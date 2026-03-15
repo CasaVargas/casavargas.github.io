@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Casa Vargas — Software by Jonathan Vargas</title>
+  <meta name="description" content="Casa Vargas builds native desktop and mobile apps. Open source and paid software by Jonathan Vargas.">
+  <meta property="og:title" content="Casa Vargas — Software by Jonathan Vargas">
+  <meta property="og:description" content="Casa Vargas builds native desktop and mobile apps. Open source and paid software by Jonathan Vargas.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://casavargas.app/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Casa Vargas — Software by Jonathan Vargas">
+  <meta name="twitter:description" content="Casa Vargas builds native desktop and mobile apps. Open source and paid software by Jonathan Vargas.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='system-ui' font-weight='bold' fill='%2377C351'%3ECV%3C/text%3E%3C/svg%3E">
+  <style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: #0a0a0a;
+  color: #fff;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+:root {
+  --green: #77C351;
+  --green-glow: rgba(119, 195, 81, 0.3);
+  --bg-card: rgba(255,255,255,0.05);
+  --border-card: rgba(255,255,255,0.1);
+  --text-secondary: rgba(255,255,255,0.6);
+}
+a { color: var(--green); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+/* Hero */
+.hero {
+  padding: 6rem 2rem 3rem;
+  text-align: center;
+  background: linear-gradient(180deg, #1a1a2e 0%, #0a0a0a 100%);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
+  border-radius: 50%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+  pointer-events: none;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  position: relative;
+}
+.hero .tagline {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  position: relative;
+}
+
+/* Projects */
+.projects {
+  flex: 1;
+  padding: 3rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+.projects-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 640px) { .projects-grid { grid-template-columns: 1fr; } }
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: #fff;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.project-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--green);
+  text-decoration: none;
+}
+.project-card:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+.project-card .card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.project-card .card-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--green);
+  flex-shrink: 0;
+}
+.project-card .card-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.project-card .card-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.project-card .card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+.tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.tag-oss {
+  background: rgba(119, 195, 81, 0.15);
+  color: var(--green);
+}
+.tag-platform {
+  background: rgba(255,255,255,0.08);
+  color: var(--text-secondary);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border-card);
+}
+footer a { color: var(--text-secondary); }
+footer a:hover { color: var(--green); }
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card { transition: none; }
+}
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>Casa Vargas</h1>
+    <p class="tagline">Software by Jonathan Vargas</p>
+  </header>
+
+  <main class="projects">
+    <p class="projects-title">Projects</p>
+    <div class="projects-grid">
+
+      <a class="project-card" href="https://github.com/CasaVargas/DebridDownloader">
+        <div class="card-header">
+          <svg class="card-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          <span class="card-name">DebridDownloader</span>
+        </div>
+        <p class="card-desc">Blazing-fast desktop client for Real-Debrid. Manage torrents and downloads with a native app built on Rust + React.</p>
+        <div class="card-tags">
+          <span class="tag tag-oss">Open Source</span>
+          <span class="tag tag-platform">macOS</span>
+          <span class="tag tag-platform">Windows</span>
+        </div>
+      </a>
+
+      <!-- Add more project cards here -->
+
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://github.com/CasaVargas">GitHub</a>
+  </footer>
+
+</body>
+</html>
