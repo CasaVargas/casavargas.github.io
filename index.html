@@ -12,13 +12,13 @@
 :root {
   --orange-light: #EF9F27;
   --orange-dark: #D85A30;
-  --warm-cream: #FDF8F0;
-  --warm-cream-alt: #FAF3E8;
-  --charcoal: #1a1a1a;
+  --warm-cream: #111110;
+  --warm-cream-alt: #1c1c1a;
+  --charcoal: #f0f0ec;
   --charcoal-soft: #2c2c2a;
-  --text-mid: #5a5550;
-  --text-light: #8a8580;
-  --border-warm: rgba(216, 90, 48, 0.12);
+  --text-mid: #a8a49e;
+  --text-light: #706c66;
+  --border-warm: rgba(216, 90, 48, 0.15);
   --gradient: linear-gradient(135deg, var(--orange-light), var(--orange-dark));
 }
 
@@ -37,7 +37,7 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9999;
 }
@@ -83,7 +83,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(253, 248, 240, 0.85);
+  background: rgba(17, 17, 16, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-warm);
@@ -135,7 +135,7 @@ nav {
   right: -10%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(239, 159, 39, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(239, 159, 39, 0.12) 0%, transparent 70%);
   pointer-events: none;
 }
 .hero::after {
@@ -145,7 +145,7 @@ nav {
   left: -5%;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(216, 90, 48, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(216, 90, 48, 0.1) 0%, transparent 70%);
   pointer-events: none;
 }
 .hero-icon {
@@ -234,7 +234,7 @@ section {
   margin-top: 3rem;
 }
 .app-card {
-  background: #fff;
+  background: #1a1a18;
   border: 1px solid var(--border-warm);
   border-radius: 16px;
   padding: 2rem;
@@ -244,7 +244,7 @@ section {
 }
 .app-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(216, 90, 48, 0.08);
+  box-shadow: 0 20px 60px rgba(216, 90, 48, 0.12);
 }
 .app-card::before {
   content: '';
@@ -307,7 +307,7 @@ section {
 
 /* --- Philosophy --- */
 .philosophy {
-  background: var(--charcoal);
+  background: #0a0a09;
   border-radius: 24px;
   padding: 4rem;
   margin: 0 2rem;
@@ -375,7 +375,7 @@ section {
   gap: 1.5rem;
 }
 .stat-card {
-  background: #fff;
+  background: #1a1a18;
   border: 1px solid var(--border-warm);
   border-radius: 16px;
   padding: 1.75rem;
@@ -430,7 +430,7 @@ footer a {
 }
 .sponsor-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(216, 90, 48, 0.25);
+  box-shadow: 0 8px 24px rgba(216, 90, 48, 0.35);
   color: #fff;
 }
 
@@ -476,7 +476,7 @@ footer a {
 <!-- Hero -->
 <section class="hero">
   <div class="animate delay-1" style="margin-bottom: 2rem;">
-    <img src="casavargas-logo-orange.svg" alt="CasaVargas.app — Indie Software Studio" style="width: 100%; max-width: 420px; height: auto;">
+    <img src="casavargas-logo-dark.svg" alt="CasaVargas.app — Indie Software Studio" style="width: 100%; max-width: 420px; height: auto;">
   </div>
   <h1 class="animate delay-2">Crafting <em>native</em> apps<br>for Apple platforms</h1>
   <p class="hero-sub animate delay-3">An indie software studio building premium, thoughtfully designed experiences in pure SwiftUI — no web views, no shortcuts.</p>
@@ -602,17 +602,11 @@ footer a {
 <!-- Footer -->
 <footer>
   <div class="footer-logo">
-    <img src="casavargas-logo-orange.svg" alt="CasaVargas.app" style="width: 200px; height: auto;">
+    <img src="casavargas-logo-dark.svg" alt="CasaVargas.app" style="width: 200px; height: auto;">
   </div>
   <a href="https://github.com/sponsors/prjoni99" target="_blank" rel="noopener" class="sponsor-btn">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.565 20.565 0 008 13.393a20.561 20.561 0 003.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.75.75 0 01-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5z"/></svg>
     Sponsor this project
   </a>
   <p style="margin-top: 1.25rem;">&copy; 2025 CasaVargas.app &middot; Indie Software Studio &middot; North Carolina</p>
-  <p style="margin-top: 0.5rem;"><a href="mailto:hello@casavargas.app">hello@casavargas.app</a></p>
-</footer>
-
-<script>
-// Intersection Observer for scroll animations
-const observer = new IntersectionObserver((entries) => {
-  e
+  <p style="margin-top: 0.5rem;"><a href="/cdn-cgi/l/email-protection#69010c050506290a081a081f081b0e081a47081919"><span class="__cf_email__" data-cfemail="b1d9d4dddddef1d2d0c2d0c7d0c3d6d0c29fd0c1c1">[email&#160;protected]</span
