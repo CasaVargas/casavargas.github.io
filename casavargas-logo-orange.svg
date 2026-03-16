@@ -1,0 +1,33 @@
+<svg width="680" height="400" viewBox="0 0 680 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="o1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EF9F27"/>
+      <stop offset="100%" stop-color="#D85A30"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Main icon -->
+  <g transform="translate(340, 155)">
+    <!-- Roof chevron -->
+    <path d="M0,-95 L-72,-30 L-58,-30 L0,-82 L58,-30 L72,-30 Z" fill="url(#o1)"/>
+    <!-- House body -->
+    <rect x="-52" y="-30" width="104" height="90" rx="4" fill="url(#o1)" opacity="0.88"/>
+    <!-- Left bracket < -->
+    <path d="M-18,-5 L-32,15 L-18,35" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right bracket > -->
+    <path d="M18,-5 L32,15 L18,35" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Slash / -->
+    <line x1="8" y1="-5" x2="-8" y2="35" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="340" y="290" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="42" font-weight="500" letter-spacing="-1">
+    <tspan fill="url(#o1)">Casa</tspan><tspan fill="#1a1a1a">Vargas</tspan>
+  </text>
+
+  <!-- .app domain -->
+  <text x="340" y="322" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="16" font-weight="400" fill="#999" letter-spacing="6">.APP</text>
+
+  <!-- Tagline -->
+  <text x="340" y="362" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="13" font-weight="400" fill="#666" letter-spacing="3">INDIE SOFTWARE STUDIO</text>
+</svg>
