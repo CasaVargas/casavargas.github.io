@@ -435,6 +435,12 @@ footer a {
 }
 
 /* --- Responsive --- */
+/* --- Screenshot scrollbar --- */
+.streamline-shots::-webkit-scrollbar { height: 4px; }
+.streamline-shots::-webkit-scrollbar-track { background: transparent; }
+.streamline-shots::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+.streamline-shots::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+
 @media (max-width: 768px) {
   nav { padding: 1rem 1.5rem; }
   .nav-links { gap: 1rem; }
@@ -488,7 +494,7 @@ footer a {
   <div class="animate">
     <p class="section-label">What we're building</p>
     <h2 class="section-title">Apps with intent</h2>
-    <p class="section-desc">Every project starts with a detailed spec and ships with polish. Here's what's live.</p>
+    <p class="section-desc">Every project starts with a detailed spec and ships with polish. Here's what's live — and what's next.</p>
   </div>
   <div class="apps-grid">
     <div class="app-card animate delay-2">
@@ -541,6 +547,41 @@ footer a {
         </a>
       </div>
     </div>
+    <div class="app-card animate delay-4" style="grid-column: 1 / -1; position: relative;">
+      <div style="position:absolute;top:1rem;right:1.5rem;">
+        <span style="font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:100px;background:linear-gradient(135deg,#06b6d4,#8b5cf6);color:#fff;">Coming Soon</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1.25rem;margin-bottom:1rem;">
+        <div class="app-icon" style="background: transparent; border-radius: 16px; overflow: hidden; width: 56px; height: 56px; flex-shrink: 0;">
+          <img src="streamline/icon.png" alt="Streamline icon" width="56" height="56" style="display:block;border-radius:14px;">
+        </div>
+        <div>
+          <p class="app-type">Premium IPTV Player</p>
+          <h3 style="font-size:1.35rem;">Streamline</h3>
+        </div>
+      </div>
+      <p style="margin-bottom:1.25rem;">The IPTV player Apple would build if they cared. Pure SwiftUI across iPhone, iPad, Mac, Apple TV, and Vision Pro. TMDB-enriched metadata, live sports with scores, full EPG guide, multi-view PiP, Stremio add-on support, and channel switching faster than your cable box. No web views. No Electron. No compromises.</p>
+      <div class="app-platforms" style="margin-bottom:1.5rem;">
+        <span class="platform-tag">iPhone</span>
+        <span class="platform-tag">iPad</span>
+        <span class="platform-tag">Apple TV</span>
+        <span class="platform-tag">Mac</span>
+        <span class="platform-tag">Vision Pro</span>
+        <span class="platform-tag" style="background:rgba(139,92,246,0.2);color:#a78bfa;">Paid App</span>
+      </div>
+      <!-- Screenshot carousel -->
+      <div class="streamline-shots" style="display:flex;gap:0.75rem;overflow-x:auto;padding-bottom:0.75rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;">
+        <img src="streamline/home.png" alt="Streamline Home — Live Now, Tonight's Highlights, Live Sports" style="height:280px;border-radius:12px;scroll-snap-align:start;flex-shrink:0;border:1px solid rgba(255,255,255,0.08);">
+        <img src="streamline/live-tv-grid.png" alt="Streamline Live TV — rich poster grid with metadata" style="height:280px;border-radius:12px;scroll-snap-align:start;flex-shrink:0;border:1px solid rgba(255,255,255,0.08);">
+        <img src="streamline/live-tv-list.png" alt="Streamline Live TV — channel list with artwork" style="height:280px;border-radius:12px;scroll-snap-align:start;flex-shrink:0;border:1px solid rgba(255,255,255,0.08);">
+        <img src="streamline/program-detail.png" alt="Streamline — program detail with backdrop, ratings, cast" style="height:280px;border-radius:12px;scroll-snap-align:start;flex-shrink:0;border:1px solid rgba(255,255,255,0.08);">
+        <img src="streamline/player-info.png" alt="Streamline — player overlay with episode info" style="height:280px;border-radius:12px;scroll-snap-align:start;flex-shrink:0;border:1px solid rgba(255,255,255,0.08);">
+        <img src="streamline/vod.png" alt="Streamline VOD — poster grid with ratings" style="height:280px;border-radius:12px;scroll-snap-align:start;flex-shrink:0;border:1px solid rgba(255,255,255,0.08);">
+      </div>
+      <div style="margin-top:1.25rem;display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:0.85rem;font-weight:400;color:var(--text-mid);">Launching 2026 &middot; Bring your own M3U / Xtream Codes provider</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -580,8 +621,8 @@ footer a {
     </div>
     <div class="about-stats animate delay-3">
       <div class="stat-card">
-        <div class="stat-num">2</div>
-        <div class="stat-label">Shipped projects</div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Active projects</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">1</div>
