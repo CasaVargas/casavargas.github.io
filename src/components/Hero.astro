@@ -1,0 +1,50 @@
+---
+---
+
+<section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-32 pb-16 overflow-hidden">
+  <!-- Radial blue glow -->
+  <div
+    class="absolute pointer-events-none"
+    style="top: -10%; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; background: radial-gradient(circle, rgba(239, 159, 39, 0.08) 0%, transparent 65%);"
+  ></div>
+
+  <!-- Badge -->
+  <div class="hero-animate hero-delay-1 inline-flex items-center gap-2.5 px-4 py-2 rounded-full border mb-8" style="border-color: rgba(74, 222, 128, 0.2); background: rgba(74, 222, 128, 0.05);">
+    <span class="relative flex h-2 w-2">
+      <span class="pulse-dot absolute inline-flex h-full w-full rounded-full opacity-75" style="background: var(--color-accent-green);"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2" style="background: var(--color-accent-green);"></span>
+    </span>
+    <span class="text-xs font-medium tracking-wide" style="color: var(--color-accent-green);">
+      Shipping native & cross-platform software since 2024
+    </span>
+  </div>
+
+  <!-- Headline -->
+  <h1
+    class="hero-animate hero-delay-2 text-5xl md:text-7xl lg:text-8xl font-normal leading-[1.05] tracking-tight mb-6"
+    style="font-family: var(--font-display);"
+  >
+    Software built to<br />
+    <em class="italic" style="color: var(--color-accent);">feel</em> right
+  </h1>
+
+  <!-- Subtitle -->
+  <p class="hero-animate hero-delay-3 text-lg md:text-xl font-light leading-relaxed max-w-xl mb-10" style="color: var(--color-text-secondary);">
+    An indie studio shipping native apps, cross-platform tools, and self-hosted infrastructure. No subscriptions. No compromises.
+  </p>
+
+  <!-- Platform tags -->
+  <div class="hero-animate hero-delay-4 flex flex-wrap justify-center gap-2 mb-16">
+    {['iOS', 'macOS', 'tvOS', 'visionOS', 'Windows', 'Linux', 'Web'].map((platform) => (
+      <span
+        class="text-xs px-3 py-1.5 rounded-full border"
+        style={`font-family: var(--font-mono); color: var(--color-text-secondary); border-color: var(--color-border); background: rgba(255,255,255,0.02);`}
+      >
+        {platform}
+      </span>
+    ))}
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero-animate hero-delay-5 scroll-indicator flex flex-col items-center"></div>
+</section>

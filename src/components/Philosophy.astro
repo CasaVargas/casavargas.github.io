@@ -1,0 +1,50 @@
+---
+const pillars = [
+  {
+    emoji: '\u{1F4D0}',
+    title: 'Spec-first',
+    description:
+      'Every feature starts as a game design document before a single line of code. The thinking happens upfront so the building flows.',
+  },
+  {
+    emoji: '\u{26A1}',
+    title: 'Native & cross-platform',
+    description:
+      'SwiftUI for Apple platforms. Tauri and Rust for desktop. Docker and Traefik for self-hosted infrastructure. The right tool for each job.',
+  },
+  {
+    emoji: '\u{1F4B0}',
+    title: 'No subscriptions',
+    description:
+      'One-time purchase or free. Software should be owned, not rented. No surprise price hikes, no features held hostage behind recurring fees.',
+  },
+];
+---
+
+<section id="philosophy" class="max-w-6xl mx-auto px-6 py-24">
+  <div class="reveal">
+    <p class="text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-3" style="color: var(--color-accent);">
+      How We Build
+    </p>
+    <h2 class="text-4xl md:text-5xl font-normal leading-tight mb-3" style="font-family: var(--font-display);">
+      Built right, everywhere
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
+    {pillars.map((pillar, i) => (
+      <div
+        class={`reveal stagger-${i + 1} rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-0.5`}
+        style="background: var(--color-bg-card); border-color: var(--color-border);"
+        onmouseenter="this.style.borderColor='rgba(255,255,255,0.12)'"
+        onmouseleave="this.style.borderColor='rgba(255,255,255,0.06)'"
+      >
+        <span class="text-2xl mb-4 block">{pillar.emoji}</span>
+        <h4 class="text-base font-semibold mb-2">{pillar.title}</h4>
+        <p class="text-sm font-light leading-relaxed" style="color: var(--color-text-secondary);">
+          {pillar.description}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,64 @@
+---
+---
+
+<nav
+  id="main-nav"
+  class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 border-b border-transparent transition-[border-color] duration-300"
+  style="background: rgba(7, 7, 10, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);"
+>
+  <a href="/" class="flex items-center gap-2.5 no-underline">
+    <!-- Logo icon -->
+    <svg width="28" height="28" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="nav-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#EF9F27"/><stop offset="100%" stop-color="#D85A30"/></linearGradient></defs>
+      <g transform="translate(256, 240)">
+        <path d="M0,-160 L-122,-51 L-98,-51 L0,-139 L98,-51 L122,-51 Z" fill="url(#nav-g)"/>
+        <rect x="-88" y="-51" width="176" height="152" rx="7" fill="url(#nav-g)" opacity="0.88"/>
+        <path d="M-30,-8 L-54,25 L-30,59" fill="none" stroke="#fff" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M30,-8 L54,25 L30,59" fill="none" stroke="#fff" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="14" y1="-8" x2="-14" y2="59" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity="0.7"/>
+      </g>
+    </svg>
+    <span class="text-lg font-semibold tracking-tight" style="font-family: var(--font-body);">
+      <span style="background: linear-gradient(135deg, #EF9F27, #D85A30); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Casa</span><span class="text-white">Vargas</span>
+    </span>
+  </a>
+
+  <div class="hidden md:flex items-center gap-8">
+    <a href="#apps" class="text-sm text-[var(--color-text-secondary)] hover:text-white transition-colors duration-200 no-underline">Apps</a>
+    <a href="#philosophy" class="text-sm text-[var(--color-text-secondary)] hover:text-white transition-colors duration-200 no-underline">Philosophy</a>
+    <a href="#about" class="text-sm text-[var(--color-text-secondary)] hover:text-white transition-colors duration-200 no-underline">About</a>
+    <a
+      href="mailto:hello@casavargas.app"
+      class="text-sm font-medium px-4 py-2 rounded-full border no-underline transition-all duration-200"
+      style="color: var(--color-accent); border-color: rgba(239, 159, 39, 0.3);"
+      onmouseenter="this.style.background='rgba(239,159,39,0.1)'"
+      onmouseleave="this.style.background='transparent'"
+    >
+      Get in Touch
+    </a>
+  </div>
+
+  <!-- Mobile: just the contact pill -->
+  <div class="md:hidden">
+    <a
+      href="mailto:hello@casavargas.app"
+      class="text-sm font-medium px-4 py-2 rounded-full border no-underline"
+      style="color: var(--color-accent); border-color: rgba(239, 159, 39, 0.3);"
+    >
+      Contact
+    </a>
+  </div>
+</nav>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        nav.style.borderBottomColor = 'rgba(255, 255, 255, 0.06)';
+      } else {
+        nav.style.borderBottomColor = 'transparent';
+      }
+    }, { passive: true });
+  }
+</script>

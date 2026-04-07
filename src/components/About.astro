@@ -1,0 +1,54 @@
+---
+const stackRows = [
+  { label: 'Apple Native', detail: 'SwiftUI \u00B7 Swift 6 \u00B7 SwiftData' },
+  { label: 'Cross-platform', detail: 'Tauri \u00B7 Rust \u00B7 React' },
+  { label: 'Infrastructure', detail: 'Docker \u00B7 Traefik \u00B7 Tailscale \u00B7 Cloudflare' },
+  { label: 'Architecture', detail: 'MVVM \u00B7 @Observable' },
+  { label: 'Monetization', detail: 'StoreKit 2 \u00B7 Lemon Squeezy' },
+  { label: 'AI Tooling', detail: 'Claude Code \u00B7 Codex \u00B7 OpenCode \u00B7 Gemini CLI' },
+  { label: 'CI/CD', detail: 'GitHub Actions \u00B7 Self-hosted' },
+];
+---
+
+<section id="about" class="max-w-6xl mx-auto px-6 py-24">
+  <div class="reveal">
+    <p class="text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-3" style="color: var(--color-accent);">
+      About
+    </p>
+    <h2 class="text-4xl md:text-5xl font-normal leading-tight mb-12" style="font-family: var(--font-display);">
+      One developer, many ideas
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+    <!-- Bio -->
+    <div class="reveal stagger-1">
+      <p class="text-base font-light leading-relaxed mb-5" style="color: var(--color-text-secondary);">
+        CasaVargas LLC is a solo indie software studio founded by Jon Vargas, based in North Carolina. What started as a passion for building things that feel right has grown into projects spanning Apple platforms, the desktop, and self-hosted infrastructure.
+      </p>
+      <p class="text-base font-light leading-relaxed" style="color: var(--color-text-secondary);">
+        From OneScribe on iOS to DebridDownloader across macOS, Windows, and Linux — every app is built with the same philosophy: spec-first, native-feeling, no subscriptions. When not writing SwiftUI or Rust, Jon works in K-12 IT and is always dreaming up the next thing to build.
+      </p>
+    </div>
+
+    <!-- Stack card -->
+    <div
+      class="reveal stagger-2 rounded-2xl p-6 border"
+      style="background: var(--color-bg-card); border-color: var(--color-border);"
+    >
+      <h3 class="text-sm font-semibold tracking-wide uppercase mb-5" style="color: var(--color-text-tertiary);">
+        The Stack
+      </h3>
+      <div class="space-y-3">
+        {stackRows.map((row) => (
+          <div class="flex items-baseline justify-between py-2 border-b" style="border-color: var(--color-border);">
+            <span class="text-sm font-medium">{row.label}</span>
+            <span class="text-xs font-light" style="font-family: var(--font-mono); color: var(--color-text-tertiary);">
+              {row.detail}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
