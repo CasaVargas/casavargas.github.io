@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://casavargas.app/sitemap-index.xml
