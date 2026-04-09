@@ -75,7 +75,7 @@ export const apps: App[] = [
     icon: '/OneScribe.png',
   },
   {
-    slug: 'debriddownloader',
+    slug: 'debrid-downloader',
     name: 'DebridDownloader',
     category: 'Desktop Download Manager',
     description:
