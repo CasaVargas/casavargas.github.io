@@ -11,12 +11,19 @@ import '@fontsource/jetbrains-mono/400.css';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
 }
 
 const {
-  title = 'CasaVargas LLC — Indie Software Studio',
+  title = 'CasaVargas — Indie Software Studio',
   description = 'An indie studio shipping native apps, cross-platform tools, and self-hosted infrastructure. No subscriptions. No compromises.',
+  ogImage = '/casavargas-logo-orange.png',
+  ogType = 'website',
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const absoluteOgImage = new URL(ogImage, Astro.site).href;
 ---
 
 <!doctype html>
@@ -25,18 +32,33 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="author" content="Jon Vargas" />
+    <meta name="theme-color" content="#f97316" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL.href} />
 
     <!-- OG Tags -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://casavargas.app" />
-    <meta property="og:image" content="/casavargas-logo-orange.png" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:site_name" content="CasaVargas" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
 
     <link rel="icon" type="image/svg+xml" href="/casavargas-logo-orange.svg" />
     <title>{title}</title>
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1RK2545QZF"></script>
