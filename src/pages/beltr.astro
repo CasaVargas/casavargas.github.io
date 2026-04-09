@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import JsonLd from '../components/JsonLd.astro';
+
+const title = 'Beltr — AI-Powered Karaoke for Mac, Windows & Linux';
+const description = 'Beltr uses AI vocal separation to turn any song into a karaoke track. Runs on Mac, Windows, and Linux with iOS and Android remotes. No subscriptions.';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Beltr',
+  description,
+  url: 'https://beltr.app',
+  operatingSystem: 'macOS, Windows, Linux',
+  applicationCategory: 'MultimediaApplication',
+  author: {
+    '@type': 'Organization',
+    name: 'CasaVargas LLC',
+    url: 'https://casavargas.app',
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+  },
+};
+---
+
+<Layout title={title} description={description} ogImage="/beltr-logo-text.svg">
+  <JsonLd data={softwareSchema} />
+  <Nav />
+
+  <main class="max-w-4xl mx-auto px-6 pt-32 pb-24">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Beltr' }]} />
+
+    <!-- Hero -->
+    <div class="flex items-start gap-5 mb-8">
+      <img src="/beltr-logo-text.svg" alt="Beltr logo" width="80" height="80" class="rounded-2xl flex-shrink-0" />
+      <div>
+        <p class="text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-1" style="color: var(--color-accent-green);">Live</p>
+        <h1 class="text-4xl md:text-5xl font-normal leading-tight mb-2" style="font-family: var(--font-display);">Beltr</h1>
+        <p class="text-lg font-light" style="color: var(--color-text-secondary);">AI-Powered Karaoke Engine</p>
+      </div>
+    </div>
+
+    <p class="text-lg font-light leading-relaxed mb-8" style="color: var(--color-text-secondary); max-width: 640px;">
+      Beltr is the karaoke app that doesn't exist yet — until now. It uses AI vocal separation to strip vocals from any song in real time, turning your music library into an infinite karaoke catalog. No need to find karaoke versions. No need for special files. Just play any song and sing.
+    </p>
+
+    <!-- Platforms -->
+    <div class="flex flex-wrap gap-2 mb-12">
+      {['macOS', 'Windows', 'Linux', 'iOS Remote', 'Android Remote'].map((p) => (
+        <span class="text-xs px-3 py-1.5 rounded-full border" style="font-family: var(--font-mono); color: var(--color-text-secondary); border-color: var(--color-border); background: rgba(255,255,255,0.02);">
+          {p}
+        </span>
+      ))}
+    </div>
+
+    <!-- Features -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-normal mb-8" style="font-family: var(--font-display);">Features</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[
+          {
+            title: 'AI Vocal Separation',
+            desc: 'State-of-the-art AI isolates vocals from any audio track in real time. No pre-processed karaoke files needed — your entire music library becomes singable.',
+          },
+          {
+            title: 'Cross-Platform Desktop',
+            desc: 'Runs natively on macOS, Windows, and Linux. Built with performance-first architecture so vocal separation happens without lag, even on modest hardware.',
+          },
+          {
+            title: 'Phone as Remote',
+            desc: 'Use your iPhone or Android phone as a wireless remote. Browse songs, queue tracks, and control playback without touching the computer.',
+          },
+          {
+            title: 'Multi-Microphone Support',
+            desc: 'Connect multiple microphones for duets and group sessions. Independent volume controls per mic so everyone sounds balanced.',
+          },
+          {
+            title: 'Live Lyrics Sync',
+            desc: 'Synchronized lyrics display that follows along with the music. Never lose your place, even in fast sections.',
+          },
+          {
+            title: 'No Subscriptions',
+            desc: 'Buy it once, own it forever. No monthly fees, no feature gates, no recurring charges. Your karaoke machine, permanently.',
+          },
+        ].map((feature) => (
+          <div class="rounded-2xl p-6 border" style="background: var(--color-bg-card); border-color: var(--color-border);">
+            <h3 class="text-base font-semibold mb-2">{feature.title}</h3>
+            <p class="text-sm font-light leading-relaxed" style="color: var(--color-text-secondary);">{feature.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-normal mb-6" style="font-family: var(--font-display);">How It Works</h2>
+      <div class="space-y-6">
+        {[
+          { step: '1', title: 'Load Your Music', desc: 'Point Beltr at your local music library or drag in individual files. MP3, FLAC, WAV, AAC — it handles everything.' },
+          { step: '2', title: 'AI Separates Vocals', desc: 'Beltr\'s AI model processes the audio and separates the vocal track from the instrumental. This happens in real time as the song plays.' },
+          { step: '3', title: 'Sing Along', desc: 'The instrumental plays through your speakers while lyrics scroll on screen. Grab a mic and go — or use your phone as a remote to control the session from the couch.' },
+        ].map((item) => (
+          <div class="flex gap-4 items-start">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold" style="background: rgba(239, 159, 39, 0.1); color: var(--color-accent);">
+              {item.step}
+            </span>
+            <div>
+              <h3 class="text-base font-semibold mb-1">{item.title}</h3>
+              <p class="text-sm font-light leading-relaxed" style="color: var(--color-text-secondary);">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="rounded-2xl p-8 border text-center" style="background: var(--color-bg-card); border-color: var(--color-border);">
+      <h2 class="text-2xl font-normal mb-3" style="font-family: var(--font-display);">Ready to sing?</h2>
+      <p class="text-sm font-light mb-6" style="color: var(--color-text-secondary);">Visit beltr.app to download Beltr for your platform.</p>
+      <a
+        href="https://beltr.app"
+        target="_blank"
+        rel="noopener"
+        class="inline-block text-sm font-semibold px-6 py-3 rounded-full no-underline transition-opacity duration-200 hover:opacity-80"
+        style="background: var(--color-accent); color: #07070a;"
+      >
+        Get Beltr &rarr;
+      </a>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
