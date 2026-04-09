@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import JsonLd from '../components/JsonLd.astro';
+
+const title = 'DebridDownloader — Open Source Debrid Download Manager';
+const description = 'A free, open-source desktop download manager for Real-Debrid. Available on Mac, Windows, and Linux.';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'DebridDownloader',
+  description,
+  url: 'https://github.com/CasaVargas/DebridDownloader',
+  operatingSystem: 'macOS, Windows, Linux',
+  applicationCategory: 'UtilitiesApplication',
+  author: {
+    '@type': 'Organization',
+    name: 'CasaVargas LLC',
+    url: 'https://casavargas.app',
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+  },
+};
+---
+
+<Layout title={title} description={description} ogImage="/DebridDownloader.png">
+  <JsonLd data={softwareSchema} />
+  <Nav />
+
+  <main class="max-w-4xl mx-auto px-6 pt-32 pb-24">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'DebridDownloader' }]} />
+
+    <!-- Hero -->
+    <div class="flex items-start gap-5 mb-8">
+      <img src="/DebridDownloader.png" alt="DebridDownloader logo" width="80" height="80" class="rounded-2xl flex-shrink-0" />
+      <div>
+        <p class="text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-1" style="color: var(--color-accent-dark);">Open Source</p>
+        <h1 class="text-4xl md:text-5xl font-normal leading-tight mb-2" style="font-family: var(--font-display);">DebridDownloader</h1>
+        <p class="text-lg font-light" style="color: var(--color-text-secondary);">Desktop Download Manager</p>
+      </div>
+    </div>
+
+    <p class="text-lg font-light leading-relaxed mb-8" style="color: var(--color-text-secondary); max-width: 640px;">
+      A blazing-fast, open-source desktop client for Real-Debrid. Built with Tauri, Rust, and React for a native experience on every platform. Multi-threaded downloads, keyboard-first interface, configurable trackers, and full theme support. Free and open source — no catches.
+    </p>
+
+    <!-- Platforms -->
+    <div class="flex flex-wrap gap-2 mb-12">
+      {['macOS', 'Windows', 'Linux'].map((p) => (
+        <span class="text-xs px-3 py-1.5 rounded-full border" style="font-family: var(--font-mono); color: var(--color-text-secondary); border-color: var(--color-border); background: rgba(255,255,255,0.02);">
+          {p}
+        </span>
+      ))}
+    </div>
+
+    <!-- Features -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-normal mb-8" style="font-family: var(--font-display);">Features</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[
+          {
+            title: 'Multi-Threaded Downloads',
+            desc: 'Saturate your connection with parallel download chunks. DebridDownloader maximizes throughput from Real-Debrid\'s servers.',
+          },
+          {
+            title: 'Keyboard-First Interface',
+            desc: 'Navigate entirely with keyboard shortcuts. Add links, manage downloads, and configure settings without touching the mouse.',
+          },
+          {
+            title: 'Built with Tauri & Rust',
+            desc: 'Native performance with a tiny footprint. Tauri gives you a real desktop app — not an Electron memory hog. The download engine is pure Rust.',
+          },
+          {
+            title: 'Configurable Trackers',
+            desc: 'Add and manage custom trackers. DebridDownloader handles magnet links, torrents, and direct URLs with full Real-Debrid API integration.',
+          },
+          {
+            title: 'Full Theme Support',
+            desc: 'Light and dark themes out of the box, with full customization support. Make it look how you want.',
+          },
+          {
+            title: 'Free & Open Source',
+            desc: 'MIT licensed. Read the code, fork it, contribute to it. No telemetry, no ads, no premium tier. Just a download manager that works.',
+          },
+        ].map((feature) => (
+          <div class="rounded-2xl p-6 border" style="background: var(--color-bg-card); border-color: var(--color-border);">
+            <h3 class="text-base font-semibold mb-2">{feature.title}</h3>
+            <p class="text-sm font-light leading-relaxed" style="color: var(--color-text-secondary);">{feature.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="rounded-2xl p-8 border text-center" style="background: var(--color-bg-card); border-color: var(--color-border);">
+      <h2 class="text-2xl font-normal mb-3" style="font-family: var(--font-display);">Download for free</h2>
+      <p class="text-sm font-light mb-6" style="color: var(--color-text-secondary);">Grab the latest release from GitHub.</p>
+      <div class="flex justify-center gap-4 flex-wrap">
+        <a
+          href="https://github.com/CasaVargas/DebridDownloader"
+          target="_blank"
+          rel="noopener"
+          class="inline-block text-sm font-semibold px-6 py-3 rounded-full no-underline transition-opacity duration-200 hover:opacity-80"
+          style="background: var(--color-accent); color: #07070a;"
+        >
+          GitHub &rarr;
+        </a>
+        <a
+          href="https://github.com/sponsors/prjoni99"
+          target="_blank"
+          rel="noopener"
+          class="inline-block text-sm font-semibold px-6 py-3 rounded-full no-underline transition-opacity duration-200 hover:opacity-80 border"
+          style="color: var(--color-accent-pink); border-color: rgba(212, 83, 126, 0.3);"
+        >
+          Sponsor &rarr;
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
