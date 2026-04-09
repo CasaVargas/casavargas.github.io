@@ -37,6 +37,15 @@ const {
 
     <link rel="icon" type="image/svg+xml" href="/casavargas-logo-orange.svg" />
     <title>{title}</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1RK2545QZF"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1RK2545QZF');
+    </script>
   </head>
   <body>
     <slot />
