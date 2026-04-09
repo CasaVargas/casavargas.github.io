@@ -7,9 +7,33 @@ import Philosophy from '../components/Philosophy.astro';
 import Stats from '../components/Stats.astro';
 import About from '../components/About.astro';
 import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'CasaVargas LLC',
+  url: 'https://casavargas.app',
+  logo: 'https://casavargas.app/casavargas-logo-orange.png',
+  founder: {
+    '@type': 'Person',
+    name: 'Jon Vargas',
+  },
+  description: 'An indie studio shipping native apps, cross-platform tools, and self-hosted infrastructure.',
+  sameAs: ['https://github.com/CasaVargas'],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'CasaVargas',
+  url: 'https://casavargas.app',
+};
 ---
 
 <Layout>
+  <JsonLd data={organizationSchema} />
+  <JsonLd data={websiteSchema} />
   <Nav />
   <Hero />
   <AppGrid />
