@@ -1,0 +1,128 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import JsonLd from '../components/JsonLd.astro';
+
+const title = 'Streamline — Native IPTV Player for Apple TV & Mac';
+const description = 'A native IPTV player built for Apple TV, Mac, and iPhone. Supports M3U playlists with a fast, beautiful interface. No subscriptions.';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Streamline',
+  description,
+  url: 'https://getstreamline.tv',
+  operatingSystem: 'tvOS, macOS, iOS',
+  applicationCategory: 'EntertainmentApplication',
+  author: {
+    '@type': 'Organization',
+    name: 'CasaVargas LLC',
+    url: 'https://casavargas.app',
+  },
+};
+---
+
+<Layout title={title} description={description} ogImage="/streamline/icon.png">
+  <JsonLd data={softwareSchema} />
+  <Nav />
+
+  <main class="max-w-4xl mx-auto px-6 pt-32 pb-24">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Streamline' }]} />
+
+    <!-- Hero -->
+    <div class="flex items-start gap-5 mb-8">
+      <img src="/streamline/icon.png" alt="Streamline logo" width="80" height="80" class="rounded-2xl flex-shrink-0" />
+      <div>
+        <p class="text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-1" style="color: var(--color-accent);">Coming Soon</p>
+        <h1 class="text-4xl md:text-5xl font-normal leading-tight mb-2" style="font-family: var(--font-display);">Streamline</h1>
+        <p class="text-lg font-light" style="color: var(--color-text-secondary);">Premium IPTV Player</p>
+      </div>
+    </div>
+
+    <p class="text-lg font-light leading-relaxed mb-8" style="color: var(--color-text-secondary); max-width: 640px;">
+      Streamline is the IPTV player Apple would build. Pure SwiftUI across every Apple platform — Apple TV, Mac, iPhone, iPad, and Vision Pro. Fast channel switching, full EPG, TMDB metadata enrichment, and a 10-foot UI designed for the big screen.
+    </p>
+
+    <!-- Platforms -->
+    <div class="flex flex-wrap gap-2 mb-12">
+      {['Apple TV', 'Mac', 'iPhone', 'iPad', 'Vision Pro'].map((p) => (
+        <span class="text-xs px-3 py-1.5 rounded-full border" style="font-family: var(--font-mono); color: var(--color-text-secondary); border-color: var(--color-border); background: rgba(255,255,255,0.02);">
+          {p}
+        </span>
+      ))}
+    </div>
+
+    <!-- Screenshots -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-normal mb-6" style="font-family: var(--font-display);">Screenshots</h2>
+      <div class="screenshots-scroll flex gap-3 overflow-x-auto pb-3" style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
+        {['/streamline/home.png', '/streamline/live-tv-grid.png', '/streamline/live-tv-list.png', '/streamline/program-detail.png', '/streamline/player-info.png', '/streamline/vod.png'].map((src, i) => (
+          <img
+            src={src}
+            alt={`Streamline screenshot ${i + 1}`}
+            class="h-56 md:h-72 rounded-xl flex-shrink-0 border"
+            style="scroll-snap-align: start; border-color: var(--color-border);"
+            loading="lazy"
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-normal mb-8" style="font-family: var(--font-display);">Features</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[
+          {
+            title: 'Native on Every Apple Platform',
+            desc: 'Built entirely in SwiftUI — not a web view, not a port. Streamline feels like it belongs on Apple TV, Mac, iPhone, iPad, and Vision Pro.',
+          },
+          {
+            title: 'M3U Playlist Support',
+            desc: 'Load any M3U or M3U8 playlist. Streamline parses channels, groups, and EPG data automatically so you can start watching in seconds.',
+          },
+          {
+            title: 'Full Electronic Program Guide',
+            desc: 'Browse what\'s on now and what\'s coming up. The EPG is fast, scrollable, and displays rich metadata pulled from TMDB.',
+          },
+          {
+            title: 'TMDB Metadata Enrichment',
+            desc: 'Movie and show artwork, descriptions, ratings, and cast info pulled from The Movie Database. Your channel list looks like a streaming service.',
+          },
+          {
+            title: 'Focus-Engine UI for tvOS',
+            desc: 'Designed for the Apple TV remote from day one. Every interaction works with the Siri Remote\'s touch surface and the tvOS focus engine.',
+          },
+          {
+            title: 'No Subscriptions',
+            desc: 'One-time purchase. No monthly fees to watch your own content. Your streams, your player, your rules.',
+          },
+        ].map((feature) => (
+          <div class="rounded-2xl p-6 border" style="background: var(--color-bg-card); border-color: var(--color-border);">
+            <h3 class="text-base font-semibold mb-2">{feature.title}</h3>
+            <p class="text-sm font-light leading-relaxed" style="color: var(--color-text-secondary);">{feature.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="rounded-2xl p-8 border text-center" style="background: var(--color-bg-card); border-color: var(--color-border);">
+      <h2 class="text-2xl font-normal mb-3" style="font-family: var(--font-display);">Coming soon</h2>
+      <p class="text-sm font-light mb-6" style="color: var(--color-text-secondary);">Streamline is in active development. Visit getstreamline.tv for updates.</p>
+      <a
+        href="https://getstreamline.tv"
+        target="_blank"
+        rel="noopener"
+        class="inline-block text-sm font-semibold px-6 py-3 rounded-full no-underline transition-opacity duration-200 hover:opacity-80"
+        style="background: var(--color-accent); color: #07070a;"
+      >
+        Visit Streamline &rarr;
+      </a>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
