@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import JsonLd from '../components/JsonLd.astro';
+
+const title = 'OneScribe — AI Document Scanner for iPhone';
+const description = 'Scan documents with AI-powered OCR on your iPhone. Fast, accurate text recognition with no subscriptions.';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'OneScribe',
+  description,
+  url: 'https://getonescribe.app',
+  operatingSystem: 'iOS',
+  applicationCategory: 'BusinessApplication',
+  author: {
+    '@type': 'Organization',
+    name: 'CasaVargas LLC',
+    url: 'https://casavargas.app',
+  },
+};
+---
+
+<Layout title={title} description={description} ogImage="/OneScribe.png">
+  <JsonLd data={softwareSchema} />
+  <Nav />
+
+  <main class="max-w-4xl mx-auto px-6 pt-32 pb-24">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'OneScribe' }]} />
+
+    <!-- Hero -->
+    <div class="flex items-start gap-5 mb-8">
+      <img src="/OneScribe.png" alt="OneScribe logo" width="80" height="80" class="rounded-2xl flex-shrink-0" />
+      <div>
+        <p class="text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-1" style="color: var(--color-accent-green);">Live on the App Store</p>
+        <h1 class="text-4xl md:text-5xl font-normal leading-tight mb-2" style="font-family: var(--font-display);">OneScribe</h1>
+        <p class="text-lg font-light" style="color: var(--color-text-secondary);">AI Document Scanner</p>
+      </div>
+    </div>
+
+    <p class="text-lg font-light leading-relaxed mb-8" style="color: var(--color-text-secondary); max-width: 640px;">
+      OneScribe turns your iPhone into an intelligent document scanner. Powered by Apple's VisionKit and CoreML, it doesn't just scan — it understands. Extract text, recognize handwriting, and export to Google Docs, OneNote, Markdown, and more. All processing happens on-device. Your documents never leave your phone.
+    </p>
+
+    <!-- Platforms -->
+    <div class="flex flex-wrap gap-2 mb-12">
+      <span class="text-xs px-3 py-1.5 rounded-full border" style="font-family: var(--font-mono); color: var(--color-text-secondary); border-color: var(--color-border); background: rgba(255,255,255,0.02);">
+        iOS
+      </span>
+    </div>
+
+    <!-- Features -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-normal mb-8" style="font-family: var(--font-display);">Features</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[
+          {
+            title: 'AI-Powered OCR',
+            desc: 'Uses Apple\'s VisionKit and CoreML for best-in-class text recognition. Handles printed text, handwriting, receipts, and complex layouts.',
+          },
+          {
+            title: 'On-Device Processing',
+            desc: 'All scanning and text recognition happens locally on your iPhone. No cloud uploads, no data collection, no privacy concerns.',
+          },
+          {
+            title: 'Multi-Format Export',
+            desc: 'Export scanned documents to Google Docs, OneNote, Markdown, PDF, and plain text. Share directly from the app to any destination.',
+          },
+          {
+            title: 'Smart Document Detection',
+            desc: 'Automatically detects document edges, corrects perspective, and enhances contrast. Just point your camera and OneScribe handles the rest.',
+          },
+          {
+            title: 'Built with SwiftUI',
+            desc: 'Native iOS app built entirely in SwiftUI and Swift 6. Fast, fluid, and designed to feel like it belongs on your iPhone.',
+          },
+          {
+            title: 'No Subscriptions',
+            desc: 'One-time purchase on the App Store. No monthly fees, no premium tiers, no feature gates. Every feature is included.',
+          },
+        ].map((feature) => (
+          <div class="rounded-2xl p-6 border" style="background: var(--color-bg-card); border-color: var(--color-border);">
+            <h3 class="text-base font-semibold mb-2">{feature.title}</h3>
+            <p class="text-sm font-light leading-relaxed" style="color: var(--color-text-secondary);">{feature.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="rounded-2xl p-8 border text-center" style="background: var(--color-bg-card); border-color: var(--color-border);">
+      <h2 class="text-2xl font-normal mb-3" style="font-family: var(--font-display);">Scan smarter</h2>
+      <p class="text-sm font-light mb-6" style="color: var(--color-text-secondary);">Download OneScribe from the App Store.</p>
+      <div class="flex justify-center gap-4 flex-wrap">
+        <a
+          href="https://apps.apple.com/us/app/onescribe-ai-scanner-ocr/id6756506734"
+          target="_blank"
+          rel="noopener"
+          class="inline-block text-sm font-semibold px-6 py-3 rounded-full no-underline transition-opacity duration-200 hover:opacity-80"
+          style="background: var(--color-accent); color: #07070a;"
+        >
+          App Store &rarr;
+        </a>
+        <a
+          href="https://getonescribe.app"
+          target="_blank"
+          rel="noopener"
+          class="inline-block text-sm font-semibold px-6 py-3 rounded-full no-underline transition-opacity duration-200 hover:opacity-80 border"
+          style="color: var(--color-accent); border-color: rgba(239, 159, 39, 0.3);"
+        >
+          Website &rarr;
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
