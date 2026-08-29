@@ -1,6 +1,6 @@
 # casavargas.app — Product-Forward Redesign
 
-**Status:** homepage implemented and verified (2026-08-29). App landing pages + blog still pending — see §7.
+**Status:** complete and deployed (2026-08-29). Homepage, all four app landing pages and the blog are on the new design system.
 **Date:** 2026-08-29
 **Branch:** `redesign/product-forward`
 
@@ -169,15 +169,26 @@ single image over 200KB on the wire, LCP image under 150KB.
 - Reads CDG, MP3+G, `.kar`, `.mid`, Thai NCN as-is; exports MP3+G, CDG, `.kar`
 - StemDeck is a *separate recommended tool*, not a Beltr feature
 
-## 7. Out of scope for this pass
+## 7. Scope (delivered)
 
-- `/beltr`, `/streamline`, `/onescribe`, `/debrid-downloader` landing pages
-- `/blog` index and post template
-- Copy is a working draft, not final
-- No new photography or screenshot capture
+**Pass 1 — homepage.** Hero, proof strip, weighted app bands, studio section.
 
-Those app pages will look inconsistent with the new homepage until a follow-up
-pass. Accepted deliberately to keep this increment shippable.
+**Pass 2 — everything else.** The four app landing pages now share an
+`AppPage` layout and are thin data files; the blog index and post template were
+restyled to match. Screenshots everywhere go through `Frame` / `Phone`.
+
+Corrected along the way, all of it the same class of defect as §6.1 — claims
+that went stale independently of the page around them:
+
+| Claim | Was | Now |
+|---|---|---|
+| Beltr separation | "in real time", "no pre-processing, no waiting" | on-device, a minute or two per song |
+| Beltr remotes | "iOS Remote" / "Android Remote" platforms and apps | phones join by QR, nothing to install |
+| Beltr `offers.price` | `'0'` in JSON-LD | `'19.99'` |
+| DebridDownloader licence | "MIT licensed" | GPL-3.0 |
+| DebridDownloader providers | Real-Debrid only | Real-Debrid, TorBox, Premiumize |
+
+Still out of scope: no new photography or screenshot capture.
 
 ## 8. Verification (results)
 
@@ -200,13 +211,26 @@ read as broken when they are not.
 - [x] No horizontal document overflow (`.hero::before` bloom was pushing
       scrollWidth 32 px past the viewport, hidden by `body{overflow-x:hidden}`)
 
-### 8.1 Known gaps
+### 8.2 Pass 2 results
 
-- **`<main>` landmark added to the homepage only.** The six other pages still
-  lack one and will fail `landmark-one-main`. Trivial fix, deferred with the
-  rest of the app-page work rather than made unverified at the end of a session.
-- 390 px viewport untested (see above).
-- Performance score not measured (Lighthouse tool covers a11y/BP/SEO only).
+- [x] Lighthouse desktop 100/100/100 with 0 failures on `/beltr/` **and** the
+      blog post, as well as `/`
+- [x] No horizontal overflow on any of the 7 pages at a mobile viewport
+- [x] Largest image on the wire 192 KB
+- [x] Two further a11y defects found and fixed, both sitewide:
+      footer column labels were `<h4>` after an `<h2>` (heading-order), and
+      inline prose links were colour-only at 1.06:1 against body text — now
+      underlined.
+
+### 8.3 Known gaps
+
+- **390 px viewport untested.** The browser window would not size below ~500 px.
+  Every mobile breakpoint (`max-width: 900px`) is exercised at 500 px, so
+  coverage is good but not literally phone-width.
+- Performance score not measured (the Lighthouse tool covers a11y/BP/SEO only).
+- **`cinematic-bigscreen.webp` is still live on beltr.app** advertising Demucs
+  and "thirty seconds". Out of this repo's reach; tracked in Tolaria.
+- `Setting-the-Stage.mp4` remains unaudited for burned-in claims.
 
 ## 9. Build sequence
 
