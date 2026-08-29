@@ -7,5 +7,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   site: 'https://casavargas.app',
+  devToolbar: { enabled: false },
   integrations: [sitemap()],
 });

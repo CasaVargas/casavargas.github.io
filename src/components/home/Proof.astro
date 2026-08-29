@@ -1,0 +1,51 @@
+---
+const stats = [
+  { value: '4', label: 'Apps shipped' },
+  { value: '7', label: 'Platforms supported' },
+  { value: '0', label: 'Subscriptions' },
+  { value: '1', label: 'Developer' },
+];
+---
+
+<section class="proof">
+  {stats.map((s) => (
+    <div class="proof__item">
+      <div class="proof__value">{s.value}</div>
+      <div class="proof__label">{s.label}</div>
+    </div>
+  ))}
+</section>
+
+<style>
+  .proof {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 84rem;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+  .proof__item {
+    padding: 2.2rem 1rem;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .proof__item + .proof__item { border-left: 1px solid var(--color-border); }
+  .proof__value {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--color-accent);
+  }
+  .proof__label {
+    margin-top: 0.45rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--color-text-tertiary);
+  }
+
+  @media (max-width: 900px) {
+    .proof { grid-template-columns: repeat(2, 1fr); padding: 0 1.5rem; }
+    .proof__item:nth-child(3) { border-left: none; }
+    .proof__item:nth-child(-n + 2) { border-bottom: none; }
+  }
+</style>

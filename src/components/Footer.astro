@@ -2,7 +2,7 @@
 import { apps } from '../data/apps';
 ---
 
-<footer class="max-w-6xl mx-auto px-6 py-10 border-t" style="border-color: var(--color-border);">
+<footer class="mx-auto py-10 border-t" style="max-width: 84rem; padding-left: 2.5rem; padding-right: 2.5rem; border-color: var(--color-border);">
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
     <!-- Apps column -->
     <div>
@@ -62,7 +62,7 @@ import { apps } from '../data/apps';
 
   <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 border-t" style="border-color: var(--color-border);">
     <p class="text-sm font-light" style="color: var(--color-text-tertiary);">
-      &copy; 2025 CasaVargas LLC
+      &copy; {new Date().getFullYear()} CasaVargas LLC
     </p>
     <a
       href="https://github.com/CasaVargas"

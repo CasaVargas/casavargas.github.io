@@ -1,13 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import AppGrid from '../components/AppGrid.astro';
-import Philosophy from '../components/Philosophy.astro';
-import Stats from '../components/Stats.astro';
-import About from '../components/About.astro';
 import Footer from '../components/Footer.astro';
 import JsonLd from '../components/JsonLd.astro';
+import Hero from '../components/home/Hero.astro';
+import Proof from '../components/home/Proof.astro';
+import AppBand from '../components/home/AppBand.astro';
+import Studio from '../components/home/Studio.astro';
+import { apps } from '../data/apps';
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -19,7 +19,8 @@ const organizationSchema = {
     '@type': 'Person',
     name: 'Jon Vargas',
   },
-  description: 'An indie studio shipping native apps, cross-platform tools, and self-hosted infrastructure.',
+  description:
+    'An indie studio shipping native apps, cross-platform tools, and self-hosted infrastructure.',
   sameAs: ['https://github.com/CasaVargas'],
 };
 
@@ -34,26 +35,51 @@ const websiteSchema = {
 <Layout>
   <JsonLd data={organizationSchema} />
   <JsonLd data={websiteSchema} />
+
   <Nav />
-  <Hero />
-  <AppGrid />
-  <Philosophy />
-  <Stats />
-  <About />
+  <main>
+    <Hero />
+    <Proof />
+
+    <section id="apps" class="apps">
+    <div class="apps__head">
+      <p class="eyebrow">The work</p>
+      <h2>Four apps, built to be lived in</h2>
+    </div>
+      {apps.map((app) => <AppBand app={app} />)}
+    </section>
+
+    <Studio />
+  </main>
   <Footer />
 </Layout>
 
-<script>
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-  );
+<style>
+  .apps { padding: 5.5rem 0 0; }
+  .apps__head {
+    max-width: 84rem;
+    margin: 0 auto;
+    padding: 0 2.5rem 2.5rem;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0 0 1.1rem;
+  }
+  h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.1rem, 3.6vw, 3.1rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
 
-  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-</script>
+  @media (max-width: 900px) {
+    .apps { padding: 3.5rem 0 0; }
+    .apps__head { padding: 0 1.5rem 1.5rem; }
+  }
+</style>

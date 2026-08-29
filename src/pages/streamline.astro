@@ -1,4 +1,12 @@
 ---
+import { Image } from 'astro:assets';
+import slHome from '../assets/streamline/home.png';
+import slGrid from '../assets/streamline/live-tv-grid.png';
+import slList from '../assets/streamline/live-tv-list.png';
+import slDetail from '../assets/streamline/program-detail.png';
+import slPlayer from '../assets/streamline/player-info.png';
+import slVod from '../assets/streamline/vod.png';
+const shots = [slHome, slGrid, slList, slDetail, slPlayer, slVod];
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -58,11 +66,15 @@ const softwareSchema = {
     <section class="mb-16">
       <h2 class="text-2xl font-normal mb-6" style="font-family: var(--font-display);">Screenshots</h2>
       <div class="screenshots-scroll flex gap-3 overflow-x-auto pb-3" style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
-        {['/streamline/home.png', '/streamline/live-tv-grid.png', '/streamline/live-tv-list.png', '/streamline/program-detail.png', '/streamline/player-info.png', '/streamline/vod.png'].map((src, i) => (
-          <img
+        {shots.map((src, i) => (
+          <Image
             src={src}
             alt={`Streamline screenshot ${i + 1}`}
-            class="h-56 md:h-72 rounded-xl flex-shrink-0 border"
+            widths={[300, 600]}
+            sizes="(max-width: 768px) 224px, 288px"
+            format="webp"
+            quality={72}
+            class="h-56 md:h-72 w-auto rounded-xl flex-shrink-0 border"
             style="scroll-snap-align: start; border-color: var(--color-border);"
             loading="lazy"
           />
