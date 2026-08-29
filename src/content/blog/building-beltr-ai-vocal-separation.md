@@ -1,6 +1,6 @@
 ---
 title: "Building Beltr: AI Vocal Separation for Cross-Platform Karaoke"
-description: "A deep dive into how Beltr uses AI to separate vocals from any song in real time, and why we built it as a cross-platform desktop app with mobile remotes."
+description: "A deep dive into how Beltr uses on-device AI to separate vocals from any song you own, and why we built it as a cross-platform desktop app that phones join by QR."
 date: 2026-04-09
 tags: [beltr, ai, cross-platform, engineering]
 ---
@@ -9,7 +9,7 @@ Every karaoke app has the same problem: you need karaoke versions of songs. Inst
 
 ## The Core Idea
 
-What if every song was a karaoke song? Not through a catalog — through AI. Beltr takes any audio file from your music library and separates the vocals from the instrumental in real time. No pre-processing, no waiting, no special files. Hit play and the vocals drop out.
+What if every song was a karaoke song? Not through a catalog — through AI. Beltr takes any audio file from your music library and separates the vocals from the instrumental on your own machine. It takes a minute or two for a typical song — quicker on a recent Apple Silicon Mac, longer on an older CPU — and then that song is karaoke forever. No catalog to buy from, no hunting for instrumental versions, and nothing uploaded.
 
 This is possible because of modern source separation models that have gotten remarkably good at isolating individual stems from mixed audio. The AI doesn't just lower the center channel (the old karaoke trick that killed everything panned center, including snare drums and bass). It actually understands what a human voice sounds like and surgically removes it while preserving the full instrumental.
 
@@ -21,13 +21,13 @@ We built Beltr for all three platforms. The audio processing pipeline is perform
 
 ## Phone as Remote
 
-But nobody wants to walk to the computer to pick the next song. That's why Beltr uses your phone as a wireless remote. iOS and Android both work. You browse your library, queue songs, and control playback from the couch — while the audio plays through your desktop setup.
+But nobody wants to walk to the computer to pick the next song. That's why Beltr uses your phone as a wireless remote — and as a microphone. Starting a room puts a four-character code and a QR on the screen; phones scan it to join. There's no app to install, no pairing, and no accounts. You browse your library, queue songs, and control playback from the couch while the audio plays through your desktop setup.
 
 This architecture — desktop as the engine, phone as the controller — gives you the best of both worlds. The heavy lifting happens on hardware with real processing power, and the interface is in your hand where it's convenient.
 
 ## Multi-Microphone Support
 
-Solo karaoke is fun. Group karaoke is a party. Beltr supports multiple microphones simultaneously with independent volume controls per mic. You can balance a quiet singer and a loud one without touching the computer. The mixing happens in real time alongside the vocal separation.
+Solo karaoke is fun. Group karaoke is a party. Beltr supports multiple microphones simultaneously with independent volume controls per mic. You can balance a quiet singer and a loud one without touching the computer. That mixing is live — it's the separation step, done once per song ahead of time, that takes a minute or two.
 
 ## No Subscriptions
 
@@ -37,4 +37,4 @@ This is a core principle at [CasaVargas](/) — software should be owned, not re
 
 ## What's Next
 
-Beltr is live now on macOS, Windows, and Linux. We're continuing to improve the vocal separation quality, adding more customization options for the singing experience, and refining the mobile remote apps. If you've ever wished you could sing along to any song without hunting for a karaoke version, [give Beltr a try](https://beltr.app).
+Beltr is live now on macOS, Windows, and Linux. We're continuing to improve the vocal separation quality, adding more customization options for the singing experience, and refining the phone experience. If you've ever wished you could sing along to any song without hunting for a karaoke version, [give Beltr a try](https://beltr.app).
