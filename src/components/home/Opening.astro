@@ -1,18 +1,10 @@
 ---
 import { work, groups } from '../../data/work';
 
-const hrefFor = (slug: string) => `/work/${slug}/`;
-
-// "Available now: Beltr, Beltr Remote and OneScribe." — a sentence, not a stat strip.
-const list = (items: { name: string; slug: string }[]) =>
-  items.map((w, i) => ({
-    ...w,
-    sep: i === items.length - 1 ? '' : i === items.length - 2 ? (items.length > 2 ? ', and ' : ' and ') : ', ',
-  }));
-
-const byGroup = groups.map((g) => ({
+// The work at a glance, set like a book's contents: one column per group.
+const catalogue = groups.map((g) => ({
   ...g,
-  items: list(work.filter((w) => w.group === g.id).map((w) => ({ name: w.name, slug: w.slug }))),
+  items: work.filter((w) => w.group === g.id),
 }));
 ---
 
@@ -21,28 +13,28 @@ const byGroup = groups.map((g) => ({
 
   <div class="wrap opening__inner">
     <h1 id="opening-title" class="statement">
-      CasaVargas makes software you own — apps for the Mac, iPhone, iPad, Apple&nbsp;TV,
-      Windows and Linux, paid for once, if at all, and kept for good.
+      <span class="statement__line">Software,</span>
+      <span class="statement__line">made to be kept.</span>
     </h1>
 
-    <div class="opening__foot">
-      <p class="byline">
-        A one-person studio in North Carolina, run by Jon Vargas.
-      </p>
+    <p class="standfirst">
+      CasaVargas is a one-person studio in North Carolina making apps for the Mac,
+      iPhone, iPad, Apple&nbsp;TV, Windows and Linux. Each app is paid for once, if it
+      costs anything at&nbsp;all.
+    </p>
 
-      <p class="opening__contents">
-        {byGroup.map((g) => (
-          <span class="opening__group">
-            <span class="opening__label">{g.label}:</span>{' '}
+    <nav class="catalogue" aria-label="The work at a glance">
+      {catalogue.map((g) => (
+        <div class="catalogue__group">
+          <p class="catalogue__label ui">{g.label}</p>
+          <ul>
             {g.items.map((w) => (
-              <>
-                <a class="textlink" href={hrefFor(w.slug)}>{w.name}</a>{w.sep}
-              </>
-            ))}.{' '}
-          </span>
-        ))}
-      </p>
-    </div>
+              <li><a href={`/work/${w.slug}/`}>{w.name}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
   </div>
 </section>
 
@@ -52,76 +44,120 @@ const byGroup = groups.map((g) => ({
     isolation: isolate;
     /* Clip sideways only: the lamp must spill up behind the masthead. */
     overflow-x: clip;
-    padding-block: clamp(3rem, 9vw, 8rem) clamp(4rem, 9vw, 7.5rem);
   }
 
-  /* The desk lamp. One warm pool of light above the statement — the only
+  /* The desk lamp: one warm pool of light over the statement, and the only
      atmosphere on the page. */
   .lamp {
     position: absolute;
     z-index: -1;
-    top: -62%;
-    left: -12%;
-    width: min(1100px, 110vw);
-    aspect-ratio: 1.35;
+    top: -48%;
+    left: -14%;
+    width: min(1250px, 115vw);
+    aspect-ratio: 1.3;
     background: radial-gradient(
       closest-side,
-      rgba(239, 159, 39, 0.2),
-      rgba(239, 159, 39, 0.07) 55%,
+      rgba(239, 159, 39, 0.19),
+      rgba(239, 159, 39, 0.065) 55%,
       transparent
     );
     pointer-events: none;
-    animation: lamp-on 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation: lamp-on 2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  /* The first screen is one composition: statement at the top, contents
+     anchored to the bottom, air in between. */
+  .opening__inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2.5vw, 2rem);
+    align-content: start;
+    min-height: min(calc(100svh - 5.5rem), 62rem);
+    padding-block: clamp(3.5rem, 11vh, 8.5rem) clamp(2.5rem, 6vh, 4rem);
   }
 
   .statement {
+    grid-column: 1 / -1;
     margin: 0;
-    max-width: 19.5em;
     font-family: var(--font-serif);
-    font-weight: 300;
-    font-size: clamp(2.25rem, 5.3vw, 5rem);
-    line-height: 1.06;
-    letter-spacing: -0.021em;
+    font-weight: 290;
+    font-size: clamp(3.25rem, 10.2vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: -0.038em;
     color: var(--color-ink);
-    text-wrap: balance;
-    animation: settle 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
+  }
+  .statement__line {
+    display: block;
+    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .statement__line + .statement__line {
+    /* A hanging indent: the second line steps in, the way a set heading would. */
+    padding-left: 0.62em;
+    animation-delay: 0.12s;
   }
 
-  .opening__foot {
+  .standfirst {
+    grid-column: 7 / -1;
+    margin: clamp(2.5rem, 6vh, 4rem) 0 0;
+    max-width: 27em;
+    font-size: clamp(1.15rem, 1.55vw, 1.375rem);
+    line-height: 1.55;
+    color: var(--color-ink-2);
+    text-wrap: pretty;
+    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both;
+  }
+
+  .catalogue {
+    grid-column: 1 / -1;
+    align-self: end;
     display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 2rem 3rem;
-    margin-top: clamp(2.5rem, 5vw, 4rem);
-    padding-top: 1.4rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem clamp(1rem, 2.5vw, 2rem);
+    margin-top: clamp(3.5rem, 9vh, 7rem);
+    padding-top: 1.3rem;
     border-top: 1px solid var(--color-line);
-    animation: settle 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s both;
+    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.45s both;
   }
 
-  .byline {
-    margin: 0;
-    font-size: 1.125rem;
-    color: var(--color-ink-2);
+  .catalogue__label {
+    margin: 0 0 0.7rem;
+    color: var(--color-ink-3);
   }
 
-  .opening__contents {
+  .catalogue ul {
+    list-style: none;
     margin: 0;
-    font-size: 1.125rem;
-    line-height: 1.7;
-    color: var(--color-ink-2);
+    padding: 0;
+    display: grid;
+    gap: 0.3rem;
   }
-  .opening__label { color: var(--color-ink-3); font-style: italic; }
+
+  .catalogue a {
+    font-size: 1.1875rem;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .catalogue a:hover { color: var(--color-amber); }
 
   @keyframes lamp-on {
     from { opacity: 0; transform: scale(0.94); }
     to   { opacity: 1; transform: scale(1); }
   }
   @keyframes settle {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: none; }
   }
 
-  @media (max-width: 760px) {
-    .opening__foot { grid-template-columns: 1fr; gap: 1rem; }
-    .lamp { top: -20%; left: -40%; width: 160vw; }
+  @media (max-width: 860px) {
+    .opening__inner { min-height: 0; }
+    .standfirst { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 560px) {
+    .statement__line + .statement__line { padding-left: 0; }
+    .catalogue { grid-template-columns: 1fr 1fr; }
+    .catalogue__group:first-child { grid-column: 1 / -1; }
+    .lamp { top: -20%; left: -45%; width: 170vw; }
   }
 </style>

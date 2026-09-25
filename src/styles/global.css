@@ -2,7 +2,7 @@
    A warm walnut ground, lit by the brand amber. Every product ships
    a near-black UI, so the ground sits *above* them in value: each
    screenshot reads as a dark screen set into a lit room. See PLAN.md §3. */
-/* Plain custom properties — no framework. */
+/* Plain custom properties, no framework. */
 :root {
   --color-ground: #231c16;
   --color-ground-deep: #1a1511;

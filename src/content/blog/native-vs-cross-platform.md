@@ -5,7 +5,7 @@ date: 2026-04-05
 tags: [engineering, swiftui, tauri, electron, architecture]
 ---
 
-The native vs cross-platform debate usually goes like this: someone picks a side, defends it religiously, and dismisses everyone who disagrees. At [CasaVargas](/), we use both — and the choice depends entirely on the product, not a philosophical position.
+The native vs cross-platform debate usually goes like this: someone picks a side, defends it religiously, and dismisses everyone who disagrees. At [CasaVargas](/), we use both, and the choice depends entirely on the product, not a philosophical position.
 
 ## Our Stack
 
@@ -21,19 +21,19 @@ For Apple platforms, we build with **SwiftUI and Swift 6**. For cross-platform d
 
 **The platforms diverge.** What works on a 65-inch TV operated by a remote is fundamentally different from what works on a phone you hold in your hand. SwiftUI lets us share business logic while building completely different UIs per platform with `NavigationSplitView` on iPad, `TabView` on iPhone, and focus-driven layouts on tvOS.
 
-[OneScribe](/work/onescribe/) is similar — it relies on VisionKit and CoreML for document scanning and OCR. These are Apple frameworks with no cross-platform equivalent. Going native isn't a preference, it's a requirement.
+[OneScribe](/work/onescribe/) is similar. It relies on VisionKit and CoreML for document scanning and OCR. These are Apple frameworks with no cross-platform equivalent. Going native isn't a preference, it's a requirement.
 
 ## When We Go Cross-Platform: Electron & Tauri
 
-[Beltr](/work/beltr/) is our karaoke engine for Mac, Windows, and Linux — built with Electron. [DebridDownloader](/work/debrid-downloader/) is our download manager for the same platforms — built with Tauri, Rust, and React. Two cross-platform apps, two different frameworks, each chosen for a reason.
+[Beltr](/work/beltr/) is our karaoke engine for Mac, Windows, and Linux, built with Electron. [DebridDownloader](/work/debrid-downloader/) is our download manager for the same platforms, built with Tauri, Rust, and React. Two cross-platform apps, two different frameworks, each chosen for a reason.
 
-**The platform doesn't matter as much as the function.** A download manager needs to download files. A karaoke app needs to play audio and separate vocals. These operations aren't tied to any OS's unique capabilities — they work the same on Mac, Windows, and Linux.
+**The platform doesn't matter as much as the function.** A download manager needs to download files. A karaoke app needs to play audio and separate vocals. These operations aren't tied to any OS's unique capabilities. They work the same on Mac, Windows, and Linux.
 
-**Electron for Beltr.** Beltr's AI vocal separation pipeline and real-time audio mixing benefit from Electron's mature ecosystem for media handling. The Chromium runtime provides robust audio APIs and a rich UI layer for the karaoke experience — lyrics display, visualizations, and the queue system all benefit from the web platform's strengths.
+**Electron for Beltr.** Beltr's AI vocal separation pipeline and real-time audio mixing benefit from Electron's mature ecosystem for media handling. The Chromium runtime provides robust audio APIs and a rich UI layer for the karaoke experience. Lyrics display, visualizations, and the queue system all benefit from the web platform's strengths.
 
 **Tauri for DebridDownloader.** A download manager doesn't need a full browser runtime. Tauri uses the OS's native webview for the UI and pure Rust for the backend. The result is a tiny binary, low memory usage, and maximum download throughput. For a utility that sits in the background moving files, Tauri's lightweight footprint is the right call.
 
-**Three platforms, one codebase.** Writing DebridDownloader three times — once in SwiftUI, once in WPF, once in GTK — would be insane for a solo developer. Cross-platform frameworks let us ship on all three platforms with a single codebase.
+**Three platforms, one codebase.** Writing DebridDownloader three times, once in SwiftUI, once in WPF and once in GTK, would be insane for a solo developer. Cross-platform frameworks let us ship on all three platforms with a single codebase.
 
 ## The Decision Framework
 
@@ -53,6 +53,6 @@ Here's the mental model we use:
 
 ## The Wrong Answer
 
-The wrong answer is picking one approach for everything. Building an Apple TV app in Tauri would be absurd — you'd fight the platform the entire time. Building a download manager three times in three native frameworks would be a waste of months.
+The wrong answer is picking one approach for everything. Building an Apple TV app in Tauri would be absurd. You'd fight the platform the entire time. Building a download manager three times in three native frameworks would be a waste of months.
 
 The right tool for each job. That's it. No ideology required.

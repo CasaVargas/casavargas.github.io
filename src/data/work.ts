@@ -16,7 +16,7 @@ import debridTorrents from '../assets/debrid/torrents.jpg';
 /**
  * Every claim in this file must match the product's own public site or store
  * listing; repos are a source for engineering detail only. This site has
- * shipped stale claims twice — see PLAN.md §8 before editing a fact.
+ * shipped stale claims twice; see PLAN.md §8 before editing a fact.
  */
 
 export interface WorkLink {
@@ -54,7 +54,7 @@ export interface Work {
   group: Group;
   runsOn: string[];
   builtWith: string[];
-  /** Omitted for work in development — no prices promised. */
+  /** Omitted for work in development: no prices promised. */
   price?: string;
   links: WorkLink[];
   icon?: ImageMetadata;

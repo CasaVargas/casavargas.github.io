@@ -6,17 +6,17 @@ import InstallOrder from '../../components/figures/InstallOrder.astro';
 // 2026-09-24. "AppPulse" is a working title. Never: competitor names, "open
 // source" (the repo is private), "sandboxed", "notarized", "updates all your
 // apps", "no network calls" (say "no telemetry"), or the unmerged wrong-
-// developer UI as shipped. No screenshots — the existing ones show a real
+// developer UI as shipped. No screenshots: the existing ones show a real
 // personal app library.
 ---
 
 <CaseStudy
   slug="apppulse"
   note="AppPulse is a working title."
-  title="AppPulse — a Mac app updater that checks who made the update · CasaVargas"
+  title="AppPulse, a Mac app updater that checks who made the update | CasaVargas"
   description="How AppPulse is being built: an updater that treats a valid signature as necessary but not sufficient, pins each app's developer Team ID, and installs through an atomic swap with rollback. A case study from CasaVargas."
   intro="AppPulse finds the third-party apps on your Mac, checks for newer versions, and installs them after a chain of checks. The last check confirms the download was signed by the same developer as the app you already have. Every step is logged. There’s no telemetry, no account and no sudo."
-  problem="A valid code signature only tells you that some registered developer signed a file. It doesn’t tell you that the same developer made the app you’re about to replace. An updater that trusts its metadata and then checks only the signature can be pointed at the wrong app — and many apps have no reliable update channel at all. AppPulse is built around being honest about both problems."
+  problem="A valid code signature only tells you that some registered developer signed a file. It doesn’t tell you that the same developer made the app you’re about to replace. An updater that trusts its metadata and then checks only the signature can be pointed at the wrong app. And many apps have no reliable update channel at all. AppPulse is built around being honest about both problems."
   features={[
     { title: 'Updates from two sources', body: 'It reads Homebrew’s cask data as plain data, without running brew to check, and Sparkle update feeds verified with EdDSA.' },
     { title: 'Installs with rollback', body: 'The old app is cloned before the new one is swapped in, and any failure swaps it back.' },
@@ -25,7 +25,7 @@ import InstallOrder from '../../components/figures/InstallOrder.astro';
     { title: 'Control per app', body: 'Skip, snooze, ignore or pin to a major version. Checks run on a schedule while it’s open, and silent installs are opt-in behind a five-part gate.' },
   ]}
   engineering={[
-    { title: 'A valid signature is not proof of identity', body: 'The first time AppPulse sees an app, it records the installed copy’s Team ID and treats it as the pin. From then on, a different Team ID is a hard stop, whatever the metadata says — a check that still holds if every upstream source is wrong.' },
+    { title: 'A valid signature is not proof of identity', body: 'The first time AppPulse sees an app, it records the installed copy’s Team ID and treats it as the pin. From then on, a different Team ID is a hard stop, whatever the metadata says. The check still holds if every upstream source is wrong.' },
     { title: 'Authenticated sources first', body: 'Sparkle with EdDSA comes first, then Homebrew’s cask data, then Sparkle without a signature. The EdDSA key already sits inside the installed app, so a network attacker can’t swap it. Cask data can’t be the integrity anchor, because some casks skip the checksum entirely.' },
     { title: 'What it refuses to do', body: 'It never runs .pkg installers, whose scripts run as root. It never uses sudo, never replaces a running app, and never launches an app to see whether an update worked. A disk image that needs a license agreement becomes a download-only update.' },
     { title: 'Boundaries a script enforces', body: 'The core library can’t import AppKit or touch the file system, network or processes outside its adapter layer, and a CI script fails the build if it tries. Every process call passes an argument array, never a shell string. The Hardened Runtime is on, with no entitlements.' },

@@ -1,13 +1,13 @@
 # CasaVargas
 
-> CasaVargas LLC is a one-person software studio in North Carolina, run by Jon Vargas. It makes apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux, sold as one-time purchases or free — no subscriptions.
+> CasaVargas LLC is a one-person software studio in North Carolina, run by Jon Vargas. It makes apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux, sold as one-time purchases or free, with no subscriptions.
 
 Each product below has a case study on this site (why it exists, what it does, how it's built) and, where it has shipped, its own product site or store listing. The product's own site is the source of truth for prices and features.
 
 ## Available now
 
 - [Beltr](https://casavargas.app/work/beltr/): Karaoke from the music you already own. Separates vocals on your own computer, times lyrics word by word, and turns phones into mics. macOS, Windows, Linux and Docker. $19.99 once, five songs free. Product site: https://beltr.app
-- [Beltr Remote and Beltr Client](https://casavargas.app/work/beltr/): Free companion apps — Remote for iPhone and Android, Client for Apple TV and Android TV.
+- [Beltr Remote and Beltr Client](https://casavargas.app/work/beltr/): Free companion apps: Remote for iPhone and Android, Client for Apple TV and Android TV.
 - [OneScribe](https://casavargas.app/work/onescribe/): A document scanner for iPhone and iPad that reads what it scans into 83 kinds of structured Data Cards, with the AI running on the device. Free to scan; Pro is $9.99 once. Product site: https://getonescribe.app
 
 ## Open source
