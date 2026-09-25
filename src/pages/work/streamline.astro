@@ -1,14 +1,18 @@
 ---
 import CaseStudy from '../../layouts/CaseStudy.astro';
+import Composition from '../../components/ui/Composition.astro';
 import StreamlineIdioms from '../../components/figures/StreamlineIdioms.astro';
+import { bySlug } from '../../data/work';
+
+const item = bySlug('streamline');
 
 // Facts checked 2026-09-24 against getstreamline.tv and the repo (dev branch).
 // Streamline is presented strictly as a player for the user's own M3U / Xtream
 // playlists and XMLTV guides. Never: Stremio, add-ons, debrid, torrents, VLCKit,
 // the companion server, DVR, multi-view, measured switch times, a price or a
-// date more specific than 2026. No screenshots until a demo playlist of
-// openly licensed streams is captured; the old ones were full of network
-// logos and copyrighted artwork. See PLAN.md §8.
+// date more specific than 2026. Screenshots come only from the fictional
+// demo lineup (captured 2026-09-24); the old ones were full of network logos
+// and copyrighted artwork. See PLAN.md §8.
 ---
 
 <CaseStudy
@@ -33,5 +37,6 @@ import StreamlineIdioms from '../../components/figures/StreamlineIdioms.astro';
   ]}
   closing="Streamline is in development and due in 2026, as a single purchase with no subscription."
 >
+  <Composition slot="lead" plate={item.plate!} eager />
   <StreamlineIdioms slot="figure" />
 </CaseStudy>

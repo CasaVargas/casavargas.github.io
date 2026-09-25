@@ -27,9 +27,17 @@ const { plate, eager = false, class: className } = Astro.props;
     <Shot shot={plate.shots[0]} width={1100} sizes="(max-width: 900px) 100vw, 60vw" eager={eager} />
   )}
 </div>
+{plate.credit && <p class="comp__credit">{plate.credit}</p>}
 
 <style>
   .comp { position: relative; }
+  .comp__credit {
+    margin: 1.4rem 0 0;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    color: var(--color-ink-3);
+    text-align: center;
+  }
 
   /* feature: a large display, a phone standing in front of its corner. */
   .comp--feature { padding-right: 9%; padding-bottom: 5%; }
