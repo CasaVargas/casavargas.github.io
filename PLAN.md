@@ -1,6 +1,6 @@
 # casavargas.app — Editorial Catalogue Redesign
 
-**Status:** built and verified on `redesign/editorial-catalogue`; not yet merged (merging to `main` deploys).
+**Status:** shipped 2026-09-24. PR #1 (merged as `72c8195`) delivered the redesign; PR #2 (`857036f`) revised the opening and removed every em dash.
 **Date:** 2026-09-24
 **Branch:** `redesign/editorial-catalogue`
 **Supersedes:** the 2026-08-29 product-forward spec (see git history of this file, `c273085`).
@@ -126,13 +126,22 @@ dark-on-dark problem in the ground itself, instead of mechanically on every imag
 ```
 CasaVargas (mark + wordmark)                   Work  Notes  Studio  Contact
 
-  CasaVargas makes software you own: native apps for the Mac,
-  iPhone, iPad, Apple TV and the desktop, sold once and kept
-  for good.                                   ← Newsreader 72, light, ~15 words/line
-  A one-person studio in North Carolina, run by Jon Vargas.
+  Software,
+      made to be kept.                        ← Newsreader ~10rem, weight 290, hanging indent
 
-  Available now: Beltr, Beltr Remote, OneScribe.  In the workshop: Streamline, Nimbus, AppPulse.
-                                              ← inline linked sentence, not a stat strip
+                           CasaVargas is a one-person studio in North Carolina
+                           making apps for the Mac, iPhone, iPad, Apple TV,
+                           Windows and Linux. Each app is paid for once, if it
+                           costs anything at all.      ← standfirst, right half
+  ─────────────────────────────────────────────────────────────────────────────
+  Available now        Open source           In the workshop
+  Beltr                DebridDownloader      Streamline
+  Beltr Remote                               Nimbus
+  Beltr Client                               AppPulse
+  OneScribe                                  ← contents row, bottom of the first screen
+
+  (Revised in PR #2. The first version set one 27-word sentence at display size;
+  the owner rejected it as not premium. See §10.)
 
 ─ Selected work ───────────────────────────────────────────────────────────────
   [plate: large screen composition, full content width]
@@ -278,6 +287,15 @@ Where the build departed from §5–§9, and why:
   tokens are plain custom properties.
 - **LCP fonts preloaded.** Homepage Lighthouse performance went from 76 to 94
   once Newsreader and Hanken were preloaded.
+- **Opening revised after launch (PR #2).**
+  - The owner rejected the first opening, one long sentence set at display size.
+  - It was replaced with a short statement ("Software, made to be kept.") set
+    very large, a standfirst, and a contents row.
+  - Premium, on this site, means fewer words, bigger and quieter type, and more air.
+- **No em dashes anywhere (PR #2).** The owner reads them as cheap. Every one
+  was rewritten by hand: site copy, case studies, titles, OG cards,
+  `llms.txt` and the four notes. Titles use ` | CasaVargas`. Keep it that way:
+  `grep -rn "—" src public dist` must come back empty.
 - **Blog content was left as written.** Only internal links were repointed to
   `/work/`. Two posts still carry claims worth revisiting:
   - The Streamline post: "tvOS and macOS first", "the IPTV player Apple would
@@ -308,6 +326,11 @@ Where the build departed from §5–§9, and why:
 - [x] Largest image on the wire is 70 KB. The oversized originals Astro emits
       are not referenced by any page.
 - [x] Every screenshot on the site was opened and read.
+- [x] Live, after both deploys:
+  - The three old app URLs meta-refresh to `/work/…/`.
+  - `/work/` and all six case studies serve.
+  - Unknown paths get the styled 404.
+  - No em dashes on any live page.
 - [x] 768 and 1024 px: no document overflow on the same 10 routes, and a
       visual pass on the homepage plates.
 
@@ -340,4 +363,4 @@ Where the build departed from §5–§9, and why:
 ### Phase 5 — Verify and ship
 - [x] §11 checklist
 - [x] `AGENTS.md` updated for the new architecture
-- [ ] PR to `main`; the owner merges (merging deploys)
+- [x] PR to `main` and merge (#1, then #2 for the revised opening)
