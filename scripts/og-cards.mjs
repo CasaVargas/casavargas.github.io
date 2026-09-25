@@ -26,7 +26,7 @@ const cards = [
   },
   { file: 'beltr', title: 'Beltr', sub: 'Karaoke from the music you already own.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/beltr.png', big: true },
   { file: 'onescribe', title: 'OneScribe', sub: 'A document scanner that reads what it scans.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/onescribe.png', big: true },
-  { file: 'debrid-downloader', title: 'DebridDownloader', sub: 'An open-source desktop client for debrid services.', kicker: 'A CasaVargas case study', big: true },
+  { file: 'debrid-downloader', title: 'DebridDownloader', sub: 'An open-source desktop client for debrid services.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/debrid.png', big: true },
   { file: 'streamline', title: 'Streamline', sub: 'A native IPTV player for every Apple screen.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/streamline.png', big: true },
   { file: 'nimbus', title: 'Nimbus', sub: 'Every cloud you use, in Finder.', kicker: 'A CasaVargas case study', big: true },
   { file: 'apppulse', title: 'AppPulse', sub: 'A Mac app updater that checks who made the update.', kicker: 'A CasaVargas case study', big: true },

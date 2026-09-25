@@ -3,6 +3,7 @@ import type { ImageMetadata } from 'astro';
 import beltrIcon from '../assets/icons/beltr.png';
 import streamlineIcon from '../assets/icons/streamline.png';
 import onescribeIcon from '../assets/icons/onescribe.png';
+import debridIcon from '../assets/icons/debrid.png';
 
 import beltrTv from '../assets/beltr/tv-scoring.jpg';
 import beltrJoin from '../assets/beltr/phone-join.jpg';
@@ -163,6 +164,7 @@ export const work: Work[] = [
       { label: 'Source on GitHub', url: 'https://github.com/CasaVargas/DebridDownloader' },
       { label: 'Download the latest release', url: 'https://github.com/CasaVargas/DebridDownloader/releases/latest' },
     ],
+    icon: debridIcon,
     plate: {
       layout: 'compact',
       shots: [
