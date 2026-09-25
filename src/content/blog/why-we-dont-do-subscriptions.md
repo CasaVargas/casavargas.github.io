@@ -9,6 +9,8 @@ Every week another app switches to subscriptions. A weather app wants $5/month. 
 
 At [CasaVargas](/), every app is either a one-time purchase or free. No subscriptions, no recurring charges, no "premium" tiers that gate features you already paid for. Here's why.
 
+*A correction, September 2026: when this post went up, OneScribe was still selling a $0.99/month plan alongside its one-time unlock. We dropped the monthly plan on May 19, 2026. OneScribe now sells only a one-time $9.99 Pro upgrade, and existing subscribers are still supported.*
+
 ## The Problem With Subscriptions
 
 Subscriptions made sense for services that have ongoing costs: streaming music, cloud storage, server-side computation. Your Spotify subscription pays for bandwidth, licensing deals, and infrastructure that costs money every month you use it.

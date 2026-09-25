@@ -48,6 +48,4 @@ Like every CasaVargas app, Streamline will be a one-time purchase. No monthly fe
 
 ## Timeline
 
-Streamline is in active development. We're shipping the tvOS and macOS versions first, with iOS, iPadOS, and visionOS following shortly after. Visit [getstreamline.tv](https://getstreamline.tv) for updates, or check back on the [Streamline page](/work/streamline/) here.
-
-We're building the IPTV player Apple would build, if Apple made IPTV players.
+Streamline is in active development and due in 2026, on iPhone, iPad, Mac, Apple TV and Vision Pro. Visit [getstreamline.tv](https://getstreamline.tv) for updates, or read the [case study](/work/streamline/) for how it's being built.

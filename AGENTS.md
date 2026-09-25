@@ -105,9 +105,10 @@ is invisible to grep, diffing and CI. Rejected so far, and why:
   artwork, which reads as redistributed channels. No Streamline screenshots
   until a demo playlist of openly licensed streams is captured.
 - AppPulse: the existing shots show a real personal app library.
-- DebridDownloader: its only icon is the stock Tauri logo — don't present it as
-  the product's mark. The screenshots here are the real UI rendered with mocked
-  IPC and neutral data (Linux installers), captured with headless Chrome.
+- DebridDownloader: the screenshots here are the real UI rendered with mocked
+  IPC and neutral data (Linux installers), captured with headless Chrome. Its
+  icon is the emerald chevron mark from the DebridDownloader repo
+  (`assets/brand/`, 2026-09), not the stock Tauri logo it used to ship.
 
 ## SEO
 
