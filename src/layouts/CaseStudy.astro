@@ -45,7 +45,7 @@ const {
   note,
   closing,
   schema,
-  ogImage,
+  ogImage = `/og/${slug}.png`,
 } = Astro.props;
 
 const item = bySlug(slug);
@@ -240,9 +240,17 @@ const facts: [string, string][] = [
     gap: 1.5rem clamp(2rem, 5vw, 4.5rem);
   }
 
+  /* Rules span the content column, not the gutters (these sit on .wrap). */
+  .cs-overview,
+  .cs-section {
+    background-image: linear-gradient(var(--color-line), var(--color-line));
+    background-size: calc(100% - 2 * var(--gutter)) 1px;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+
   .cs-overview {
     padding-block: clamp(2.5rem, 6vw, 4.5rem);
-    border-top: 1px solid var(--color-line);
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   }
   .cs-intro {
@@ -263,7 +271,6 @@ const facts: [string, string][] = [
 
   .cs-section {
     padding-block: clamp(2.5rem, 6vw, 4.5rem);
-    border-top: 1px solid var(--color-line);
   }
 
   .cs-h2 {

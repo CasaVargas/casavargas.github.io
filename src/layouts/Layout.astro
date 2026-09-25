@@ -2,6 +2,9 @@
 import '@fontsource-variable/newsreader/opsz.css';
 import '@fontsource-variable/newsreader/opsz-italic.css';
 import '@fontsource-variable/hanken-grotesk';
+// Preloaded: the opening statement is the LCP element and waits on these two.
+import serifLatin from '@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2?url';
+import sansLatin from '@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2?url';
 
 interface Props {
   title?: string;
@@ -46,6 +49,9 @@ const absoluteOgImage = new URL(ogImage, Astro.site).href;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteOgImage} />
+
+    <link rel="preload" href={serifLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={sansLatin} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" type="image/svg+xml" href="/casavargas-logo-orange.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />

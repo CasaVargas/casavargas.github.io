@@ -5,7 +5,7 @@ date: 2026-04-09
 tags: [beltr, ai, cross-platform, engineering]
 ---
 
-Every karaoke app has the same problem: you need karaoke versions of songs. Instrumental tracks, CDG files, or a streaming catalog that's always missing the one song you want to sing. We built [Beltr](/beltr) to kill that problem entirely.
+Every karaoke app has the same problem: you need karaoke versions of songs. Instrumental tracks, CDG files, or a streaming catalog that's always missing the one song you want to sing. We built [Beltr](/work/beltr/) to kill that problem entirely.
 
 ## The Core Idea
 

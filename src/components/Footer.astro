@@ -91,7 +91,8 @@ const year = new Date().getFullYear();
     gap: 0.5rem 2rem;
     margin-top: clamp(3rem, 6vw, 4.5rem);
     padding-block: 1.6rem 2rem;
-    border-top: 1px solid var(--color-line);
+    /* Rule spans the content column, not the gutters (this sits on .wrap). */
+    background: linear-gradient(var(--color-line), var(--color-line)) center top / calc(100% - 2 * var(--gutter)) 1px no-repeat;
     color: var(--color-ink-3);
   }
   .colophon__base p { margin: 0; }

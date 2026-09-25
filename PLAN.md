@@ -1,6 +1,6 @@
 # casavargas.app — Editorial Catalogue Redesign
 
-**Status:** in progress
+**Status:** built and verified on `redesign/editorial-catalogue`; not yet merged (merging to `main` deploys).
 **Date:** 2026-09-24
 **Branch:** `redesign/editorial-catalogue`
 **Supersedes:** the 2026-08-29 product-forward spec (see git history of this file, `c273085`).
@@ -248,46 +248,96 @@ layout.
 - `public/` holds only files that need stable URLs: favicons, logo, OG cards.
 - New OG card: `public/og/casavargas.png` (1200×630), typeset in the site's own system.
 
-## 10. Verification
+## 10. Changes made during the build
 
-Everything is measured against `npm run build && npm run preview`, never the dev server.
+Where the build departed from §5–§9, and why:
 
-- [ ] `npm run build` clean; `astro check` clean if available
-- [ ] 1440, 1024, 768 and 390 px: no horizontal overflow (`scrollWidth === clientWidth`
-      measured, not hidden)
-- [ ] Every internal link resolves, including redirects
-- [ ] Lighthouse accessibility 100; visible keyboard focus everywhere
-- [ ] `prefers-reduced-motion` disables the load moment
-- [ ] JSON-LD valid on home and every case study; canonical and OG on every page
-- [ ] Every screenshot on the site opened and read for burned-in claims
+- **Streamline lost its homepage plate.** Every existing Streamline screenshot
+  is dominated by network logos and copyrighted artwork. On an IPTV player that
+  reads as redistributed channels, which contradicts "your own playlists".
+  Streamline, Nimbus and AppPulse share an **"In the workshop" band** instead:
+  words plus one engineering fact each, no pictures.
+- **Diagrams instead of screenshots** for the three products in development:
+  - Streamline: the four platform idioms, from its `docs/platforms.md`.
+  - Nimbus: the app → RcloneKit → local rclone architecture.
+  - AppPulse: its eight-step install order.
 
-## 11. Phases
+  Numbering is used only on the install order, because that is a real sequence.
+- **Beltr imagery replaced.**
+  - Out: the old `library`/`processing` shots, which showed a LAN join URL, and
+    "about 5 min left", which contradicts "a minute or two".
+  - In: the TV lyric stage (`tv-scoring`) with the phone join screen.
+- **OneScribe imagery replaced.** The old shots showed real brands. The new
+  ones are fictional-data captures: a Pacifica Air boarding pass, the briefing,
+  and a Silverbrook Cellars label.
+- **DebridDownloader imagery re-captured.** The real React UI was rendered with
+  `@tauri-apps/api/mocks` and neutral data (Linux installers), and shot at 2×
+  with headless Chrome. Its stock-Tauri "icon" was dropped.
+- **Tailwind removed.** A Tailwind utility (`.contents` → `display: contents`)
+  collided with a component class, and nothing used Tailwind anymore. The
+  tokens are plain custom properties.
+- **LCP fonts preloaded.** Homepage Lighthouse performance went from 76 to 94
+  once Newsreader and Hanken were preloaded.
+- **Blog content was left as written.** Only internal links were repointed to
+  `/work/`. Two posts still carry claims worth revisiting:
+  - The Streamline post: "tvOS and macOS first", "the IPTV player Apple would
+    build".
+  - "Why we don't do subscriptions": OneScribe did offer a monthly plan in
+    March 2026.
 
-### Phase 1 — Foundation (in progress)
-- [ ] Fonts: add Newsreader and Hanken Grotesk variable; remove Instrument Serif, DM Sans and JetBrains Mono
-- [ ] Rewrite `global.css` tokens and base typography (§3)
-- [ ] `src/data/work.ts` (§7) with verified facts
-- [ ] Nav + footer (colophon) rebuilt; mobile nav keeps its links
+## 11. Verification (results, 2026-09-24, against `astro preview`)
+
+- [x] `npm run build` clean: 17 HTML files, including the three redirect stubs.
+- [x] 390 px: `scrollWidth === clientWidth` on all 10 routes checked. The only
+      elements wider than the viewport are intended:
+      - The lamp is clipped by `overflow-x: clip`.
+      - The Streamline table scrolls inside its own container.
+- [x] 1440 px visual pass on the homepage, all six case studies, the blog index
+      and a post.
+- [x] Every internal `href`/`src` in `dist/` resolves (scripted check).
+- [x] All 22 JSON-LD blocks parse.
+- [x] Lighthouse (mobile, simulated throttling):
+
+      | Page | Perf | A11y | Best practices | SEO |
+      |---|---|---|---|---|
+      | `/` | 94 | 100 | 100 | 100 |
+      | `/work/beltr/` | 98 | 100 | 100 | 100 |
+      | `/work/apppulse/` | 92 | 100 | 100 | 100 |
+      | A blog post | 96 | 100 | 100 | 100 |
+
+- [x] Largest image on the wire is 70 KB. The oversized originals Astro emits
+      are not referenced by any page.
+- [x] Every screenshot on the site was opened and read.
+- [x] 768 and 1024 px: no document overflow on the same 10 routes, and a
+      visual pass on the homepage plates.
+
+## 12. Phases
+
+### Phase 1 — Foundation
+- [x] Fonts: add Newsreader and Hanken Grotesk variable; remove Instrument Serif, DM Sans and JetBrains Mono
+- [x] Rewrite `global.css` tokens and base typography (§3)
+- [x] `src/data/work.ts` (§7) with verified facts
+- [x] Nav and footer (colophon) rebuilt; mobile nav keeps its links
 
 ### Phase 2 — Homepage
-- [ ] Opening statement + lamp glow + load moment
-- [ ] Plates (`Plate.astro`), reusing the refined `Frame` / `Phone` wells
-- [ ] Index (`WorkIndex.astro`)
-- [ ] How the studio works, Studio, Notes sections
-- [ ] Visual review at 1440 and 390; critique pass
+- [x] Opening statement, lamp glow and load moment
+- [x] Plates (`Plate.astro` + `Composition.astro`)
+- [x] Index (`WorkIndex.astro`)
+- [x] Workshop band, How the studio works, Studio, Notes
+- [x] Visual review at 1440 and 390; critique pass
 
 ### Phase 3 — Case studies
-- [ ] `CaseStudy.astro` layout
-- [ ] Six case studies with researched, fact-checked content
-- [ ] `/work/` index page; redirects; delete `beltr.astro`
-- [ ] JSON-LD per page
+- [x] `CaseStudy.astro` layout
+- [x] Six case studies with researched, fact-checked content
+- [x] `/work/` index page; redirects; `beltr.astro` deleted
+- [x] JSON-LD per page
 
 ### Phase 4 — Notes, 404, SEO
-- [ ] Blog index + post template restyled
-- [ ] 404 page
-- [ ] OG card, `llms.txt`, sitemap sanity check
+- [x] Blog index and post template restyled
+- [x] 404 page
+- [x] OG cards (`scripts/og-cards.mjs`), `llms.txt`, sitemap filters redirect stubs
 
 ### Phase 5 — Verify and ship
-- [ ] §10 checklist
-- [ ] Update `AGENTS.md` for the new architecture
+- [x] §11 checklist
+- [x] `AGENTS.md` updated for the new architecture
 - [ ] PR to `main`; the owner merges (merging deploys)

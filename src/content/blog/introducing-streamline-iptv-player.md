@@ -7,7 +7,7 @@ tags: [streamline, tvos, apple-tv, product-launch]
 
 If you've ever tried to watch IPTV on an Apple TV, you know the pain. The existing apps are either web views wrapped in a native shell, ports from Android with touch-based interfaces crammed onto a remote-driven platform, or abandoned projects that haven't been updated in years.
 
-We're building [Streamline](/streamline) to fix this.
+We're building [Streamline](/work/streamline/) to fix this.
 
 ## What's Wrong With Current IPTV Apps
 
@@ -48,6 +48,6 @@ Like every CasaVargas app, Streamline will be a one-time purchase. No monthly fe
 
 ## Timeline
 
-Streamline is in active development. We're shipping the tvOS and macOS versions first, with iOS, iPadOS, and visionOS following shortly after. Visit [getstreamline.tv](https://getstreamline.tv) for updates, or check back on the [Streamline page](/streamline) here.
+Streamline is in active development. We're shipping the tvOS and macOS versions first, with iOS, iPadOS, and visionOS following shortly after. Visit [getstreamline.tv](https://getstreamline.tv) for updates, or check back on the [Streamline page](/work/streamline/) here.
 
 We're building the IPTV player Apple would build — if Apple made IPTV players.

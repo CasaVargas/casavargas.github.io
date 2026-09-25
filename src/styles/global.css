@@ -1,10 +1,9 @@
-@import 'tailwindcss';
-
 /* ── The house at night ────────────────────────────────────────
    A warm walnut ground, lit by the brand amber. Every product ships
    a near-black UI, so the ground sits *above* them in value: each
    screenshot reads as a dark screen set into a lit room. See PLAN.md §3. */
-@theme {
+/* Plain custom properties — no framework. */
+:root {
   --color-ground: #231c16;
   --color-ground-deep: #1a1511;
   --color-surface: #2c231c;
@@ -25,19 +24,6 @@
   --font-serif: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
   --font-sans: 'Hanken Grotesk Variable', system-ui, sans-serif;
 
-  /* Legacy aliases — still referenced by the blog templates until they are
-     restyled (PLAN.md phase 4). Remove with them. */
-  --color-bg: var(--color-ground);
-  --color-bg-alt: var(--color-ground-deep);
-  --color-bg-card: var(--color-surface);
-  --color-border: var(--color-line);
-  --color-border-soft: var(--color-line);
-  --color-text-primary: var(--color-ink);
-  --color-text-secondary: var(--color-ink-2);
-  --color-text-tertiary: var(--color-ink-3);
-  --color-accent: var(--color-amber);
-  --font-display: var(--font-serif);
-  --font-body: var(--font-serif);
 }
 
 :root {
@@ -52,6 +38,17 @@
   --page-max: 82rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
   --measure: 36rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg {
+  max-width: 100%;
 }
 
 html {
