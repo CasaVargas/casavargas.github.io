@@ -27,7 +27,7 @@ const schema = {
 
 <CaseStudy
   slug="debrid-downloader"
-  title="DebridDownloader — an open-source desktop client for debrid services · CasaVargas"
+  title="DebridDownloader, an open-source desktop client for debrid services | CasaVargas"
   description="How DebridDownloader moves Real-Debrid, TorBox and Premiumize from a browser tab to a native desktop app, built with Tauri, Rust and React. A case study from CasaVargas."
   intro="DebridDownloader is a free, open-source desktop app for people who pay for Real-Debrid, TorBox or Premiumize. It replaces the browser tab: you add a link or a file, the service fetches it, and you download, stream or file the results without leaving the app. It runs on macOS, Windows and Linux."
   problem="Debrid services are run from a web dashboard. You add a link, wait, then click through file links one at a time and let the browser save each one. There is no queue to control, nothing files finished downloads where a media server expects them, and API tokens tend to end up pasted into scripts and extensions. DebridDownloader moves that workflow into a native app and keeps the credentials in the operating system’s keychain."
@@ -37,13 +37,13 @@ const schema = {
     { title: 'Stream before you download', body: 'Preview a video straight from your provider in a floating mini-player, without saving it first.' },
     { title: 'Files land where your library looks', body: 'Sort downloads into movie and TV folders using TMDB, trigger a library scan in Plex, Jellyfin or Emby, or send files to an rclone remote.' },
     { title: 'Handles links from the system', body: 'Set it as the default handler and new links add themselves. It stays in the tray and can start at login.' },
-    { title: 'Keyboard first, secrets in the keychain', body: 'Command-K to search, arrow keys to move, Return to download. Tokens live in Keychain, Credential Manager or Secret Service — never in a settings file.' },
+    { title: 'Keyboard first, secrets in the keychain', body: 'Command-K to search, arrow keys to move, Return to download. Tokens live in Keychain, Credential Manager or Secret Service, never in a settings file.' },
   ]}
   engineering={[
     { title: 'One trait, three services', body: 'A Rust async trait defines about a dozen operations, and each provider’s client translates its own API into shared types. The active provider can be swapped at runtime; commands clone it and release the lock before awaiting, so a slow network call never blocks a switch.' },
     { title: 'Progress is pushed, not polled', body: 'A Tokio semaphore caps how many downloads run at once. Each one streams to disk with its own cancellation handle, and progress reaches the React front end as events, at most every 100 ms. One speed limiter covers both local and rclone destinations.' },
     { title: 'A local streaming proxy', body: 'An Axum server on a random localhost port serves one URL per preview session and forwards range requests, so the player can seek inside a remote file.' },
-    { title: 'Untrusted input goes through one door', body: 'Links arrive three ways — the system deep link, a hand-off from a second instance, and command-line arguments on a cold start. All three pass the same validator before anything reaches a provider.' },
+    { title: 'Untrusted input goes through one door', body: 'Links arrive three ways: the system deep link, a hand-off from a second instance, and command-line arguments on a cold start. All three pass the same validator before anything reaches a provider.' },
     { title: 'Five targets from one workflow', body: 'A GitHub Actions matrix builds macOS on Apple Silicon, Windows on x64 and ARM64, and Linux on x64 and ARM64, with signed and notarized macOS builds and signed update bundles. Because Tauri uses the system web view, the installers stay under 9 MB.' },
   ]}
   record={[

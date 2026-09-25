@@ -37,7 +37,7 @@ const schema = [
 
 <CaseStudy
   slug="beltr"
-  title="Beltr — karaoke from the music you own · CasaVargas"
+  title="Beltr, karaoke from the music you own | CasaVargas"
   description="How Beltr turns your own music library into living-room karaoke: on-device vocal separation, word-timed lyrics, and phones as mics. A case study from CasaVargas."
   intro="Beltr is living-room karaoke built on your own music library. It removes the vocals from songs you already own, times the lyrics to them word by word, and puts them on the TV while guests join from their phones. All of the processing runs on your own computer or home server."
   problem="Home karaoke has mostly become a subscription: a licensed catalog rented by the year, limited to whatever it carries this month. The alternative, lyric videos, is hit and miss. Meanwhile the music people already own sits in a folder, and the karaoke discs they bought years ago need a machine to play. Beltr starts from the other end. Your library is the catalog and your own hardware does the work, so there is nothing to rent."
@@ -50,11 +50,11 @@ const schema = [
     { title: 'Runs on a home server too', body: 'The same engine ships as a Docker image for Unraid and other home servers, in CPU, NVIDIA and Intel GPU builds.' },
   ]}
   engineering={[
-    { title: 'One inference runtime, and no PyTorch', body: 'Every model — separation, alignment, fallback transcription and pitch — runs on ONNX Runtime, which took two to three gigabytes out of each installer. Rather than switch aligners, the existing wav2vec2 model was exported to ONNX and its Viterbi pass rewritten in NumPy, so word timing stayed compatible with a version already measured at a 0 ms median start offset across 3,085 words.' },
+    { title: 'One inference runtime, and no PyTorch', body: 'Separation, alignment, fallback transcription and pitch all run on ONNX Runtime. Dropping PyTorch took two to three gigabytes out of each installer. Rather than switch aligners, the existing wav2vec2 model was exported to ONNX and its Viterbi pass rewritten in NumPy, so word timing stayed compatible with a version already measured at a 0 ms median start offset across 3,085 words.' },
     { title: 'One protocol for six clients', body: 'The TV page, the web remote and four native apps all speak the same WebSocket room protocol, and the JSON the server emits is the contract. Scoring is ported to Swift and Kotlin and checked against golden vectors produced by running the real JavaScript scoring under Node, so a score means the same thing on every screen.' },
     { title: 'Built for the machine you have', body: 'Separation runs one song at a time so memory stays bounded, and a song is handed over as soon as it can be sung while the rest finishes in the background. A home-server install can send separation to a faster Mac or PC on the network and falls back to its own CPU when that machine is off.' },
     { title: 'Old formats through the same pipeline', body: 'MIDI, .kar and NCN files are rendered at import into the same vocal-and-instrumental layout as separated songs, so the TV, the mixer and scoring need no special cases. Legacy text encodings such as TIS-620, Shift-JIS and Big5 are detected on import.' },
-    { title: 'One tag builds every platform', body: 'Pushing a version tag builds signed and notarized macOS builds, Windows builds including a Microsoft Store package, Linux packages, multi-architecture container images and a Homebrew cask update. A final step checks every image tag and architecture — added after one release shipped without its GPU pack.' },
+    { title: 'One tag builds every platform', body: 'Pushing a version tag builds signed and notarized macOS builds, Windows builds including a Microsoft Store package, Linux packages, multi-architecture container images and a Homebrew cask update. A final step checks every image tag and architecture. It was added after one release shipped without its GPU pack.' },
   ]}
   record={[
     ['Releases', '83 public desktop releases between May 21 and September 24, 2026'],

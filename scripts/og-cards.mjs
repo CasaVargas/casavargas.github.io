@@ -15,12 +15,12 @@ const serif = b64('node_modules/@fontsource-variable/newsreader/files/newsreader
 const sans = b64('node_modules/@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2');
 const icon = (p) => `data:image/png;base64,${b64(p)}`;
 
-// Kept in step with src/data/work.ts by hand — six cards don't justify a TS loader.
+// Kept in step with src/data/work.ts by hand; six cards don't justify a TS loader.
 const cards = [
   {
     file: 'casavargas',
-    title: 'CasaVargas makes software you own.',
-    sub: 'Apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux — paid for once, if at all.',
+    title: 'Software, made to be kept.',
+    sub: 'A one-person studio making apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux. Paid for once, if at all.',
     kicker: 'casavargas.app',
     big: false,
   },

@@ -20,7 +20,7 @@ Most IPTV players on Apple TV share the same fundamental problem: they weren't b
 
 ## How Streamline Is Different
 
-Streamline is built from scratch in SwiftUI for tvOS. Not ported, not adapted — designed for the Apple TV remote and the 10-foot viewing experience from day one.
+Streamline is built from scratch in SwiftUI for tvOS. Not ported, not adapted: designed for the Apple TV remote and the 10-foot viewing experience from day one.
 
 ### Focus-Engine Native
 
@@ -44,10 +44,10 @@ Streamline isn't just an Apple TV app. It runs on Mac, iPhone, iPad, and Vision 
 
 ## No Subscriptions
 
-Like every CasaVargas app, Streamline will be a one-time purchase. No monthly fee to watch your own content. Your M3U playlist, your streams, your player — permanently.
+Like every CasaVargas app, Streamline will be a one-time purchase. No monthly fee to watch your own content. Your M3U playlist, your streams, your player, permanently.
 
 ## Timeline
 
 Streamline is in active development. We're shipping the tvOS and macOS versions first, with iOS, iPadOS, and visionOS following shortly after. Visit [getstreamline.tv](https://getstreamline.tv) for updates, or check back on the [Streamline page](/work/streamline/) here.
 
-We're building the IPTV player Apple would build — if Apple made IPTV players.
+We're building the IPTV player Apple would build, if Apple made IPTV players.
