@@ -1,0 +1,37 @@
+---
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import NimbusStack from '../../components/figures/NimbusStack.astro';
+
+// Facts from the Nimbus repo (main) and Tolaria notes, 2026-09-24. Never: a
+// licence (unresolved), a price, "sandboxed", "Mac App Store", "bundles
+// rclone", performance targets, "never sees your password" as a blanket
+// claim, the retired Tauri version, or roadmap items as if they exist.
+---
+
+<CaseStudy
+  slug="nimbus"
+  title="Nimbus — cloud storage in Finder, built on rclone · CasaVargas"
+  description="How Nimbus is being built: a native Mac app and Finder extension sharing one local rclone engine, with rclone's own config flow driving setup. A case study from CasaVargas."
+  intro="Nimbus is a Mac app for cloud storage. It lets you browse, copy, sync and mount remotes from S3, Google Drive, OneDrive, SFTP and the rest of rclone’s long list. It doesn’t reimplement any provider: it drives rclone and puts a native interface on top, including a Finder extension so your remotes show up where your files already are."
+  problem="rclone is the most capable cloud-storage engine there is, but using it means a terminal and a config file. The usual alternative is one vendor app per cloud, each with its own sync folder and its own idea of how a Mac should behave. Nimbus keeps rclone’s reach and its open config format, and drops the command line."
+  features={[
+    { title: 'Your remotes, in Finder', body: 'A File Provider extension lists your remotes in Finder. Files download when you open them, and edits go back up.' },
+    { title: 'Mount a remote as a volume', body: 'Mount any remote as a Finder volume. Mounts marked to open at launch, or left open when you quit, come back on the next launch.' },
+    { title: 'Add a remote without the config file', body: 'A guided sheet asks only the questions rclone needs for that provider, and providers that use OAuth sign in through your browser. Existing rclone configs import as they are.' },
+    { title: 'Browse, copy and sync', body: 'List and grid views with Quick Look and type-to-select; drag between clouds to copy; copy or sync any two remotes or folders, with progress in a Transfers view and the menu bar.' },
+  ]}
+  engineering={[
+    { title: 'One engine, two clients', body: 'The app and its Finder extension talk to the same local rclone process through RcloneKit, a typed Swift client for rclone’s remote-control API. The engine’s port is shared through the app group, and no provider is ever reimplemented in Swift.' },
+    { title: 'The rclone contract is tested, not assumed', body: 'Four behaviors were checked against the real rclone and fixed — among them that listings return paths relative to the remote’s root, and that the API has no download call, so file contents come through rclone’s own file server. The lesson written into the project: a mock proves the client’s shape, not the server’s contract.' },
+    { title: 'Setup follows rclone’s own questions', body: 'Adding a remote walks rclone’s own configuration flow instead of a hand-built form per provider — 13 questions for S3 instead of 78 options, 8 for Google Drive instead of 52. A test pins those counts, so an rclone upgrade that changes the flow fails loudly rather than silently.' },
+    { title: 'Mounts that come back', body: 'Deciding what to restore and which stale mounts to clean up are pure, unit-tested functions. Leftover NFS servers from a crashed session are stopped before a new mount starts, and automatic remounting happens at most once per session.' },
+    { title: 'Rules the build enforces', body: 'The build fails on hard-coded font sizes, which protects Dynamic Type, and on any remote Swift package dependency.' },
+  ]}
+  record={[
+    ['Providers', 'More than 50, through rclone'],
+    ['Tests', 'About 200 test functions across the app and RcloneKit'],
+  ]}
+  closing="Nimbus is in development. There is no release date yet."
+>
+  <NimbusStack slot="figure" />
+</CaseStudy>

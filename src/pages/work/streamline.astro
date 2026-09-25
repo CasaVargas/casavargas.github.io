@@ -1,0 +1,37 @@
+---
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import StreamlineIdioms from '../../components/figures/StreamlineIdioms.astro';
+
+// Facts checked 2026-09-24 against getstreamline.tv and the repo (dev branch).
+// Streamline is presented strictly as a player for the user's own M3U / Xtream
+// playlists and XMLTV guides. Never: Stremio, add-ons, debrid, torrents, VLCKit,
+// the companion server, DVR, multi-view, measured switch times, a price or a
+// date more specific than 2026. No screenshots until a demo playlist of
+// openly licensed streams is captured — the old ones were full of network
+// logos and copyrighted artwork. See PLAN.md §8.
+---
+
+<CaseStudy
+  slug="streamline"
+  title="Streamline — a native IPTV player for every Apple screen · CasaVargas"
+  description="How Streamline is being built: one SwiftUI codebase across iPhone, iPad, Mac, Apple TV and Vision Pro, a streaming XMLTV parser, and channel changes on a time budget. A case study from CasaVargas."
+  intro="Streamline is an IPTV player for iPhone, iPad, Mac, Apple TV and Vision Pro. It plays the playlists and program guides you already have. It is one SwiftUI codebase, with each platform built around its own input — touch, keyboard, the Siri Remote, or eyes and hands. It is in development and due in 2026, as a single purchase."
+  problem="An IPTV playlist is just a list of channels. The guide data that makes it watchable usually arrives as a large, compressed XML file that most players handle poorly. And on Apple TV especially, a player has to get focus, remote input and channel changes exactly right, or it feels broken however good it looks. Streamline treats the guide and the channel change as the core of the product, not as features."
+  features={[
+    { title: 'Plays your own playlists', body: 'M3U and M3U8 playlists, the Xtream Codes API and XMLTV guides.' },
+    { title: 'A seven-day guide', body: 'Every channel gets a timeline that opens at the current time, with now and next, genre filters and the week ahead.' },
+    { title: 'Quick channel changes', body: 'A mini-guide overlay, gesture controls, a sleep timer and picture in picture.' },
+    { title: 'A home screen from your guide', body: 'Rows for what’s live now, tonight’s highlights, live sports and movies starting soon, plus a PIN-locked kids zone.' },
+    { title: 'Programme details from TMDB', body: 'Posters, cast and ratings for guide programs and for your provider’s on-demand library.' },
+    { title: 'Profiles that sync', body: 'Several profiles with parental controls, and favorites synced over iCloud.' },
+  ]}
+  engineering={[
+    { title: 'Channel changes have a time budget', body: 'The player swaps items rather than rebuilding the video layer. A small pool of warm players pre-buffers the channels you are likely to switch to next, in the direction you have been switching, and the stream format that worked last time is remembered per channel so the fallback sequence isn’t repeated. A signpost measures every change from tap to first frame.' },
+    { title: 'The guide parser streams', body: 'A gzipped XMLTV file is decompressed to disk and read with a streaming parser, which first checks the opening bytes to catch an HTML error page posing as a guide. Programmes are sorted per channel, so “what’s on now” is a binary search, and a compressed disk cache lets the app open without a network.' },
+    { title: 'Predictable focus on Apple TV', body: 'The player’s on-screen controls run on a five-state machine that replaced four separate flags and their sixteen combinations; only one element can hold focus at a time, so the focus engine never has to choose. The guide grid never recycles the focused cell, and when it rebuilds it keeps you at the same time of day, not the same scroll offset.' },
+    { title: 'Large catalogs on SQLite', body: 'Channels live in SQLite with a full-text index for search, and lists load in pages. The Apple TV work was tested against a synthetic catalog of about 80,000 channels.' },
+  ]}
+  closing="Streamline is in development and due in 2026, as a single purchase with no subscription."
+>
+  <StreamlineIdioms slot="figure" />
+</CaseStudy>

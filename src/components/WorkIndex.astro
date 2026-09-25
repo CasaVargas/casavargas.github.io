@@ -1,0 +1,145 @@
+---
+import { work, groups } from '../data/work';
+
+interface Props {
+  /** Heading level for the section title: h2 on the homepage, h1 on /work/. */
+  as?: 'h1' | 'h2';
+  title?: string;
+  intro?: string;
+}
+
+const {
+  as: Heading = 'h2',
+  title = 'All work',
+  intro = 'Everything the studio has shipped or is building, companion apps included.',
+} = Astro.props;
+
+const rows = groups.map((g) => ({ ...g, items: work.filter((w) => w.group === g.id) }));
+---
+
+<section id="index" class="index" aria-labelledby="index-title">
+  <div class="wrap">
+    <header class="index__head">
+      <Heading id="index-title" class="section-title">{title}</Heading>
+      <p class="index__intro">{intro}</p>
+    </header>
+
+    <table class="index__table">
+      <caption class="visually-hidden">{title}: name, what it is, what it runs on, and what it's built with.</caption>
+      <thead class="ui">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">What it is</th>
+          <th scope="col">Runs on</th>
+          <th scope="col">Built with</th>
+        </tr>
+      </thead>
+      {rows.map((g) => (
+        <tbody>
+          <tr class="index__group">
+            <th scope="rowgroup" colspan="4">{g.label}</th>
+          </tr>
+          {g.items.map((w) => (
+            <tr class="index__row">
+              <th scope="row" class="index__name">
+                <a href={`/work/${w.slug}/`}>{w.name}</a>
+              </th>
+              <td class="index__what">{w.what}</td>
+              <td class="index__meta ui">{w.runsOn.join(', ')}</td>
+              <td class="index__meta ui">{w.builtWith.join(', ')}</td>
+            </tr>
+          ))}
+        </tbody>
+      ))}
+    </table>
+  </div>
+</section>
+
+<style>
+  .index {
+    background: var(--color-ground-deep);
+    border-block: 1px solid var(--color-line);
+    padding-block: clamp(4rem, 9vw, 7rem);
+  }
+
+  .index__head {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 1rem 3rem;
+    align-items: end;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .index__intro {
+    margin: 0;
+    max-width: 32em;
+    color: var(--color-ink-2);
+  }
+
+  .index__table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  thead th {
+    padding: 0 1rem 0.8rem 0;
+    font-weight: 500;
+    color: var(--color-ink-3);
+    border-bottom: 1px solid var(--color-line-strong);
+  }
+  thead th:first-child { width: 22%; }
+  thead th:nth-child(2) { width: 34%; }
+
+  .index__group th {
+    padding: 2.2rem 0 0.7rem;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.0625rem;
+    color: var(--color-amber);
+    border-bottom: 1px solid var(--color-line);
+  }
+  tbody:first-of-type .index__group th { padding-top: 1.4rem; }
+
+  .index__row > * {
+    padding: 1.05rem 1rem 1.05rem 0;
+    border-bottom: 1px solid var(--color-line);
+    vertical-align: baseline;
+  }
+
+  .index__name {
+    font-weight: 400;
+  }
+  .index__name a {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  /* A scanning aid, not a fake button: the name is the only link. */
+  .index__row { transition: background-color 0.18s ease; }
+  .index__row:hover { background: rgba(244, 237, 227, 0.035); }
+  .index__name a:hover { color: var(--color-amber); }
+
+  .index__what { color: var(--color-ink-2); }
+  .index__meta { color: var(--color-ink-3); font-size: 0.9375rem; }
+
+  @media (max-width: 860px) {
+    .index__head { grid-template-columns: 1fr; }
+
+    thead { display: none; }
+    .index__table, tbody, tr, th, td { display: block; }
+
+    .index__row {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+    .index__row > * { padding: 0; border: 0; }
+    .index__what { margin-top: 0.2rem; }
+    .index__meta { margin-top: 0.35rem; }
+    .index__meta + .index__meta { margin-top: 0.1rem; }
+  }
+</style>

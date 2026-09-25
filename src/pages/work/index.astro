@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import WorkIndex from '../../components/WorkIndex.astro';
+---
+
+<Layout
+  title="Work — CasaVargas"
+  description="Everything CasaVargas has shipped or is building: Beltr, OneScribe, DebridDownloader, and Streamline, Nimbus and AppPulse in development."
+>
+  <Nav />
+  <main id="main">
+    <div class="wrap crumbs-row">
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Work' }]} />
+    </div>
+    <WorkIndex
+      as="h1"
+      title="Work"
+      intro="Everything the studio has shipped or is building, companion apps included. Each name opens a case study: why it exists, what it does, and how it’s built."
+    />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .crumbs-row { padding-top: clamp(2rem, 5vw, 3rem); padding-bottom: 1.5rem; }
+  main :global(.index) { border-top: 0; background: transparent; padding-top: 1rem; }
+  main :global(.index .section-title) { font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 300; letter-spacing: -0.03em; line-height: 0.95; }
+</style>

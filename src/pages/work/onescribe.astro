@@ -1,0 +1,57 @@
+---
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import Composition from '../../components/ui/Composition.astro';
+import { bySlug } from '../../data/work';
+
+// Facts checked 2026-09-24 against getonescribe.app and the App Store listing.
+// Say "83 Data Cards" (not "document types"), "the AI runs on your device"
+// (not "nothing ever leaves"), iPhone and iPad (not "iOS only"). No
+// subscription language, no 2.0 features, no accuracy numbers. See PLAN.md §8.
+const item = bySlug('onescribe');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MobileApplication',
+  name: 'OneScribe',
+  description: item.tagline,
+  url: 'https://getonescribe.app',
+  operatingSystem: 'iOS 26, iPadOS 26',
+  applicationCategory: 'ProductivityApplication',
+  author: { '@type': 'Organization', name: 'CasaVargas LLC', url: 'https://casavargas.app' },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  sameAs: ['https://apps.apple.com/us/app/onescribe-ai-note-scanner/id6756506734'],
+};
+---
+
+<CaseStudy
+  slug="onescribe"
+  title="OneScribe — a document scanner that reads what it scans · CasaVargas"
+  description="How OneScribe turns scans into structured Data Cards with on-device AI: typed extraction with Foundation Models, Vision for reading, and rules that decide. A case study from CasaVargas."
+  ogImage="/og/onescribe.png"
+  intro="OneScribe turns a photo of a receipt, a lease or a boarding pass into a structured card: the vendor, the dates, the amounts, the deadlines. The AI that does the reading runs on the device, so there is no account to create and nothing to upload. Scanning is free; Pro is a single $9.99 purchase."
+  problem="Most scans end up as a flat image or a block of text. The information people actually need — when the warranty ends, what the lease says about notice — stays buried until someone rereads the page. Many of these documents are also the most private ones a person owns: tax forms, prescriptions, IDs. That made on-device processing the starting point, not a feature."
+  features={[
+    { title: 'A card for every document', body: 'Each scan becomes one of 83 Data Cards. A receipt card holds the line items, tax and total; a contract card holds the deadlines and renewal windows.' },
+    { title: 'Ask in plain English', body: 'Search the whole library in natural language, or chat with a single document. Voice conversations run on the device too.' },
+    { title: 'A daily briefing', body: 'Each morning it lists what needs attention — upcoming deadlines, recent spending — so you don’t have to go looking.' },
+    { title: 'Alerts before deadlines', body: 'You hear about it before a warranty lapses, a return window closes or a policy comes up for renewal.' },
+    { title: 'Documents that link up', body: 'Related documents connect automatically: a receipt with its warranty, an invoice with its payment, an insurance card with a vehicle registration.' },
+    { title: 'Exports to the right app', body: 'Contracts go to Calendar, business cards to Contacts, meeting notes to Reminders and receipts to a spreadsheet.' },
+  ]}
+  engineering={[
+    { title: 'Typed extraction, checked afterward', body: 'Every document type is a Swift @Generable struct, so Apple’s on-device model fills typed fields instead of writing prose — 151 schemas and about 1,420 field instructions written in one house style. After each extraction a validator flags impossible dates, negative amounts and balances that don’t add up; a critical issue triggers one retry in a fresh session.' },
+    { title: 'Vision reads the page, Core ML sorts it', body: 'A single Vision document request per page returns the text in reading order with its structure and barcodes, which let the project delete about 1,200 lines of its own layout code. A Core ML classifier identifies the document type first and returns immediately when it’s confident; only ambiguous documents reach the language model.' },
+    { title: 'A fallback for every device', body: 'The app tries Apple’s Foundation Models first, then an optional downloadable model running on MLX. If neither is available, 20 rule-based extractors still build cards for 22 document types.' },
+    { title: 'Rules decide, the model writes', body: 'Document links come from a pure rule engine: same vendor, related types with matching amounts, identical policy numbers. The briefing picks what is due within 30 days, and the model only writes the headline and first paragraph — with fixed text standing by if it fails.' },
+  ]}
+  record={[
+    ['Data Cards', '83'],
+    ['Export modes', '19'],
+    ['Siri shortcuts', '14'],
+    ['On the App Store', 'Since January 2026'],
+  ]}
+  closing="OneScribe is free to download and scan with. Pro is $9.99, once."
+  schema={schema}
+>
+  <Composition slot="lead" plate={item.plate!} />
+</CaseStudy>

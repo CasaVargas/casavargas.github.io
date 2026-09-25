@@ -1,0 +1,405 @@
+---
+import { Image } from 'astro:assets';
+import Layout from './Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import JsonLd from '../components/JsonLd.astro';
+import Facts from '../components/ui/Facts.astro';
+import { bySlug, companionsOf, nextAfter, statusFor } from '../data/work';
+
+interface Entry {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  slug: string;
+  /** <title> and meta description. */
+  title: string;
+  description: string;
+  intro: string;
+  problem: string;
+  features: Entry[];
+  engineering: Entry[];
+  /** Verifiable numbers only, each with its source noted in the page file. */
+  record?: [string, string][];
+  /** Optional note under the name, e.g. "Working title". */
+  note?: string;
+  /** Closing line above the call to action. */
+  closing: string;
+  /** Structured data beyond the breadcrumb. */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  ogImage?: string;
+}
+
+const {
+  slug,
+  title,
+  description,
+  intro,
+  problem,
+  features,
+  engineering,
+  record,
+  note,
+  closing,
+  schema,
+  ogImage,
+} = Astro.props;
+
+const item = bySlug(slug);
+const companions = companionsOf(slug);
+const next = nextAfter(slug);
+const inDevelopment = item.group === 'workshop';
+
+const facts: [string, string][] = [
+  ['Status', statusFor(item)],
+  ['Runs on', item.runsOn.join(', ')],
+  ...(item.price ? [['Price', item.price] as [string, string]] : []),
+  ['Built with', item.builtWith.join(', ')],
+];
+---
+
+<Layout title={title} description={description} ogImage={ogImage}>
+  {schema && <JsonLd data={schema} />}
+  <Nav />
+
+  <main id="main" class="cs">
+    <header class="wrap cs-head">
+      <Breadcrumbs items={[{ label: 'Work', href: '/work/' }, { label: item.name }]} />
+
+      <div class="cs-title">
+        {item.icon && (
+          <Image src={item.icon} alt="" widths={[76, 152]} sizes="76px" format="webp" quality={84} loading="eager" class="cs-icon" />
+        )}
+        <div>
+          <h1>{item.name}</h1>
+          {note && <p class="cs-note ui">{note}</p>}
+        </div>
+      </div>
+
+      <p class="cs-tagline">{item.tagline}</p>
+    </header>
+
+    {Astro.slots.has('lead') && (
+      <div class="wrap cs-lead">
+        <slot name="lead" />
+      </div>
+    )}
+
+    <div class="wrap cs-grid cs-overview">
+      <p class="cs-intro">{intro}</p>
+      <div class="cs-aside">
+        <Facts rows={facts} />
+        {item.links.length > 0 && (
+          <ul class="cs-links">
+            {item.links.map((l) => (
+              <li><a class="textlink" href={l.url} rel="noopener">{l.label}</a></li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+
+    <section class="wrap cs-grid cs-section" aria-labelledby="problem">
+      <h2 id="problem" class="cs-h2">Why it exists</h2>
+      <p class="cs-prose">{problem}</p>
+    </section>
+
+    <section class="wrap cs-grid cs-section" aria-labelledby="features">
+      <h2 id="features" class="cs-h2">What it does</h2>
+      <dl class="cs-features">
+        {features.map((f) => (
+          <div>
+            <dt>{f.title}</dt>
+            <dd>{f.body}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="wrap cs-grid cs-section" aria-labelledby="engineering">
+      <h2 id="engineering" class="cs-h2">How it’s built</h2>
+      <div class="cs-engineering">
+        {engineering.map((e) => (
+          <article class="cs-note-block">
+            <h3>{e.title}</h3>
+            <p>{e.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {Astro.slots.has('figure') && (
+      <section class="wrap cs-figure" aria-label="Diagram">
+        <slot name="figure" />
+      </section>
+    )}
+
+    {record && record.length > 0 && (
+      <section class="wrap cs-grid cs-section" aria-labelledby="record">
+        <h2 id="record" class="cs-h2">On the record</h2>
+        <Facts rows={record} class="cs-record" />
+      </section>
+    )}
+
+    {companions.length > 0 && (
+      <section class="wrap cs-grid cs-section" aria-labelledby="companions">
+        <h2 id="companions" class="cs-h2">Companion apps</h2>
+        <ul class="cs-companions">
+          {companions.map((c) => (
+            <li>
+              <h3>{c.name}</h3>
+              <p>{c.tagline}</p>
+              <p class="ui cs-companions__meta">{c.runsOn.join(', ')}. {c.price}.</p>
+              <p class="cs-companions__links">
+                {c.links.map((l) => <a class="textlink" href={l.url} rel="noopener">{l.label}</a>)}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="cs-close" aria-label={inDevelopment ? 'Status' : 'Get it'}>
+      <div class="wrap cs-grid">
+        <p class="cs-close__line">{closing}</p>
+        <div class="cs-close__actions">
+          {item.links[0] ? (
+            <a class="cs-button" href={item.links[0].url} rel="noopener">
+              {/\.\w+$/.test(item.links[0].label) ? `Visit ${item.links[0].label}` : item.links[0].label}
+            </a>
+          ) : (
+            <a class="cs-button" href="mailto:hello@casavargas.app">Write to the studio</a>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <nav class="wrap cs-next" aria-label="Next case study">
+      <a href={`/work/${next.slug}/`}>
+        <span class="ui">Next case study</span>
+        <span class="cs-next__name">{next.name}</span>
+        <span class="cs-next__what">{next.what}</span>
+      </a>
+    </nav>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .cs-head {
+    padding-top: clamp(2rem, 5vw, 4rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .cs-title {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+  }
+  :global(.cs-icon) {
+    width: clamp(56px, 7vw, 76px);
+    height: auto;
+    border-radius: 22.5%;
+    box-shadow: 0 0 0 1px var(--well-ring);
+  }
+
+  h1 {
+    margin: 0;
+    font-weight: 300;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .cs-note {
+    margin: 0.6rem 0 0;
+    color: var(--color-ink-3);
+  }
+
+  .cs-tagline {
+    margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
+    max-width: 24em;
+    font-size: clamp(1.4rem, 2.6vw, 2.125rem);
+    font-weight: 330;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+    color: var(--color-ink-2);
+  }
+
+  .cs-lead { padding-bottom: clamp(3rem, 7vw, 5.5rem); }
+
+  /* Editorial grid: headings hang in the left third, prose in the right. */
+  .cs-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: 1.5rem clamp(2rem, 5vw, 4.5rem);
+  }
+
+  .cs-overview {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    border-top: 1px solid var(--color-line);
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+  .cs-intro {
+    margin: 0;
+    max-width: 30em;
+    font-size: clamp(1.25rem, 1.9vw, 1.5rem);
+    line-height: 1.5;
+    color: var(--color-ink);
+  }
+  .cs-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
+    margin: 1.2rem 0 0;
+    padding: 0;
+  }
+
+  .cs-section {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .cs-h2 {
+    margin: 0;
+    font-weight: 340;
+    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+  }
+
+  .cs-prose {
+    margin: 0;
+    max-width: 34em;
+    font-size: 1.1875rem;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+  }
+
+  .cs-features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem clamp(1.5rem, 3vw, 2.5rem);
+    margin: 0;
+  }
+  .cs-features dt {
+    font-size: 1.1875rem;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .cs-features dd {
+    margin: 0.4rem 0 0;
+    color: var(--color-ink-2);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  .cs-engineering {
+    display: grid;
+    gap: 2.2rem;
+  }
+  .cs-note-block {
+    max-width: 36em;
+  }
+  .cs-note-block h3 {
+    margin: 0;
+    font-size: clamp(1.3rem, 1.8vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: -0.008em;
+    color: var(--color-ink);
+  }
+  .cs-note-block p {
+    margin: 0.55rem 0 0;
+    color: var(--color-ink-2);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .cs-figure {
+    padding-block: clamp(1rem, 3vw, 2rem) clamp(3rem, 7vw, 5rem);
+  }
+
+  .cs-companions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+  .cs-companions h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+  .cs-companions p { margin: 0.45rem 0 0; color: var(--color-ink-2); font-size: 1.0625rem; }
+  .cs-companions .cs-companions__meta { color: var(--color-ink-3); }
+  .cs-companions__links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+
+  .cs-close {
+    background: var(--color-ground-deep);
+    border-top: 1px solid var(--color-line);
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+  }
+  .cs-close .cs-grid { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); align-items: center; }
+  .cs-close__line {
+    margin: 0;
+    max-width: 22em;
+    font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+    font-weight: 330;
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+  }
+  .cs-close__actions { justify-self: end; }
+
+  /* The one solid button on the site: the call to action at the end of a case study. */
+  .cs-button {
+    display: inline-block;
+    padding: 0.85rem 1.4rem;
+    border-radius: 8px;
+    background: var(--color-ink);
+    color: var(--color-ground);
+    font-family: var(--font-sans);
+    font-size: 0.975rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.18s ease;
+  }
+  .cs-button:hover { background: var(--color-amber); }
+
+  .cs-next {
+    padding-block: clamp(3rem, 7vw, 5rem);
+  }
+  .cs-next a {
+    display: grid;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: var(--color-ink);
+  }
+  .cs-next .ui { color: var(--color-ink-3); }
+  .cs-next__name {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    transition: color 0.18s ease;
+  }
+  .cs-next a:hover .cs-next__name { color: var(--color-amber); }
+  .cs-next__what { color: var(--color-ink-2); }
+
+  @media (max-width: 860px) {
+    .cs-grid,
+    .cs-overview,
+    .cs-close .cs-grid { grid-template-columns: 1fr; }
+    .cs-features,
+    .cs-companions { grid-template-columns: 1fr; }
+    .cs-close__actions { justify-self: start; }
+  }
+</style>

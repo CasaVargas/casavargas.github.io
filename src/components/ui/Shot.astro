@@ -1,0 +1,29 @@
+---
+import Frame from './Frame.astro';
+import Phone from './Phone.astro';
+import type { Shot } from '../../data/work';
+
+interface Props {
+  shot: Shot;
+  width?: number;
+  sizes?: string;
+  eager?: boolean;
+  class?: string;
+}
+
+const { shot, width, sizes, eager, class: className } = Astro.props;
+---
+
+{shot.kind === 'phone' ? (
+  <Phone src={shot.src} alt={shot.alt} sizes={sizes} class={className} />
+) : (
+  <Frame
+    src={shot.src}
+    alt={shot.alt}
+    width={width}
+    sizes={sizes}
+    eager={eager}
+    chrome={shot.kind === 'window'}
+    class={className}
+  />
+)}

@@ -9,6 +9,8 @@ interface Props {
   width?: number;
   sizes?: string;
   eager?: boolean;
+  /** Show a macOS titlebar. Off for TV/full-bleed captures. */
+  chrome?: boolean;
   class?: string;
 }
 
@@ -16,37 +18,40 @@ const {
   src,
   alt,
   width = 1100,
-  sizes = '(max-width: 900px) 100vw, 55vw',
+  sizes = '(max-width: 900px) 100vw, 60vw',
   eager = false,
+  chrome = true,
   class: className = '',
 } = Astro.props;
+
+const widths = [Math.round(width / 2), width, Math.min(width * 2, src.width)].filter(
+  (w, i, a) => w <= src.width && a.indexOf(w) === i,
+);
 ---
 
-<figure class={`frame ${className}`}>
-  <div class="chrome" aria-hidden="true"><i></i><i></i><i></i></div>
+<figure class:list={['frame', className]}>
+  {chrome && <div class="frame__chrome" aria-hidden="true"><i></i><i></i><i></i></div>}
   <Image
     src={src}
     alt={alt}
-    widths={[Math.round(width / 2), width, width * 2]}
+    widths={widths}
     sizes={sizes}
     format="webp"
-    quality={72}
+    quality={74}
     loading={eager ? 'eager' : 'lazy'}
     fetchpriority={eager ? 'high' : 'auto'}
   />
 </figure>
 
 <style>
-  /* A dark app UI on a dark page has no boundary. Window chrome supplies a
-     bright horizontal edge at the top; the inset lip finishes the other three. */
+  /* A screen set into a lit room: dark glass, a warm ring, a specular lip. */
   .frame {
     position: relative;
     margin: 0;
-    border-radius: 14px;
+    border-radius: 12px;
     overflow: hidden;
-    border: 1px solid var(--shot-ring);
-    box-shadow: var(--shot-shadow);
-    background: #0a0a0c;
+    background: var(--color-screen);
+    box-shadow: 0 0 0 1px var(--well-ring), var(--well-shadow);
   }
 
   .frame :global(img) {
@@ -61,26 +66,24 @@ const {
     inset: 0;
     pointer-events: none;
     border-radius: inherit;
-    box-shadow: inset 0 1px 0 var(--shot-lip);
+    box-shadow: inset 0 1px 0 var(--well-lip);
   }
 
-  .chrome {
+  .frame__chrome {
     display: flex;
     align-items: center;
     gap: 6px;
-    height: 28px;
-    padding: 0 12px;
-    background: var(--color-chrome);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    height: 24px;
+    padding: 0 11px;
+    background: #1b1714;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  .chrome i {
+  .frame__chrome i {
     display: block;
-    width: 9px;
-    height: 9px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
+    background: rgba(244, 237, 227, 0.2);
   }
-  .chrome i:nth-child(1) { background: #ff5f57; }
-  .chrome i:nth-child(2) { background: #febc2e; }
-  .chrome i:nth-child(3) { background: #28c840; }
 </style>

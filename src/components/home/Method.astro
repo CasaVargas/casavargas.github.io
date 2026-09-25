@@ -1,0 +1,58 @@
+---
+// Every clause here is checkable against a product page. Keep it that way.
+---
+
+<section class="method wrap" aria-labelledby="method-title">
+  <h2 id="method-title" class="section-title method__title">How the studio works</h2>
+
+  <div class="method__body">
+    <p class="method__lead">
+      Everything here is paid for once, if it costs anything at all. There are no
+      subscriptions, and nothing is rented back to you.
+    </p>
+    <p>
+      The heavy lifting happens on your own hardware. Beltr separates vocals on your
+      computer; OneScribe reads your documents on your phone and never uploads them.
+      Apple software is written in Swift for the device it runs on, not ported to it.
+    </p>
+    <p>
+      And every project starts as a written specification, so the thinking is done
+      before the building begins — and so the decisions are still on record when a
+      product is five versions in.
+    </p>
+  </div>
+</section>
+
+<style>
+  .method {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: 2rem 3rem;
+    padding-block: clamp(4.5rem, 10vw, 8rem);
+  }
+
+  .method__title { padding-top: 0.5rem; }
+
+  .method__body p {
+    margin: 0;
+    max-width: 34em;
+    font-size: clamp(1.15rem, 1.5vw, 1.3125rem);
+    line-height: 1.6;
+    color: var(--color-ink-2);
+  }
+  .method__body p + p { margin-top: 1.1em; }
+
+  .method__body .method__lead {
+    max-width: 22em;
+    font-size: clamp(1.6rem, 2.7vw, 2.25rem);
+    font-weight: 330;
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+    color: var(--color-ink);
+    margin-bottom: 1.3rem;
+  }
+
+  @media (max-width: 860px) {
+    .method { grid-template-columns: 1fr; }
+  }
+</style>

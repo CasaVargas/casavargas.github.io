@@ -1,127 +1,66 @@
 ---
-const stack: [string, string][] = [
-  ['Apple native', 'SwiftUI · Swift 6 · SwiftData'],
-  ['Cross-platform', 'Tauri · Rust · React'],
-  ['Infrastructure', 'Docker · Traefik · Tailscale'],
-  ['Monetization', 'StoreKit 2 · Lemon Squeezy'],
-  ['CI/CD', 'GitHub Actions · Self-hosted'],
+import Facts from '../ui/Facts.astro';
+
+const workshop: [string, string][] = [
+  ['Apple platforms', 'Swift 6, SwiftUI, SwiftData, Foundation Models'],
+  ['Desktop', 'Tauri and Rust; Electron and Python where the job needs them'],
+  ['Builds', 'Self-hosted runners on a Mac mini, a Windows PC and a Linux server'],
+  ['Infrastructure', 'Docker, Traefik and Tailscale, run in-house'],
+  ['Sales', 'The App Store, and Lemon Squeezy for the desktop'],
 ];
 ---
 
-<section id="studio" class="studio">
-  <div class="studio__head">
-    <p class="eyebrow">The studio</p>
-    <h2>One developer, shipping in the open</h2>
-  </div>
-
-  <div class="studio__grid">
-    <div class="studio__bio">
+<section id="studio" class="studio" aria-labelledby="studio-title">
+  <div class="wrap studio__grid">
+    <div class="studio__copy">
+      <h2 id="studio-title" class="section-title">The studio</h2>
       <p>
-        CasaVargas LLC is a solo studio founded by Jon Vargas in North Carolina.
-        Every project starts as a written spec before a line of code gets
-        written — the thinking happens up front so the building flows.
+        CasaVargas LLC is Jon Vargas, working from North Carolina. By day, Jon works
+        in IT for a public school district. The rest of the time goes into the
+        software on this page, from the first specification to the signed installer.
       </p>
       <p>
-        By day it's K-12 IT for a public school district. By night it's SwiftUI,
-        Rust, and a home lab that runs the whole operation. The through-line is
-        the same either way: build the thing properly, charge once, and don't
-        rent people their own software back to them.
+        There's no team to hand things to, so the whole chain is owned end to end:
+        design, code, release engineering, the build machines, the product sites and
+        the support inbox.
       </p>
     </div>
 
-    <div class="studio__stack">
-      <h3>The stack</h3>
-      {stack.map(([label, detail]) => (
-        <div class="stackrow">
-          <span>{label}</span>
-          <span class="stackrow__detail">{detail}</span>
-        </div>
-      ))}
+    <div class="studio__workshop">
+      <h3 class="ui studio__label">The workshop</h3>
+      <Facts rows={workshop} />
     </div>
   </div>
 </section>
 
 <style>
   .studio {
-    padding: 4.5rem 0 5rem;
-    border-top: 1px solid var(--color-border-soft);
-  }
-  .studio__head {
-    max-width: 84rem;
-    margin: 0 auto;
-    padding: 0 2.5rem 2.5rem;
-  }
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin: 0 0 1.1rem;
-  }
-  h2 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(2.1rem, 3.6vw, 3.1rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    border-top: 1px solid var(--color-line);
+    padding-block: clamp(4.5rem, 10vw, 8rem);
   }
 
   .studio__grid {
     display: grid;
-    grid-template-columns: 1.25fr 1fr;
-    gap: 4rem;
-    max-width: 84rem;
-    margin: 0 auto;
-    padding: 0 2.5rem;
-  }
-  .studio__bio p {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.68;
-    color: var(--color-text-secondary);
-  }
-  .studio__bio p + p { margin-top: 1.1rem; }
-
-  .studio__stack {
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: 14px;
-    padding: 1.6rem;
-    align-self: start;
-  }
-  .studio__stack h3 {
-    margin: 0 0 1rem;
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--color-text-tertiary);
-  }
-  .stackrow {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    padding: 0.62rem 0;
-    border-bottom: 1px solid var(--color-border-soft);
-    font-size: 0.85rem;
-  }
-  .stackrow:last-child { border-bottom: none; }
-  .stackrow__detail {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--color-text-tertiary);
-    text-align: right;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 3rem clamp(2rem, 6vw, 6rem);
   }
 
-  @media (max-width: 900px) {
-    .studio__head { padding: 0 1.5rem 2rem; }
-    .studio__grid {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-      padding: 0 1.5rem;
-    }
+  .studio__copy p {
+    margin: 1.4rem 0 0;
+    max-width: 33em;
+    color: var(--color-ink-2);
+  }
+  .studio__copy .section-title + p { margin-top: 2rem; }
+
+  .studio__label {
+    margin: 0 0 0.9rem;
+    font-weight: 500;
+    color: var(--color-ink-3);
+  }
+
+  .studio__workshop { padding-top: 0.6rem; }
+
+  @media (max-width: 860px) {
+    .studio__grid { grid-template-columns: 1fr; }
   }
 </style>
