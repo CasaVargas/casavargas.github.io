@@ -18,7 +18,7 @@ const schema = [
     url: 'https://beltr.app',
     operatingSystem: 'macOS, Windows, Linux',
     applicationCategory: 'MultimediaApplication',
-    author: { '@type': 'Organization', name: 'CasaVargas LLC', url: 'https://casavargas.app' },
+    author: { '@type': 'Organization', name: 'Casa Vargas LLC', url: 'https://casavargas.app' },
     offers: { '@type': 'Offer', price: '19.99', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
   },
   ...companionsOf('beltr').map((c) => ({
@@ -28,7 +28,7 @@ const schema = [
     description: c.tagline,
     operatingSystem: c.runsOn.join(', '),
     applicationCategory: 'MultimediaApplication',
-    author: { '@type': 'Organization', name: 'CasaVargas LLC' },
+    author: { '@type': 'Organization', name: 'Casa Vargas LLC' },
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     sameAs: c.links.map((l) => l.url),
   })),
