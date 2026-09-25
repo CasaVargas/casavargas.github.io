@@ -2,104 +2,125 @@
 
 ## Project
 
-Astro 5.x static site with Tailwind CSS v4. Deployed to GitHub Pages at
-casavargas.app on every push to `main` (`.github/workflows/deploy.yml`).
-`origin` is GitHub and is what deploys; `gitea` is a mirror.
+Astro 5 static site, plain CSS (no framework). Deployed to GitHub Pages at
+casavargas.app on every push to `main` (`.github/workflows/deploy.yml`) —
+**merging to `main` is a production deploy**. `origin` is GitHub and is what
+deploys; `gitea` is a mirror.
 
-`PLAN.md` holds the design spec for the current look — read it before changing
-layout or art direction.
+`PLAN.md` holds the design spec for the current look (the editorial catalogue,
+2026-09). Read it before changing layout, art direction or product claims.
 
 ## Commands
 
 - `npm run dev` — local dev server
 - `npm run build` — production build to `dist/`
 - `npm run preview` — serve the production build
+- `node scripts/og-cards.mjs` — re-render the Open Graph cards in `public/og/`
+  (needs Google Chrome). Run it after changing a product name or tagline.
 
 **Verify against `npm run preview`, not `npm run dev`.** The dev server
 generates image transforms on demand, so lazy images below the fold read as
-broken when they are perfectly fine.
+broken when they are fine.
 
 ## Architecture
 
 ```
 src/
-  data/apps.ts            single source of truth for every app
+  data/work.ts              single source of truth: every product, its facts,
+                            homepage plate, index row, footer link, JSON-LD
   layouts/
-    Layout.astro          <head>, SEO tags, fonts
-    AppPage.astro         the whole app landing page, driven by props
+    Layout.astro            <head>, SEO tags, fonts (+ LCP font preloads)
+    CaseStudy.astro         the whole /work/<slug>/ page, driven by props + slots
+  pages/
+    index.astro             homepage
+    work/index.astro        the full index
+    work/<slug>.astro       one thin content file per case study
+    blog/                   notes (Markdown in src/content/blog/)
+    404.astro
   components/
-    ui/Frame.astro        desktop screenshot: window chrome + specular edge
-    ui/Phone.astro        phone screenshot: lit bezel
-    home/                 Hero, Proof, AppBand, Studio
-    Nav / Footer / Breadcrumbs / JsonLd
-  assets/                 ALL screenshots — imported, never referenced by URL
+    home/                   Opening, Plate, Workshop, Method, Studio, LatestNotes
+    WorkIndex.astro         the index table (homepage and /work/)
+    figures/                typographic diagrams for products without screenshots
+    ui/Frame, Phone, Shot   screenshot wells; Composition lays out a plate
+    ui/Facts                the spec table used everywhere instead of "a · b · c"
+  assets/<slug>/            ALL screenshots — imported, never referenced by URL
+public/og/                  Open Graph cards (generated), llms.txt, favicons
 ```
 
-`public/` holds only files that need a stable public URL: favicons, logos, and
-the icons used as `ogImage` (OG scrapers cannot read hashed build output).
+Redirects for the old app URLs (`/streamline`, `/onescribe`,
+`/debrid-downloader` → `/work/…/`) live in `astro.config.mjs`.
 
-## Art direction
+**`/beltr` cannot be a route on this site.** GitHub Pages redirects it to
+beltr.app because the Beltr repo's Pages custom domain claims that path. Before
+adding any top-level route, check that `curl -sI https://casavargas.app/<route>`
+does not 301 off-site.
 
-Dark ground. The load-bearing constraint: **every app ships a dark UI**, so a
-screenshot on a dark page has no edge unless you give it one. Four mechanisms,
-all in `global.css` tokens and the `ui/` components — window chrome, a specular
-top edge, lighter phone bezels, and alternating band grounds. Don't drop one
-without reading §3.2 of `PLAN.md`.
+## Art direction (PLAN.md §3)
 
-Tokens live in the `@theme` block in `src/styles/global.css`. Use them; don't
-hardcode colours in components. `--color-text-tertiary` is the lightest value
-that still clears WCAG AA on every ground — don't darken it.
+- Warm walnut ground (`--color-ground`), lit by the brand amber like a lamp. The
+  ground is *lighter* than the apps' near-black UIs, so screenshots read as
+  screens set into the page.
+- Newsreader (serif, variable `opsz`) for display and body; Hanken Grotesk only
+  for small functional UI (`.ui`). No monospace, no all-caps labels, no eyebrows.
+- Tokens are CSS custom properties in `src/styles/global.css`. Use them; don't
+  hardcode colours. `--color-ink-3` is the lightest value that clears WCAG AA on
+  every ground — don't darken it.
+- Structure only where it carries information: facts tables, the index table,
+  numbered steps only for real sequences. Links are underlined text, not pills.
+- One motion moment (the opening), off under `prefers-reduced-motion`.
 
-## Adding a new app
+## Adding a product
 
-1. Add an entry to `src/data/apps.ts`. Required: `slug`, `name`, `category`,
-   `description`, `specs[]` (three short scannable claims), `platforms`,
-   `status`, `links`, `icon`, `weight`, `shotKind`, `shots`.
-   - `weight: 'large' | 'compact'` decides its homepage footprint. Base it on
-     how much imagery the app can actually show, not on how much you like it.
-   - `shotKind: 'window' | 'phone'` picks the screenshot treatment.
-   - `reverse: true` flips the band so consecutive bands alternate.
-2. Put screenshots in `src/assets/<slug>/` and import them. Never put a
-   screenshot in `public/`.
-3. Create `src/pages/<slug>.astro` using the `AppPage` layout — it is a thin
-   data file (see `beltr.astro`). Pass `tagline`, `intro`, `features`,
-   optional `steps`, `cta`, and a `SoftwareApplication` schema.
-4. The homepage grid and the footer pick the app up from `apps.ts` automatically.
-5. Consider a blog post announcement for extra SEO surface.
+1. Add an entry to `src/data/work.ts`: `slug`, `name`, `what` (≤10 words),
+   `tagline`, `group` (`available` / `open-source` / `workshop`), `runsOn`,
+   `builtWith`, `price` (omit while in development), `links`, optional `icon`,
+   optional `plate` (only if it has honest, publishable screenshots), optional
+   `highlight` (workshop band), `parent` for companion apps.
+2. Put screenshots in `src/assets/<slug>/` and import them.
+3. Create `src/pages/work/<slug>.astro` with the `CaseStudy` layout: `intro`,
+   `problem`, `features`, `engineering`, optional `record` (verifiable numbers
+   only), `closing`, `schema`, and a `lead` or `figure` slot.
+4. Add a card to `scripts/og-cards.mjs` and run it. Update `public/llms.txt`.
+5. The homepage, index, footer and sitemap pick it up automatically.
 
-## Screenshots carry claims — audit them
+## Claims go stale — check them against the product's own site
 
-Marketing imagery embeds copy that goes stale independently of the page around
-it. It is invisible to grep, diffing and CI, and it survives every rewrite of
-the surrounding text.
+This site has shipped stale claims three times. The product's public site or
+store listing is the source of truth for every claim; repos are a source for
+engineering detail only. Each case-study file opens with a comment listing what
+it must never say — keep those lists current.
 
-**Read every screenshot for burned-in text before shipping it**, and re-audit
-when an app's positioning changes. A real example: `cinematic-bigscreen.webp`
-from beltr.app has "Demucs doing surgery, thirty seconds, clean stem" rendered
-into the pixels. Beltr no longer uses Demucs and separation now takes a minute
-or two, so that asset is banned from this repo.
+## Screenshots carry claims — open every one before shipping it
 
-Product claims in copy and in JSON-LD go stale the same way. `offers.price` said
-`'0'` for Beltr long after it became a $19.99 one-time purchase, and the
-DebridDownloader page claimed MIT when the repo is GPL-3.0. Check against the
-product's own site before writing a number or a licence.
+Marketing imagery embeds text that goes stale independently of the page, and it
+is invisible to grep, diffing and CI. Rejected so far, and why:
 
-## Blog posts
-
-Markdown in `src/content/blog/` with frontmatter: `title`, `description`,
-`date`, `tags`. Link internally to the relevant app landing pages.
+- Beltr `cinematic-bigscreen`, `phone-native-sing`, `practice-mode`,
+  `ui-word-timing`, `phone-native-playing`: a stale "Demucs… thirty seconds" lyric.
+- Beltr `ui-library`, `ui-processing` (the old site's `processing.webp`),
+  `Beltr-Dash`: a LAN join URL; `processing` also said "about 5 min left".
+- OneScribe shots with real brands (United, H-E-B, CVS/BCBS, Opus One) — use
+  the fictional-data captures in the OneScribe repo's `AppStoreAssets/captures/`.
+- Streamline: every existing shot is full of network logos and copyrighted
+  artwork, which reads as redistributed channels. No Streamline screenshots
+  until a demo playlist of openly licensed streams is captured.
+- AppPulse: the existing shots show a real personal app library.
+- DebridDownloader: its only icon is the stock Tauri logo — don't present it as
+  the product's mark. The screenshots here are the real UI rendered with mocked
+  IPC and neutral data (Linux installers), captured with headless Chrome.
 
 ## SEO
 
-Every page needs a canonical URL, OG tags, Twitter card tags, and JSON-LD.
-`Layout.astro` handles most of it from props; `JsonLd.astro` takes a schema
-object. Don't ship a page without checking those survive.
+Every page has a canonical URL, OG and Twitter tags, and JSON-LD (Organization,
+ItemList, SoftwareApplication/MobileApplication per shipped product,
+BreadcrumbList, BlogPosting). `public/llms.txt` summarises the site for AI
+crawlers — keep it in step with `work.ts`.
 
 ## Before saying it works
 
 - `npm run build` clean
 - No image over 200 KB on the wire
-- No horizontal document overflow (`scrollWidth === clientWidth`) —
-  `body { overflow-x: hidden }` will hide the symptom, so measure
-- Lighthouse accessibility 100 (it was 93 until a contrast token was fixed)
-- Check a narrow viewport, not just desktop
+- No horizontal document overflow at 390 px (`scrollWidth === clientWidth`,
+  measured — not hidden)
+- Lighthouse accessibility, best practices and SEO 100
+- Every screenshot opened and read

@@ -13,7 +13,7 @@ For Apple platforms, we build with **SwiftUI and Swift 6**. For cross-platform d
 
 ## When We Go Native: SwiftUI
 
-[Streamline](/streamline) is our IPTV player for Apple TV, Mac, iPhone, iPad, and Vision Pro. It's built entirely in SwiftUI. Here's why:
+[Streamline](/work/streamline/) is our IPTV player for Apple TV, Mac, iPhone, iPad, and Vision Pro. It's built entirely in SwiftUI. Here's why:
 
 **Platform integration is the product.** An IPTV player on Apple TV needs to work with the tvOS focus engine, the Siri Remote's touch surface, and Apple's video playback APIs (AVKit). On Vision Pro, it needs spatial windows. On iPhone, it needs to feel like a first-party app. None of this works well through an abstraction layer.
 
@@ -21,11 +21,11 @@ For Apple platforms, we build with **SwiftUI and Swift 6**. For cross-platform d
 
 **The platforms diverge.** What works on a 65-inch TV operated by a remote is fundamentally different from what works on a phone you hold in your hand. SwiftUI lets us share business logic while building completely different UIs per platform with `NavigationSplitView` on iPad, `TabView` on iPhone, and focus-driven layouts on tvOS.
 
-[OneScribe](/onescribe) is similar — it relies on VisionKit and CoreML for document scanning and OCR. These are Apple frameworks with no cross-platform equivalent. Going native isn't a preference, it's a requirement.
+[OneScribe](/work/onescribe/) is similar — it relies on VisionKit and CoreML for document scanning and OCR. These are Apple frameworks with no cross-platform equivalent. Going native isn't a preference, it's a requirement.
 
 ## When We Go Cross-Platform: Electron & Tauri
 
-[Beltr](/beltr) is our karaoke engine for Mac, Windows, and Linux — built with Electron. [DebridDownloader](/debrid-downloader) is our download manager for the same platforms — built with Tauri, Rust, and React. Two cross-platform apps, two different frameworks, each chosen for a reason.
+[Beltr](/work/beltr/) is our karaoke engine for Mac, Windows, and Linux — built with Electron. [DebridDownloader](/work/debrid-downloader/) is our download manager for the same platforms — built with Tauri, Rust, and React. Two cross-platform apps, two different frameworks, each chosen for a reason.
 
 **The platform doesn't matter as much as the function.** A download manager needs to download files. A karaoke app needs to play audio and separate vocals. These operations aren't tied to any OS's unique capabilities — they work the same on Mac, Windows, and Linux.
 

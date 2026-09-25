@@ -6,168 +6,104 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
 const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 
-const title = 'Notes — CasaVargas';
-const description =
-  'Articles on indie app development, native software, AI tools, and building without subscriptions.';
+const fmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 ---
 
-<Layout title={title} description={description}>
+<Layout
+  title="Notes — CasaVargas"
+  description="Notes from a one-person software studio: native versus cross-platform, pricing without subscriptions, and how the apps are built."
+>
   <Nav />
 
-  <main>
-    <div class="wrap">
-      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Notes' }]} />
+  <main id="main" class="wrap notes-page">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Notes' }]} />
 
-      <header class="head">
-        <p class="eyebrow">Notes</p>
-        <h1>Working in the open</h1>
-        <p class="lede">
-          Thoughts on building native software, AI tools, and running a one-person studio.
-        </p>
-      </header>
+    <header class="head">
+      <h1>Notes</h1>
+      <p class="lede">
+        Writing from the studio: how the apps are built, and why they’re built that way.
+      </p>
+    </header>
 
-      {posts.length === 0 ? (
-        <p class="empty">No posts yet. Check back soon.</p>
-      ) : (
-        <ol class="posts">
-          {posts.map((post) => (
-            <li>
-              <a href={`/blog/${post.id}`} class="post">
-                <div class="post__meta">
-                  <time datetime={post.data.date.toISOString()}>
-                    {post.data.date.toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </time>
-                  {post.data.tags.slice(0, 3).map((tag) => <span class="chip">{tag}</span>)}
-                </div>
-                <h2>{post.data.title}</h2>
-                <p class="post__desc">{post.data.description}</p>
-                <span class="post__more">Read &rarr;</span>
-              </a>
-            </li>
-          ))}
-        </ol>
-      )}
-    </div>
+    <ol class="list">
+      {posts.map((post) => (
+        <li class="entry">
+          <time class="ui entry__date" datetime={post.data.date.toISOString()}>{fmt.format(post.data.date)}</time>
+          <div>
+            <h2 class="entry__title"><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+            <p class="entry__desc">{post.data.description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
   </main>
 
   <Footer />
 </Layout>
 
 <style>
-  main { padding: 7rem 0 6rem; }
+  .notes-page { padding-block: clamp(2rem, 5vw, 3rem) clamp(4rem, 9vw, 7rem); }
 
-  .wrap {
-    max-width: 58rem;
-    margin: 0 auto;
-    padding: 0 2.5rem;
-  }
-
-  .head { margin: 1.5rem 0 3rem; }
-
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin: 0 0 1rem;
-  }
+  .head { margin: clamp(2rem, 5vw, 3.5rem) 0 clamp(2.5rem, 5vw, 4rem); }
 
   h1 {
     margin: 0;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(2.4rem, 4.6vw, 3.6rem);
-    line-height: 1;
-    letter-spacing: -0.025em;
+    font-weight: 300;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
   }
 
   .lede {
-    margin: 1.1rem 0 0;
-    font-size: 1.08rem;
-    line-height: 1.6;
-    color: var(--color-text-secondary);
-    max-width: 34rem;
+    margin: 1.4rem 0 0;
+    max-width: 28em;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    line-height: 1.4;
+    color: var(--color-ink-2);
   }
 
-  .empty { color: var(--color-text-tertiary); font-size: 0.9rem; }
-
-  .posts {
+  .list {
     list-style: none;
     margin: 0;
     padding: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .entry {
     display: grid;
-    gap: 1rem;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: 0.4rem 3rem;
+    padding-block: 1.8rem;
+    border-bottom: 1px solid var(--color-line);
   }
 
-  .post {
-    display: block;
-    padding: 1.6rem;
-    border-radius: 16px;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    text-decoration: none;
-    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .post:hover {
-    border-color: var(--color-border-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.8);
-  }
+  .entry__date { color: var(--color-ink-3); padding-top: 0.55rem; }
 
-  .post__meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.7rem;
-  }
-  .post__meta time {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-text-tertiary);
-  }
-  .chip {
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    padding: 0.2rem 0.5rem;
-    border-radius: 999px;
-    background: rgba(239, 159, 39, 0.12);
-    color: var(--color-accent);
-  }
-
-  .post h2 {
-    margin: 0 0 0.5rem;
-    font-size: 1.3rem;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    color: var(--color-text-primary);
-  }
-  .post__desc {
+  .entry__title {
     margin: 0;
-    font-size: 0.92rem;
-    line-height: 1.62;
-    color: var(--color-text-secondary);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.012em;
   }
-  .post__more {
-    display: inline-block;
-    margin-top: 1rem;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--color-accent);
+  .entry__title a {
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .entry__title a:hover { color: var(--color-amber); }
+
+  .entry__desc {
+    margin: 0.5rem 0 0;
+    max-width: 38em;
+    color: var(--color-ink-2);
   }
 
-  @media (max-width: 900px) {
-    main { padding: 5.5rem 0 4rem; }
-    .wrap { padding: 0 1.5rem; }
-    .head { margin-bottom: 2rem; }
+  @media (max-width: 760px) {
+    .entry { grid-template-columns: 1fr; }
+    .entry__date { padding-top: 0; }
   }
 </style>

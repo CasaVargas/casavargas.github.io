@@ -19,7 +19,7 @@ Usually, it's paying for the developer's lifestyle. Which is fine — developers
 
 ## The One-Time Purchase Model
 
-When you buy [OneScribe](/onescribe), [Beltr](/beltr), or any CasaVargas app, you own it. Updates are included. New features are included. There's no moment where you stop paying and lose access to your own workflows.
+When you buy [OneScribe](/work/onescribe/), [Beltr](/work/beltr/), or any CasaVargas app, you own it. Updates are included. New features are included. There's no moment where you stop paying and lose access to your own workflows.
 
 This creates the right incentive structure. We make money by building something good enough that new people want to buy it — not by trapping existing users into perpetual payments.
 
@@ -29,7 +29,7 @@ The honest answer: it's harder. Subscription revenue is predictable and compound
 
 But CasaVargas is a solo indie studio, not a VC-funded startup chasing recurring revenue metrics. The overhead is low. There's no board demanding MRR growth. If an app sells well enough to justify the time spent building it, that's a win.
 
-We also use [GitHub Sponsors](https://github.com/sponsors/prjoni99) for open-source projects like [DebridDownloader](/debrid-downloader). If people find the software valuable and want to support continued development, they can — voluntarily, not because a paywall forces them to.
+We also use [GitHub Sponsors](https://github.com/sponsors/prjoni99) for open-source projects like [DebridDownloader](/work/debrid-downloader/). If people find the software valuable and want to support continued development, they can — voluntarily, not because a paywall forces them to.
 
 ## The User Relationship
 
