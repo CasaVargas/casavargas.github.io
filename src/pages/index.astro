@@ -3,11 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import JsonLd from '../components/JsonLd.astro';
-import Hero from '../components/home/Hero.astro';
-import Proof from '../components/home/Proof.astro';
-import AppBand from '../components/home/AppBand.astro';
+import Opening from '../components/home/Opening.astro';
+import Plate from '../components/home/Plate.astro';
+import Workshop from '../components/home/Workshop.astro';
+import WorkIndex from '../components/WorkIndex.astro';
+import Method from '../components/home/Method.astro';
 import Studio from '../components/home/Studio.astro';
-import { apps } from '../data/apps';
+import LatestNotes from '../components/home/LatestNotes.astro';
+import { featured, caseStudies } from '../data/work';
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -15,12 +18,11 @@ const organizationSchema = {
   name: 'CasaVargas LLC',
   url: 'https://casavargas.app',
   logo: 'https://casavargas.app/casavargas-logo-orange.png',
-  founder: {
-    '@type': 'Person',
-    name: 'Jon Vargas',
-  },
+  email: 'hello@casavargas.app',
+  founder: { '@type': 'Person', name: 'Jon Vargas' },
+  address: { '@type': 'PostalAddress', addressRegion: 'NC', addressCountry: 'US' },
   description:
-    'An indie studio shipping native apps, cross-platform tools, and self-hosted infrastructure.',
+    'A one-person software studio making apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux — paid for once, if at all.',
   sameAs: ['https://github.com/CasaVargas'],
 };
 
@@ -30,56 +32,55 @@ const websiteSchema = {
   name: 'CasaVargas',
   url: 'https://casavargas.app',
 };
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Work by CasaVargas',
+  itemListElement: caseStudies.map((w, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: w.name,
+    url: `https://casavargas.app/work/${w.slug}/`,
+  })),
+};
 ---
 
 <Layout>
   <JsonLd data={organizationSchema} />
   <JsonLd data={websiteSchema} />
+  <JsonLd data={itemListSchema} />
 
   <Nav />
-  <main>
-    <Hero />
-    <Proof />
+  <main id="main">
+    <Opening />
 
-    <section id="apps" class="apps">
-    <div class="apps__head">
-      <p class="eyebrow">The work</p>
-      <h2>Four apps, built to be lived in</h2>
-    </div>
-      {apps.map((app) => <AppBand app={app} />)}
+    <section class="wrap selected" aria-labelledby="selected-title">
+      <header class="selected__head">
+        <h2 id="selected-title" class="section-title">Selected work</h2>
+        <a class="textlink ui selected__all" href="#index">See everything</a>
+      </header>
+      {featured.map((item) => <Plate item={item} />)}
+      <Workshop />
     </section>
 
+    <WorkIndex />
+    <Method />
     <Studio />
+    <LatestNotes />
   </main>
   <Footer />
 </Layout>
 
 <style>
-  .apps { padding: 5.5rem 0 0; }
-  .apps__head {
-    max-width: 84rem;
-    margin: 0 auto;
-    padding: 0 2.5rem 2.5rem;
-  }
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin: 0 0 1.1rem;
-  }
-  h2 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(2.1rem, 3.6vw, 3.1rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-  }
+  .selected { padding-top: clamp(1rem, 3vw, 2rem); }
 
-  @media (max-width: 900px) {
-    .apps { padding: 3.5rem 0 0; }
-    .apps__head { padding: 0 1.5rem 1.5rem; }
+  .selected__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: clamp(2rem, 4vw, 3rem);
   }
+  .selected__all { color: var(--color-ink-2); }
 </style>

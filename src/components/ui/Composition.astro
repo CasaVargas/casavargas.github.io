@@ -1,0 +1,65 @@
+---
+import Shot from './Shot.astro';
+import type { Plate } from '../../data/work';
+
+interface Props {
+  plate: Plate;
+  /** The first image on a case study is above the fold. */
+  eager?: boolean;
+  class?: string;
+}
+
+const { plate, eager = false, class: className } = Astro.props;
+---
+
+<div class:list={['comp', `comp--${plate.layout}`, className]}>
+  {plate.layout === 'feature' && (
+    <>
+      <Shot shot={plate.shots[0]} width={1600} sizes="(max-width: 900px) 100vw, 78vw" eager={eager} />
+      {plate.shots[1] && <Shot shot={plate.shots[1]} class="comp__aside" sizes="(max-width: 900px) 30vw, 15vw" />}
+    </>
+  )}
+
+  {plate.layout === 'phones' &&
+    plate.shots.map((shot, i) => <Shot shot={shot} class={`comp__phone comp__phone--${i}`} />)}
+
+  {plate.layout === 'compact' && (
+    <Shot shot={plate.shots[0]} width={1100} sizes="(max-width: 900px) 100vw, 60vw" eager={eager} />
+  )}
+</div>
+
+<style>
+  .comp { position: relative; }
+
+  /* feature: a large display, a phone standing in front of its corner. */
+  .comp--feature { padding-right: 9%; padding-bottom: 5%; }
+  .comp--feature :global(.comp__aside) {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 17%;
+  }
+
+  /* phones: devices stand in a row, the middle one forward. */
+  .comp--phones {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding-top: 1.5rem;
+  }
+  .comp--phones :global(.comp__phone) { width: min(24%, 290px); }
+  .comp--phones :global(.comp__phone--1) {
+    width: min(27%, 320px);
+    transform: translateY(-1.5rem);
+  }
+
+  @media (max-width: 900px) {
+    .comp--feature { padding-right: 14%; padding-bottom: 10%; }
+    .comp--feature :global(.comp__aside) { width: 26%; }
+
+    .comp--phones { gap: 0.75rem; }
+    .comp--phones :global(.comp__phone) { width: 31%; }
+    .comp--phones :global(.comp__phone--1) { width: 35%; transform: translateY(-0.75rem); }
+  }
+</style>

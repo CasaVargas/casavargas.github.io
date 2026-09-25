@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { caseStudies } from '../data/work';
+---
+
+<Layout title="Page not found — CasaVargas" description="This page doesn’t exist.">
+  <Nav />
+  <main id="main" class="wrap missing">
+    <h1>There’s nothing at this address.</h1>
+    <p class="missing__lede">
+      It may have moved when the site was reorganized. The work now lives under
+      <a class="textlink" href="/work/">/work</a>, and the writing under
+      <a class="textlink" href="/blog/">/blog</a>.
+    </p>
+    <ul class="missing__list">
+      {caseStudies.map((w) => (
+        <li><a class="textlink" href={`/work/${w.slug}/`}>{w.name}</a></li>
+      ))}
+    </ul>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .missing { padding-block: clamp(4rem, 12vw, 9rem); }
+  h1 {
+    margin: 0;
+    max-width: 14em;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 6vw, 4.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+  }
+  .missing__lede {
+    margin: 1.8rem 0 0;
+    max-width: 32em;
+    font-size: 1.25rem;
+    color: var(--color-ink-2);
+  }
+  .missing__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.6rem;
+    margin: 2.2rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 1.125rem;
+  }
+</style>

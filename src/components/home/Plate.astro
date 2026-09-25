@@ -1,0 +1,129 @@
+---
+import { Image } from 'astro:assets';
+import Composition from '../ui/Composition.astro';
+import Facts from '../ui/Facts.astro';
+import { statusFor, type Work } from '../../data/work';
+
+interface Props {
+  item: Work;
+}
+
+const { item } = Astro.props;
+const plate = item.plate!;
+const external = item.links[0];
+const externalLabel = external && (/\.\w+$/.test(external.label) ? `Visit ${external.label}` : external.label);
+---
+
+<article class:list={['plate', `plate--${plate.layout}`]} aria-labelledby={`plate-${item.slug}`}>
+  <div class="plate__art">
+    <Composition plate={plate} />
+  </div>
+
+  <div class="plate__text">
+    <header class="plate__head">
+      {item.icon && (
+        <Image src={item.icon} alt="" widths={[56, 112]} sizes="56px" format="webp" quality={82} class="plate__icon" loading="lazy" />
+      )}
+      <h3 id={`plate-${item.slug}`} class="plate__name">
+        <a href={`/work/${item.slug}/`}>{item.name}</a>
+      </h3>
+    </header>
+
+    <p class="plate__tagline">{item.tagline}</p>
+
+    <p class="plate__links">
+      <a class="textlink" href={`/work/${item.slug}/`}>Read the <span class="visually-hidden">{item.name} </span>case study</a>
+      {external && (
+        <a class="textlink plate__ext" href={external.url} rel="noopener">{externalLabel}</a>
+      )}
+    </p>
+  </div>
+
+  <Facts
+    class="plate__facts"
+    rows={[
+      ['Status', statusFor(item)],
+      ['Runs on', item.runsOn.join(', ')],
+      ...(item.price ? [['Price', item.price] as [string, string]] : []),
+      ['Built with', item.builtWith.join(', ')],
+    ]}
+  />
+</article>
+
+<style>
+  .plate {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2.5vw, 2rem);
+    row-gap: clamp(2.25rem, 4vw, 3.25rem);
+    padding-block: clamp(3.5rem, 8vw, 6.5rem);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .plate__art { grid-column: 1 / -1; position: relative; }
+  .plate__text { grid-column: 1 / span 6; }
+  :global(.plate__facts) { grid-column: 8 / -1; align-self: start; }
+
+  /* compact: thin imagery, told honestly — image and text side by side. */
+  .plate--compact .plate__art { grid-column: 1 / span 7; grid-row: 1 / span 2; align-self: start; }
+  .plate--compact .plate__text { grid-column: 9 / -1; }
+  .plate--compact :global(.plate__facts) { grid-column: 9 / -1; }
+  .plate--compact .plate__name { font-size: clamp(2rem, 3.2vw, 2.75rem); }
+
+  .plate__head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  :global(.plate__icon) {
+    width: 56px;
+    height: 56px;
+    border-radius: 13px;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 1px var(--well-ring);
+  }
+
+  .plate__name {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: 380;
+    font-size: clamp(2.4rem, 4.4vw, 3.75rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .plate__name a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .plate__name a:hover { color: var(--color-amber); }
+
+  .plate__tagline {
+    margin: 1.2rem 0 0;
+    max-width: 30em;
+    font-size: clamp(1.15rem, 1.6vw, 1.3125rem);
+    line-height: 1.5;
+    color: var(--color-ink-2);
+  }
+
+  .plate__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.6rem;
+    margin: 1.5rem 0 0;
+    font-size: 1.0625rem;
+  }
+  .plate__ext { color: var(--color-ink-2); }
+
+  @media (max-width: 900px) {
+    .plate__text,
+    :global(.plate__facts),
+    .plate--compact .plate__art,
+    .plate--compact .plate__text,
+    .plate--compact :global(.plate__facts) {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+
+  }
+</style>

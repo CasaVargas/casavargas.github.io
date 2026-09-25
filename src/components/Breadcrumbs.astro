@@ -12,39 +12,50 @@ interface Props {
 
 const { items } = Astro.props;
 
-const jsonLdItems = items.map((item, index) => ({
-  '@type': 'ListItem',
-  position: index + 1,
-  name: item.label,
-  ...(item.href ? { item: `https://casavargas.app${item.href}` } : {}),
-}));
-
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
-  itemListElement: jsonLdItems,
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, 'https://casavargas.app').href } : {}),
+  })),
 };
 ---
 
-<nav aria-label="Breadcrumb" class="mb-8">
-  <ol class="flex items-center gap-2 text-sm" style="color: var(--color-text-tertiary);">
-    {items.map((item, index) => (
-      <li class="flex items-center gap-2">
-        {index > 0 && <span>/</span>}
-        {item.href ? (
-          <a
-            href={item.href}
-            class="no-underline transition-colors duration-200 hover:text-white"
-            style="color: var(--color-text-secondary);"
-          >
-            {item.label}
-          </a>
-        ) : (
-          <span style="color: var(--color-text-primary);">{item.label}</span>
-        )}
+<nav aria-label="Breadcrumb" class="crumbs ui">
+  <ol>
+    {items.map((item) => (
+      <li>
+        {item.href ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
       </li>
     ))}
   </ol>
 </nav>
 
 <JsonLd data={breadcrumbSchema} />
+
+<style>
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--color-ink-3);
+  }
+  .crumbs li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+    color: var(--color-line-strong);
+  }
+  .crumbs a {
+    color: var(--color-ink-2);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .crumbs a:hover { color: var(--color-amber); }
+  .crumbs [aria-current] { color: var(--color-ink-3); }
+</style>

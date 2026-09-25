@@ -1,0 +1,80 @@
+---
+// From Streamline's docs/platforms.md (dev branch), platform comparison tables.
+const platforms = ['iPhone and iPad', 'Apple TV', 'Mac', 'Vision Pro'];
+const rows: [string, string[]][] = [
+  ['Input', ['Touch and swipe', 'Siri Remote and the focus engine', 'Keyboard, pointer and menu commands', 'Eyes and hands']],
+  ['Navigation', ['Tab bar', 'Top tab bar', 'Split view', 'Split view']],
+  ['Guide', ['A list on iPhone, a grid on iPad', 'Grid', 'Grid', 'Grid']],
+  ['Player', ['Full screen', 'Full screen', 'In the window', 'Inline']],
+  ['Lists', ['Swipe actions and context menus', 'Context menus, driven by focus', 'Context menus', 'Context menus']],
+];
+---
+
+<figure class="idioms">
+  <div class="idioms__scroll">
+    <table>
+      <caption class="visually-hidden">How Streamline adapts to each Apple platform</caption>
+      <thead class="ui">
+        <tr>
+          <th scope="col"><span class="visually-hidden">Aspect</span></th>
+          {platforms.map((p) => <th scope="col">{p}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map(([aspect, cells]) => (
+          <tr>
+            <th scope="row" class="ui">{aspect}</th>
+            {cells.map((c) => <td>{c}</td>)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <figcaption class="idioms__caption">
+    One SwiftUI codebase, four idioms. A root view picks a separate shell for each platform,
+    so each one gets the navigation and input its users expect.
+  </figcaption>
+</figure>
+
+<style>
+  .idioms { margin: 0; }
+
+  .idioms__scroll { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    min-width: 42rem;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  thead th {
+    padding: 0 1rem 0.8rem 0;
+    font-weight: 500;
+    color: var(--color-ink-2);
+    border-bottom: 1px solid var(--color-line-strong);
+  }
+
+  tbody th {
+    padding: 0.95rem 1rem 0.95rem 0;
+    font-weight: 500;
+    color: var(--color-ink-3);
+    vertical-align: baseline;
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.95rem 1rem 0.95rem 0;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+    color: var(--color-ink);
+    vertical-align: baseline;
+  }
+  tbody tr { border-bottom: 1px solid var(--color-line); }
+
+  .idioms__caption {
+    margin-top: 2rem;
+    max-width: 40em;
+    font-style: italic;
+    color: var(--color-ink-2);
+  }
+</style>

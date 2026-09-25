@@ -1,0 +1,94 @@
+---
+// AppPulse's install sequence, from its SPEC.md §0 and Install/Installer.swift.
+// Numbered because it is a real sequence: the order is the design.
+const steps = [
+  ['Preflight', 'The app isn’t running, no privileges are needed, and there’s room on disk.'],
+  ['Extract', 'Into a fresh staging folder. An archive that tries to escape it through a symlink or hard link is rejected.'],
+  ['Match', 'Bundle ID, version and architecture must agree with the app already installed.'],
+  ['Signature', 'codesign --strict, then Gatekeeper’s own assessment.'],
+  ['Team ID', 'The developer must match the one pinned from the installed copy. A mismatch is a hard stop.'],
+  ['Swap', 'The current app is cloned for rollback, then swapped atomically with renamex_np.'],
+  ['Verify again', 'The signature is checked a second time, at its final path.'],
+  ['Release', 'Only then is the quarantine flag removed.'],
+];
+const pivot = 4; // index of the Team ID step — the load-bearing control
+---
+
+<figure class="order">
+  <ol class="order__steps">
+    {steps.map(([title, body], i) => (
+      <li class:list={['step', i === pivot && 'step--pivot']}>
+        <span class="step__n ui">{i + 1}</span>
+        <h3 class="step__title">{title}</h3>
+        <p class="step__body">{body}</p>
+      </li>
+    ))}
+  </ol>
+  <figcaption class="order__caption">
+    The install order. Nothing in <span class="order__path">/Applications</span> changes until the
+    first five checks pass, and a failure after the swap puts the old app back.
+  </figcaption>
+</figure>
+
+<style>
+  .order { margin: 0; }
+
+  .order__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2.5rem clamp(1rem, 2.5vw, 2rem);
+  }
+
+  .step {
+    position: relative;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--color-line-strong);
+  }
+  /* The rail: a node on the line above each step. */
+  .step::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-ink-3);
+  }
+  .step--pivot { border-top-color: var(--color-amber); }
+  .step--pivot::before { background: var(--color-amber); }
+
+  .step__n { color: var(--color-ink-3); }
+  .step--pivot .step__n { color: var(--color-amber); }
+
+  .step__title {
+    margin: 0.35rem 0 0;
+    font-size: 1.3rem;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .step__body {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--color-ink-2);
+  }
+
+  .order__caption {
+    margin-top: 2.5rem;
+    max-width: 40em;
+    font-style: italic;
+    color: var(--color-ink-2);
+  }
+  .order__path { font-style: normal; font-family: var(--font-sans); font-size: 0.92em; }
+
+  @media (max-width: 900px) {
+    .order__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 520px) {
+    .order__steps { grid-template-columns: 1fr; gap: 1.8rem; }
+  }
+</style>

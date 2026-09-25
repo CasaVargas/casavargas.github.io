@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const fmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+---
+
+<section class="notes" aria-labelledby="notes-title">
+  <div class="wrap">
+    <header class="notes__head">
+      <h2 id="notes-title" class="section-title">Notes</h2>
+      <a class="textlink ui notes__all" href="/blog/">All notes</a>
+    </header>
+
+    <ol class="notes__list">
+      {posts.map((post) => (
+        <li class="note">
+          <time class="ui note__date" datetime={post.data.date.toISOString()}>{fmt.format(post.data.date)}</time>
+          <div>
+            <h3 class="note__title"><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+            <p class="note__desc">{post.data.description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .notes {
+    border-top: 1px solid var(--color-line);
+    padding-block: clamp(4.5rem, 10vw, 7rem);
+  }
+
+  .notes__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .notes__all { color: var(--color-ink-2); }
+
+  .notes__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .note {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: 0.4rem 3rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .note__date {
+    color: var(--color-ink-3);
+    padding-top: 0.45rem;
+  }
+
+  .note__title {
+    margin: 0;
+    font-weight: 400;
+    font-size: clamp(1.35rem, 2vw, 1.625rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .note__title a {
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .note__title a:hover { color: var(--color-amber); }
+
+  .note__desc {
+    margin: 0.45rem 0 0;
+    max-width: 40em;
+    font-size: 1.0625rem;
+    color: var(--color-ink-2);
+  }
+
+  @media (max-width: 760px) {
+    .note { grid-template-columns: 1fr; }
+    .note__date { padding-top: 0; }
+  }
+</style>

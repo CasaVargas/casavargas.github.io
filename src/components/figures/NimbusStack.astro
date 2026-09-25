@@ -1,0 +1,109 @@
+---
+// Nimbus architecture, from its AGENTS.md, RcloneClient.swift and MountManager.swift.
+---
+
+<figure class="stack">
+  <div class="stack__grid">
+    <div class="node node--surface" style="grid-area: app">
+      <span class="node__label ui">You see</span>
+      <span class="node__name">The Nimbus app</span>
+    </div>
+    <div class="node node--surface" style="grid-area: finder">
+      <span class="node__label ui">You see</span>
+      <span class="node__name">Your remotes in Finder</span>
+      <span class="node__detail">File Provider extension</span>
+    </div>
+    <div class="node node--surface" style="grid-area: volume">
+      <span class="node__label ui">You see</span>
+      <span class="node__name">Mounted volumes</span>
+      <span class="node__detail">A remote as a Finder volume</span>
+    </div>
+
+    <div class="node" style="grid-area: kit">
+      <span class="node__name">RcloneKit</span>
+      <span class="node__detail">A typed Swift client for rclone’s remote-control API, shared by the app and the extension</span>
+    </div>
+    <div class="node" style="grid-area: nfs">
+      <span class="node__name">rclone serve nfs</span>
+      <span class="node__detail">Mounted with the system’s own NFS client</span>
+    </div>
+
+    <div class="node node--engine" style="grid-area: engine">
+      <span class="node__name">rclone, running locally</span>
+      <span class="node__detail">One engine for every provider. Nimbus never reimplements one.</span>
+    </div>
+
+    <div class="node node--clouds" style="grid-area: clouds">
+      <span class="node__name">S3, Google Drive, OneDrive, SFTP and more than fifty others</span>
+    </div>
+  </div>
+  <figcaption class="stack__caption">
+    One engine, two clients. The app and its Finder extension talk to the same local rclone
+    through RcloneKit; mounts go through rclone’s NFS server.
+  </figcaption>
+</figure>
+
+<style>
+  .stack { margin: 0; }
+
+  .stack__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      'app    finder volume'
+      'kit    kit    nfs'
+      'engine engine engine'
+      'clouds clouds clouds';
+    gap: 1.6rem 1rem;
+  }
+
+  .node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 10px;
+    background: var(--color-ground);
+  }
+  /* A short connector down to the tier below. */
+  .node:not(.node--clouds)::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: calc(-1.6rem - 1px);
+    width: 1px;
+    height: 1.6rem;
+    background: var(--color-line-strong);
+  }
+
+  .node--surface { background: var(--color-surface); }
+  .node--engine { border-color: var(--color-amber); }
+  .node--clouds {
+    border-style: dashed;
+    background: transparent;
+    align-items: center;
+    text-align: center;
+  }
+
+  .node__label { color: var(--color-ink-3); font-size: 0.8125rem; }
+  .node__name { font-size: 1.1875rem; line-height: 1.25; color: var(--color-ink); }
+  .node__detail { font-size: 0.975rem; line-height: 1.45; color: var(--color-ink-2); }
+
+  .stack__caption {
+    margin-top: 2rem;
+    max-width: 40em;
+    font-style: italic;
+    color: var(--color-ink-2);
+  }
+
+  @media (max-width: 720px) {
+    .stack__grid {
+      grid-template-columns: 1fr;
+      grid-template-areas: 'app' 'finder' 'volume' 'kit' 'nfs' 'engine' 'clouds';
+      gap: 0.75rem;
+    }
+    .node::after { display: none; }
+  }
+</style>
