@@ -14,6 +14,10 @@ import osWine from '../assets/onescribe/wine.jpg';
 
 import debridTorrents from '../assets/debrid/torrents.jpg';
 
+import slGuide from '../assets/streamline/guide.jpg';
+import slHome from '../assets/streamline/home.jpg';
+import slPlayer from '../assets/streamline/player-mini-guide.jpg';
+
 /**
  * Every claim in this file must match the product's own public site or store
  * listing; repos are a source for engineering detail only. This site has
@@ -40,6 +44,8 @@ export interface Plate {
    */
   layout: 'feature' | 'phones' | 'compact';
   shots: Shot[];
+  /** Attribution shown under the images (e.g. a CC BY licence credit). */
+  credit?: string;
 }
 
 export type Group = 'available' | 'open-source' | 'workshop';
@@ -183,6 +189,18 @@ export const work: Work[] = [
     builtWith: ['SwiftUI', 'AVFoundation', 'SQLite'],
     links: [{ label: 'getstreamline.tv', url: 'https://getstreamline.tv' }],
     icon: streamlineIcon,
+    // Captured 2026-09-24 against a fictional demo lineup (runbook in Tolaria:
+    // streamline-marketing-screenshots-fictional-lineup-runbook). Never use
+    // captures of a real provider's channels: logos and shows read as piracy.
+    plate: {
+      layout: 'phones',
+      shots: [
+        { src: slGuide, kind: 'phone', alt: 'Streamline’s guide: fictional channels with tonight’s programs' },
+        { src: slHome, kind: 'phone', alt: 'Streamline’s home screen with a live soccer match and tonight’s highlights' },
+        { src: slPlayer, kind: 'phone', alt: 'Streamline playing video with the On Now mini guide open' },
+      ],
+      credit: 'Shown with a demo lineup: channels, programs and artwork are fictional. Video: Big Buck Bunny © Blender Foundation, CC BY 3.0.',
+    },
     highlight:
       'Channel changes run on a time budget: a small pool of warm players pre-buffers the channels you are likely to switch to next.',
   },
@@ -217,7 +235,10 @@ export const work: Work[] = [
 /** One entry per case study (companions excluded), in site order. */
 export const caseStudies = work.filter((w) => !w.parent);
 
-export const featured = work.filter((w) => w.plate);
+/** Plates on the homepage; the compact (thin-imagery) plate always goes last. */
+export const featured = work
+  .filter((w) => w.plate)
+  .sort((a, b) => Number(a.plate!.layout === 'compact') - Number(b.plate!.layout === 'compact'));
 
 export const groups: { id: Group; label: string }[] = [
   { id: 'available', label: 'Available now' },

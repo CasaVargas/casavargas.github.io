@@ -4,14 +4,16 @@ import { work } from '../../data/work';
 
 // Work in development is described, not pictured: no screenshot here would be
 // both honest and publishable yet. See PLAN.md §8.
-const items = work.filter((w) => w.group === 'workshop');
+// Products with a plate already appear in Selected work above.
+const items = work.filter((w) => w.group === 'workshop' && !w.plate);
+const count = ['No', 'One', 'Two', 'Three', 'Four', 'Five'][items.length] ?? String(items.length);
 ---
 
 <section class="workshop" aria-labelledby="workshop-title">
   <header class="workshop__head">
     <h2 id="workshop-title" class="section-title">In the workshop</h2>
     <p class="workshop__intro">
-      Three products in development. They're named here because the work is real;
+      {count} more in development. They're named here because the work is real;
       no dates are promised until they ship.
     </p>
   </header>
@@ -58,7 +60,7 @@ const items = work.filter((w) => w.group === 'workshop');
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
     gap: clamp(1.5rem, 3vw, 2.5rem);
   }
 

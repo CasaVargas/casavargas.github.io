@@ -101,9 +101,11 @@ is invisible to grep, diffing and CI. Rejected so far, and why:
   `Beltr-Dash`: a LAN join URL; `processing` also said "about 5 min left".
 - OneScribe shots with real brands (United, H-E-B, CVS/BCBS, Opus One) — use
   the fictional-data captures in the OneScribe repo's `AppStoreAssets/captures/`.
-- Streamline: every existing shot is full of network logos and copyrighted
-  artwork, which reads as redistributed channels. No Streamline screenshots
-  until a demo playlist of openly licensed streams is captured.
+- Streamline: never use captures of a real provider's lineup; network logos and
+  copyrighted shows read as redistributed channels. The shots here come from a
+  fictional demo lineup with Big Buck Bunny (CC BY 3.0, credited on the plate).
+  Runbook and generator scripts: Tolaria `CasaVargas/Streamline/`
+  (`streamline-marketing-screenshots-fictional-lineup-runbook`).
 - AppPulse: the existing shots show a real personal app library.
 - DebridDownloader: the screenshots here are the real UI rendered with mocked
   IPC and neutral data (Linux installers), captured with headless Chrome. Its
