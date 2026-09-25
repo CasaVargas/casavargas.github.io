@@ -1,254 +1,293 @@
-# casavargas.app — Product-Forward Redesign
+# casavargas.app — Editorial Catalogue Redesign
 
-**Status:** complete and deployed (2026-08-29). Homepage, all four app landing pages and the blog are on the new design system.
-**Date:** 2026-08-29
-**Branch:** `redesign/product-forward`
+**Status:** in progress
+**Date:** 2026-09-24
+**Branch:** `redesign/editorial-catalogue`
+**Supersedes:** the 2026-08-29 product-forward spec (see git history of this file, `c273085`).
 
 ---
 
-## 1. Problem
+## 1. Brief
 
-The current site reads as empty and generic. Three causes, in order of severity:
+> "I need casavargas.app to be stellar and show all my work in a serious manner and
+> elegantly."
 
-1. **Dark-on-dark.** All four apps ship dark UIs. On a `#07070a` page ground their
-   screenshots have no edge — they dissolve into the page. This is the actual
-   cause of the flatness. It reads as "too much whitespace," but adding or
-   removing space cannot fix it; only a value step between page and screenshot can.
-2. **The products are below the fold.** The hero is `min-h-screen` holding a badge,
-   a headline, one line of copy, and platform pills. The apps — the entire pitch —
-   start a full screen down.
-3. **Uniform grid, non-uniform assets.** A flagship card plus a 2-up grid forces
-   four apps into equal cells when only two have imagery to fill one. Result:
-   a card-shaped hole next to DebridDownloader.
+Decisions taken with the owner on 2026-09-24:
 
-Secondary: reveal animations (0.7s + 0.35s stagger) that scrolling outruns, the
-grain overlay, the pulsing "since 2024" dot, emoji as section icons, and an
-`∞ Backlog Ideas` stat that undercuts credibility.
+| Question | Answer |
+|---|---|
+| Direction | **Editorial catalogue.** The site reads like a studio monograph, not an app landing page. |
+| What goes public | Shipped: Beltr (desktop plus the Remote and Client companion apps), OneScribe, DebridDownloader. **In development:** Streamline, Nimbus, AppPulse. |
+| Ground | **Dark, refined.** The owner confirmed dark twice (August and now). |
+| App pages | **Studio case studies** at `/work/<slug>/`. The product sites stay the sales pages. |
 
-## 2. Decisions
+Kept off the site by decision: open-source infrastructure repos (tap, EPG manifest,
+Unraid templates, the lyricsfile proposal), Cappy (unannounced), the IPTV lab
+(LineupTV, StreamPolish, probers), forks of other people's work (cabinet, stemdeck),
+ytfree / Loafr (terms-of-service risk), and personal or throwaway projects.
 
-| Decision | Choice | Note |
-|---|---|---|
-| Scope | Full redesign, new art direction | Homepage first, then app pages + blog |
-| Direction | Product-forward | Screenshots carry the page |
-| Page ground | **Dark** | Chosen over light. Light tested better for screenshot contrast; dark chosen deliberately and the contrast problem is solved structurally instead (§3.2) |
-| Layout | Weighted bands, not a uniform grid | Space allocated by what each app can actually show |
-| Stack | Unchanged — Astro 5 + Tailwind v4 | No framework change |
+## 2. What was wrong with the August site
 
-### 2.1 Rejected
+1. **It showed four apps.** The studio has shipped seven store listings across six
+   platforms and has three credible products in development. "Four apps" undersold it.
+2. **The claims had gone stale again.**
+   - Beltr was tagged `AVFoundation · CoreML` (it is Electron, Python and ONNX Runtime) and listed as macOS/Windows/Linux only (it also has an iPhone Remote, an Apple TV Client, Android apps and Docker images).
+   - OneScribe was described as "iOS" with "Google Docs / OneNote export" (it is iPhone and iPad, 83 document types, $9.99 lifetime Pro).
+3. **Some of it was broken.**
+   - `/beltr` 301s to beltr.app, because the Beltr repo's Pages custom domain claims that path, so the Astro page never served (Tolaria: `casavargas-site-beltr-route-shadowed-by-pages-custom-domain`).
+   - The DebridDownloader screenshot was a cropped, near-empty window.
+   - Under 700 px the nav dropped every link.
+4. **It read as a template.**
+   - A near-black ground with one bright accent.
+   - Uppercase mono eyebrows over every heading, and a "CASAVARGAS LLC — NORTH CAROLINA" label.
+   - A `4 · 7 · 0 · 1` stat strip, pill buttons, green LIVE badges, `→` on every link.
+   - One identical band per app.
+   Each of those is a default, not a choice.
+5. **The SEO basics were thin.** The social card was the logo, and there was no `llms.txt`.
 
-- **Light ground.** Highest contrast for dark app screenshots and the strongest
-  differentiator. Rejected by owner preference; brand stays dark.
-- **Uniform 4-up app grid.** Cannot be filled honestly with current assets.
-- **Keeping the current bones.** Would leave cause #1 unaddressed.
+## 3. Art direction — "the house at night"
 
-## 3. Art direction
+CasaVargas means the Vargas house. The page is that house after dark: a warm walnut
+ground lit by the brand amber like a desk lamp, holding the things the house has
+made. Every product ships a near-black UI, so a ground **lighter** than those UIs
+makes each screenshot read as a dark screen set into a lit room. That solves the
+dark-on-dark problem in the ground itself, instead of mechanically on every image.
 
 ### 3.1 Tokens
 
-```
---bg          #0A0A0E    page ground
---bg-alt      #101017    alternating band ground
---surface     #17171F    cards
---ink         #F4F3F7
---ink-soft    #ABA9B6
---ink-faint   #74727F
---rule        rgba(255,255,255,0.13)
---rule-soft   rgba(255,255,255,0.07)
---accent      #EF9F27    unchanged brand orange
---chrome-bg   #1C1C24    window titlebar
-```
-
-Type unchanged: Instrument Serif (display), DM Sans (body), JetBrains Mono
-(labels/tags). Serif gets used more confidently and at larger sizes.
-
-### 3.2 Making dark screenshots read on a dark ground
-
-This is the core technique of the redesign. Four mechanisms, all required:
-
-1. **Window chrome.** Desktop app shots (Beltr ×3, DebridDownloader) get a 28px
-   titlebar with traffic lights. A bright horizontal edge at the top of the image
-   is what makes a dark UI stop merging with a dark page.
-2. **Specular top edge.** Every framed shot gets `inset 0 1px 0 rgba(255,255,255,0.14)`.
-3. **Physical phone bezels.** Phone shots get a 5px light-to-dark gradient bezel
-   (`#35353F → #1A1A21`) plus a 20%-white ring, so a black screen has something
-   lighter around it.
-4. **Banded grounds.** Sections alternate `--bg` / `--bg-alt` so consecutive
-   screenshots don't sit on identical values.
-
-Plus a soft `rgba(239,159,39,0.13)` accent bloom behind the hero shot.
-
-### 3.3 Removed
-
-Grain overlay, pulse dot, scroll indicator, `.reveal` scroll animations, emoji
-pillars, `∞ Backlog Ideas`.
-
-## 4. Page structure
-
-```
-Nav            sticky, hairline, logo · Apps · Studio · Notes · Get in touch
-Hero           2-col — headline + lede + 2 CTAs | Beltr library shot (windowed)
-Proof          4 · 7 · 0 · 1  (apps / platforms / subscriptions / developers)
-Apps
-  Beltr        large band, copy left, processing shot + floating add-music inset
-  Streamline   large band, copy right, 3 staggered phones
-  OneScribe    medium band, copy left, 2 phones
-  Debrid       compact row — deliberately lighter weight
-Studio         bio + stack table
-Footer         brand + app links + contact
-```
-
-Every app band carries: icon, category kicker, name, status pill, description,
-three concrete spec bullets, platform tags, and an outbound link.
-
-## 5. Files
-
-**New**
-- `src/components/home/Hero.astro`
-- `src/components/home/Proof.astro`
-- `src/components/home/AppBand.astro` — takes an `App` + `variant: 'large' | 'compact'`
-- `src/components/home/Studio.astro`
-- `src/components/ui/Frame.astro` — window chrome + specular edge
-- `src/components/ui/Phone.astro` — bezel treatment
-
-**Modified**
-- `src/styles/global.css` — new tokens, delete grain + reveal machinery
-- `src/data/apps.ts` — add `screenshots`, `specs[]`, `heroShot` per app
-- `src/pages/index.astro` — recomposed
-- `src/components/Nav.astro`, `Footer.astro` — restyled
-- `astro.config.mjs` — `devToolbar: { enabled: false }`
-
-**Deleted**
-- `src/components/Hero.astro`, `Philosophy.astro`, `Stats.astro`, `About.astro`, `AppCard.astro`
-- `src/pages/preview-light.astro`, `preview-dark.astro`, `src/components/preview/` (after approval)
-
-## 6. Assets
-
-Downloaded to `public/` on this branch:
-
-| App | Files | Source |
+| Token | Value | Role |
 |---|---|---|
-| Beltr | `library.webp`, `processing.webp`, `addmusic.webp`, `icon.png` | beltr.app |
-| OneScribe | `boarding.png`, `receipt.png`, `health.png`, `wine.png` | getonescribe.app `/Screenshots/DataCards/` |
-| Debrid | `screenshot.png` | GitHub `docs/` |
-| Streamline | already present | repo |
+| `--ground` | `#231C16` | Page ground, walnut |
+| `--ground-deep` | `#1A1511` | Recessed bands: index, footer |
+| `--surface` | `#2C231C` | Raised: row hover, facts tables |
+| `--ink` | `#F4EDE3` | Primary text, warm paper white (14.3:1 on ground) |
+| `--ink-2` | `#C9BDAE` | Secondary text (9.0:1) |
+| `--ink-3` | `#A39686` | Tertiary and meta text (5.75:1; AA on every ground) |
+| `--line` | `rgba(244,237,227,.13)` | Rules |
+| `--amber` | `#EF9F27` | Brand: logo, the lamp glow, link hover, focus ring. Used sparingly. |
+| `--screen` | `#0B0A09` | Image wells: the dark "glass" around screenshots |
 
-**Gap:** DebridDownloader has exactly one sparse screenshot. The compact band is
-designed around that, not as a workaround to be undone later. If better shots
-appear, it can be promoted to a large band with no structural change.
+### 3.2 Type
 
-### 6.1 Screenshots can carry stale product claims
+- **Newsreader** (variable, `opsz` 6–72, weight 200–800, with italics) does display *and*
+  body. Display sizes run at the 72 optical size and light weight. Body is 18–19 px at
+  a text optical size with 1.6 leading. This is a book face, which is what makes the
+  site read as a monograph.
+- **Hanken Grotesk** (variable) is used only for small functional UI: nav, facts-table
+  labels, table heads, dates, buttons. It is clearly distinct from the serif.
+- **No monospace. No all-caps labels. No letter-spaced eyebrows.**
+- Scale, after Bringhurst: 14 · 16 · 18 · 21 · 24 · 36 · 48 · 60 · 72 · 96+.
+  Tabular lining figures in tables.
 
-`cinematic-bigscreen.webp` was pulled from beltr.app and has **"Demucs doing
-surgery, thirty seconds, clean stem"** rendered into the image. Beltr no longer
-uses Demucs, and separation now takes a minute or two, not thirty seconds. The
-asset has been deleted from this branch and must not be reused.
+### 3.3 Principles
 
-This is a standing hazard for a screenshot-driven site: marketing imagery
-embeds copy that goes stale independently of the page around it, and nothing
-in the build will catch it. **Every screenshot must be read for burned-in text
-before it ships**, and re-checked whenever an app's positioning changes.
+- **Spend boldness in one place:** the opening statement, set huge, under the lamp
+  glow. Everything below it is quiet and disciplined.
+- **Structure only where it carries information.**
+  - Facts tables (`dl`) replace meta strings joined with middle dots.
+  - The index table is real tabular data.
+  - No decorative numbering: the work isn't a sequence.
+- **Plain words.** Sentence case, active voice, no hype adjectives.
+  - Links say what happens ("Read the case study", "Visit beltr.app") and are
+    underlined text, not pills with arrows.
+- **One motion moment.** On load, the lamp glow warms up and the opening sentence
+  settles. Nothing else animates on its own. Hover and focus states answer the
+  user's action. `prefers-reduced-motion` turns the moment off.
+- **Screens, not cards.**
+  - Screenshots sit in `--screen` wells with a thin warm ring and a specular top lip.
+  - Desktop shots keep a slim window titlebar.
+  - Phones keep a lit bezel.
+  - Radius follows hierarchy: 18 px on large wells, 10 px on small, 0 on tables.
 
-Audited so far — `library.webp`, `processing.webp`, `addmusic.webp` clean
-(`processing.webp` reads "Separating vocals · 20% · <1 min", which matches
-current claims). Streamline and OneScribe shots not yet audited.
+## 4. Information architecture
 
-**Optimization is mandatory, not optional.** Streamline PNGs are 1.7–2.7MB and
-OneScribe's are 348–604KB. A screenshot-heavy page cannot ship those. Move all
-screenshots to `src/assets/` and render through `astro:assets` `<Image>` /
-`<Picture>` with `formats: ['avif','webp']` and explicit `widths`. Target: no
-single image over 200KB on the wire, LCP image under 150KB.
+| Route | What |
+|---|---|
+| `/` | Homepage, §5 |
+| `/work/` | The full index as its own page (breadcrumb parent for the case studies) |
+| `/work/<slug>/` | Case study: `beltr`, `onescribe`, `streamline`, `debrid-downloader`, `nimbus`, `apppulse` |
+| `/blog/`, `/blog/<slug>/` | Notes, restyled to the new system. Post content unchanged. |
+| `/404` | Styled 404 (GitHub Pages serves `404.html`) |
 
-### 6.2 Beltr facts of record (source: beltr.app, 2026-08-29)
+- **Redirects.** These use Astro `redirects`, which emits meta refresh plus a canonical:
+  - `/streamline/` → `/work/streamline/`
+  - `/onescribe/` → `/work/onescribe/`
+  - `/debrid-downloader/` → `/work/debrid-downloader/`
+  - `src/pages/beltr.astro` is **deleted**, because it can never serve (see §2.3).
+- **`/work/` is unclaimed.** No `CasaVargas/work` or `prjoni99/work` repo exists;
+  `curl -sI https://casavargas.app/work/` returned 404 on 2026-09-24.
+- **Nav:** Work, Notes, Studio, Contact.
+  - Contact is a `mailto:hello@casavargas.app` text link, not a pill.
+  - On narrow screens the links wrap to a second row under the wordmark instead of
+    disappearing.
 
-- On-device AI vocal separation; **no Demucs**, no named model
-- A minute or two per song; faster on Apple Silicon, slower on older CPUs
-- Nothing uploads — fully local
-- $19.99 once, 5 songs free, no card, 14-day refund
-- Phones join by QR as mics; no app install, no accounts
-- Reads CDG, MP3+G, `.kar`, `.mid`, Thai NCN as-is; exports MP3+G, CDG, `.kar`
-- StemDeck is a *separate recommended tool*, not a Beltr feature
+## 5. Homepage
 
-## 7. Scope (delivered)
+```
+CasaVargas (mark + wordmark)                   Work  Notes  Studio  Contact
 
-**Pass 1 — homepage.** Hero, proof strip, weighted app bands, studio section.
+  CasaVargas makes software you own: native apps for the Mac,
+  iPhone, iPad, Apple TV and the desktop, sold once and kept
+  for good.                                   ← Newsreader 72, light, ~15 words/line
+  A one-person studio in North Carolina, run by Jon Vargas.
 
-**Pass 2 — everything else.** The four app landing pages now share an
-`AppPage` layout and are thin data files; the blog index and post template were
-restyled to match. Screenshots everywhere go through `Frame` / `Phone`.
+  Available now: Beltr, Beltr Remote, OneScribe.  In the workshop: Streamline, Nimbus, AppPulse.
+                                              ← inline linked sentence, not a stat strip
 
-Corrected along the way, all of it the same class of defect as §6.1 — claims
-that went stale independently of the page around them:
+─ Selected work ───────────────────────────────────────────────────────────────
+  [plate: large screen composition, full content width]
+  Beltr                              Runs on   macOS, Windows, Linux, iPhone…
+  Karaoke from the music you own.    Price     $19.99 once, 5 songs free
+  2-sentence summary.                Status    Available — v1.68
+  Read the case study   beltr.app    Built with Electron, Python, ONNX Runtime…
 
-| Claim | Was | Now |
-|---|---|---|
-| Beltr separation | "in real time", "no pre-processing, no waiting" | on-device, a minute or two per song |
-| Beltr remotes | "iOS Remote" / "Android Remote" platforms and apps | phones join by QR, nothing to install |
-| Beltr `offers.price` | `'0'` in JSON-LD | `'19.99'` |
-| DebridDownloader licence | "MIT licensed" | GPL-3.0 |
-| DebridDownloader providers | Real-Debrid only | Real-Debrid, TorBox, Premiumize |
+  [plate] OneScribe          (phones)
+  [plate] Streamline         (phones, "In development")
+  [plate] DebridDownloader   (compact, open source; honest about thin imagery)
 
-Still out of scope: no new photography or screenshot capture.
+─ Index (ground-deep band) ────────────────────────────────────────────────────
+  Available      Beltr · Beltr Remote · Beltr Client · OneScribe
+  Open source    DebridDownloader
+  In the workshop Streamline · Nimbus · AppPulse
+  columns: Name | What it is | Runs on | Built with          (rows link to case study)
 
-## 8. Verification (results)
+─ How the studio works ────────────────────────────────────────────────────────
+  One large serif paragraph, not a four-card grid: bought once; runs on your
+  machine; native to its platform; written down before it's built.
 
-Measured against the production build (`astro preview`), not the dev server —
-Astro's dev server generates image transforms on demand, which makes lazy images
-read as broken when they are not.
+─ Studio ──────────────────────────────────────────────────────────────────────
+  Bio (third person, factual) + the tools and infrastructure, as a short facts table.
 
-- [x] Renders correctly at 1440, 1280, and 500 px. **390 px not tested** — the
-      browser window would not go below ~500 px wide; the 500 px pass exercised
-      every mobile breakpoint (`max-width: 900px`), so coverage is good but not
-      literally phone-width.
-- [x] `npm run build` clean — 10 pages
-- [x] No image over 200 KB on the wire — largest is 172 KB (`vod.webp`);
-      sources were 1.7–2.7 MB PNGs
-- [x] Lighthouse desktop: **Accessibility 100, Best Practices 100, SEO 100**, 0 failed audits
-- [x] Contrast: `--color-text-tertiary` was **#74727f at 4.19:1 — failing WCAG AA**.
-      Raised to `#8a8895` (5.12–5.68:1 across all three grounds).
-- [x] SEO preserved — canonical, OG, and JSON-LD verified present on all 7 pages
-- [x] All internal links resolve; 0 broken images across all 7 pages
-- [x] No horizontal document overflow (`.hero::before` bloom was pushing
-      scrollWidth 32 px past the viewport, hidden by `body{overflow-x:hidden}`)
+─ Notes ───────────────────────────────────────────────────────────────────────
+  Latest three posts: date, title, one-line description.
 
-### 8.2 Pass 2 results
+─ Colophon footer (ground-deep) ───────────────────────────────────────────────
+  Contact, GitHub, Sponsor. "Set in Newsreader and Hanken Grotesk. Built with Astro."
+  © CasaVargas LLC
+```
 
-- [x] Lighthouse desktop 100/100/100 with 0 failures on `/beltr/` **and** the
-      blog post, as well as `/`
-- [x] No horizontal overflow on any of the 7 pages at a mobile viewport
-- [x] Largest image on the wire 192 KB
-- [x] Two further a11y defects found and fixed, both sitewide:
-      footer column labels were `<h4>` after an `<h2>` (heading-order), and
-      inline prose links were colour-only at 1.06:1 against body text — now
-      underlined.
+## 6. Case study template (`src/layouts/CaseStudy.astro`)
 
-### 8.3 Known gaps
+1. Breadcrumb (Work / Name), app icon, name (display), tagline.
+2. Facts table: runs on, price, status, built with, links. Structured, never a
+   middle-dot string.
+3. Lead image composition (same well treatment as the homepage plate).
+4. **Intro:** 2–3 sentences.
+5. **The problem:** one paragraph.
+6. **What it does:** 4–6 features, as a two-column definition list.
+7. **How it's built:** 3–5 engineering highlights. This is the section that makes the
+   site serious. It holds real decisions a working engineer would respect, cited from
+   each repo's own docs.
+8. Additional screenshots where they add something, never as filler.
+9. Primary call to action to the product site or store (shipped), or a note that the
+   product is in development with no date promised.
+10. Next case study link.
 
-- **390 px viewport untested.** The browser window would not size below ~500 px.
-  Every mobile breakpoint (`max-width: 900px`) is exercised at 500 px, so
-  coverage is good but not literally phone-width.
-- Performance score not measured (the Lighthouse tool covers a11y/BP/SEO only).
-- **`cinematic-bigscreen.webp` is still live on beltr.app** advertising Demucs
-  and "thirty seconds". Out of this repo's reach; tracked in Tolaria.
-- `Setting-the-Stage.mp4` remains unaudited for burned-in claims.
+Every shipped product page carries `SoftwareApplication` JSON-LD with a real `offers`
+block. In-development pages carry no `offers`.
 
-## 9. Build sequence
+## 7. Data model
 
-1. Tokens + `global.css` cleanup
-2. `Frame` / `Phone` primitives
-3. `astro:assets` migration + image optimization
-4. `apps.ts` schema extension
-5. `Hero`, `Proof`, `AppBand`, `Studio`
-6. Recompose `index.astro`, delete dead components
-7. Responsive pass + verification checklist
-8. Delete preview routes
+`src/data/apps.ts` → **`src/data/work.ts`**, the single source of truth for the
+homepage plates, the index, the case studies, the footer, and the JSON-LD.
 
-## 10. Open questions
+```ts
+interface Work {
+  slug: string;              // case-study slug; companions point at a parent
+  name: string;
+  what: string;              // ≤10 words, index column
+  tagline: string;           // one sentence, plain
+  group: 'available' | 'open-source' | 'workshop';
+  runsOn: string[];
+  builtWith: string[];
+  price?: string;            // omitted for in-development
+  status: string;            // "Available — v1.68" / "In development"
+  links: { label: string; url: string }[];
+  icon?: ImageMetadata;
+  parent?: string;           // Beltr Remote / Client → 'beltr'
+  plate?: { kind: 'window' | 'phones'; shots: ImageMetadata[]; size: 'full' | 'compact' };
+}
+```
 
-1. Headline: "Software you own." is a draft. Keep, or write against the existing
-   "Software built to feel right"?
-2. Proof strip — are `4 / 7 / 0 / 1` the numbers worth showing, or drop the strip?
-3. Should the Beltr `Setting-the-Stage.mp4` (172KB) become an autoplaying muted
-   hero loop instead of a static shot? **Must be audited frame-by-frame for
-   burned-in claims first** — it comes from the same beltr.app batch as the
-   Demucs shot (§6.1), and its name suggests it shows the same lyric stage.
+Case-study prose (intro, problem, features, engineering) lives in the page file, so
+each `src/pages/work/<slug>.astro` stays a thin, readable content file around the
+layout.
+
+## 8. Facts of record and content rules
+
+- **The product's own public site or store listing is the source of truth for every
+  claim.** The repos are the source for engineering detail only. Research notes from
+  2026-09-24 are summarised per product in the page files.
+- **Beltr:**
+  - $19.99 once, 5 songs free, 14-day refund.
+  - On-device separation, a minute or two per song.
+  - Phones join by QR with nothing to install, *and* optional native Remote apps exist.
+  - **Never** mention Demucs, "real time", "thirty seconds", YouTube or yt-dlp features.
+- **OneScribe:** iPhone and iPad, iOS 26+; free scanning; Pro is $9.99 one-time;
+  83 document types; on-device.
+- **Streamline:** a native IPTV player for the user's own M3U / Xtream playlists and
+  XMLTV guides; coming 2026. **No mention of Stremio, add-ons, debrid, or content
+  sourcing.**
+- **DebridDownloader:**
+  - GPL-3.0; Real-Debrid, TorBox, Premiumize.
+  - Stated factually; no piracy framing.
+  - Search sources are user-configured, and the app ships none.
+- **Nimbus:** no licence stated (unresolved in its repo).
+- **AppPulse:** a working title; don't name competitor products.
+- **Screenshots carry claims.** Open every image before shipping it.
+  - Banned: `cinematic-bigscreen.webp` and `phone-native-sing.webp` (both have a stale
+    Demucs lyric), and `ui-tv-lobby.webp` uncropped (shows a LAN IP).
+  - Nothing with personal data or third-party artwork dominating the frame.
+
+## 9. Assets
+
+- All screenshots are imported from `src/assets/<slug>/` and rendered through
+  `astro:assets` as AVIF/WebP at explicit widths.
+- No image over 200 KB on the wire; the LCP image under 150 KB (the LCP is text now,
+  which is better still).
+- `public/` holds only files that need stable URLs: favicons, logo, OG cards.
+- New OG card: `public/og/casavargas.png` (1200×630), typeset in the site's own system.
+
+## 10. Verification
+
+Everything is measured against `npm run build && npm run preview`, never the dev server.
+
+- [ ] `npm run build` clean; `astro check` clean if available
+- [ ] 1440, 1024, 768 and 390 px: no horizontal overflow (`scrollWidth === clientWidth`
+      measured, not hidden)
+- [ ] Every internal link resolves, including redirects
+- [ ] Lighthouse accessibility 100; visible keyboard focus everywhere
+- [ ] `prefers-reduced-motion` disables the load moment
+- [ ] JSON-LD valid on home and every case study; canonical and OG on every page
+- [ ] Every screenshot on the site opened and read for burned-in claims
+
+## 11. Phases
+
+### Phase 1 — Foundation (in progress)
+- [ ] Fonts: add Newsreader and Hanken Grotesk variable; remove Instrument Serif, DM Sans and JetBrains Mono
+- [ ] Rewrite `global.css` tokens and base typography (§3)
+- [ ] `src/data/work.ts` (§7) with verified facts
+- [ ] Nav + footer (colophon) rebuilt; mobile nav keeps its links
+
+### Phase 2 — Homepage
+- [ ] Opening statement + lamp glow + load moment
+- [ ] Plates (`Plate.astro`), reusing the refined `Frame` / `Phone` wells
+- [ ] Index (`WorkIndex.astro`)
+- [ ] How the studio works, Studio, Notes sections
+- [ ] Visual review at 1440 and 390; critique pass
+
+### Phase 3 — Case studies
+- [ ] `CaseStudy.astro` layout
+- [ ] Six case studies with researched, fact-checked content
+- [ ] `/work/` index page; redirects; delete `beltr.astro`
+- [ ] JSON-LD per page
+
+### Phase 4 — Notes, 404, SEO
+- [ ] Blog index + post template restyled
+- [ ] 404 page
+- [ ] OG card, `llms.txt`, sitemap sanity check
+
+### Phase 5 — Verify and ship
+- [ ] §10 checklist
+- [ ] Update `AGENTS.md` for the new architecture
+- [ ] PR to `main`; the owner merges (merging deploys)
