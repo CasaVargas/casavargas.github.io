@@ -48,7 +48,9 @@ public/og/                  Open Graph cards (generated), llms.txt, favicons
 ```
 
 Redirects for the old app URLs (`/streamline`, `/onescribe`,
-`/debrid-downloader` → `/work/…/`) live in `astro.config.mjs`.
+`/debrid-downloader` → `/work/…/`) live in `astro.config.mjs`. Streamline was
+renamed Cathode TV on 2026-09-26; `/streamline` and `/work/streamline` both
+redirect to `/work/cathode-tv/`.
 
 **`/beltr` cannot be a route on this site.** GitHub Pages redirects it to
 beltr.app because the Beltr repo's Pages custom domain claims that path. Before
@@ -101,11 +103,11 @@ is invisible to grep, diffing and CI. Rejected so far, and why:
   `Beltr-Dash`: a LAN join URL; `processing` also said "about 5 min left".
 - OneScribe shots with real brands (United, H-E-B, CVS/BCBS, Opus One) — use
   the fictional-data captures in the OneScribe repo's `AppStoreAssets/captures/`.
-- Streamline: never use captures of a real provider's lineup; network logos and
+- Cathode TV (formerly Streamline): never use captures of a real provider's lineup; network logos and
   copyrighted shows read as redistributed channels. The shots here come from a
   fictional demo lineup with Big Buck Bunny (CC BY 3.0, credited on the plate).
-  Runbook and generator scripts: Tolaria `CasaVargas/Streamline/`
-  (`streamline-marketing-screenshots-fictional-lineup-runbook`).
+  Runbook: Tolaria `cathodetv-marketing-screenshots-runbook`; the generator
+  lives in the marketing repo at `cathodetv/demo-lineup/`.
 - AppPulse: the existing shots show a real personal app library.
 - DebridDownloader: the screenshots here are the real UI rendered with mocked
   IPC and neutral data (Linux installers), captured with headless Chrome. Its

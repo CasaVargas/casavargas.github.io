@@ -17,7 +17,7 @@ Decisions taken with the owner on 2026-09-24:
 | Question | Answer |
 |---|---|
 | Direction | **Editorial catalogue.** The site reads like a studio monograph, not an app landing page. |
-| What goes public | Shipped: Beltr (desktop plus the Remote and Client companion apps), OneScribe, DebridDownloader. **In development:** Streamline, Nimbus, AppPulse. |
+| What goes public | Shipped: Beltr (desktop plus the Remote and Client companion apps), OneScribe, DebridDownloader. **In development:** Cathode TV (announced as Streamline), Nimbus, AppPulse. |
 | Ground | **Dark, refined.** The owner confirmed dark twice (August and now). |
 | App pages | **Studio case studies** at `/work/<slug>/`. The product sites stay the sales pages. |
 
@@ -105,12 +105,12 @@ dark-on-dark problem in the ground itself, instead of mechanically on every imag
 |---|---|
 | `/` | Homepage, §5 |
 | `/work/` | The full index as its own page (breadcrumb parent for the case studies) |
-| `/work/<slug>/` | Case study: `beltr`, `onescribe`, `streamline`, `debrid-downloader`, `nimbus`, `apppulse` |
+| `/work/<slug>/` | Case study: `beltr`, `onescribe`, `cathode-tv`, `debrid-downloader`, `nimbus`, `apppulse` |
 | `/blog/`, `/blog/<slug>/` | Notes, restyled to the new system. Post content unchanged. |
 | `/404` | Styled 404 (GitHub Pages serves `404.html`) |
 
 - **Redirects.** These use Astro `redirects`, which emits meta refresh plus a canonical:
-  - `/streamline/` → `/work/streamline/`
+  - `/streamline/` and `/work/streamline/` → `/work/cathode-tv/` (the 2026-09-26 rename)
   - `/onescribe/` → `/work/onescribe/`
   - `/debrid-downloader/` → `/work/debrid-downloader/`
   - `src/pages/beltr.astro` is **deleted**, because it can never serve (see §2.3).
@@ -261,6 +261,11 @@ layout.
 
 Where the build departed from §5–§9, and why:
 
+- **Streamline became Cathode TV (2026-09-26).** A brand rename only: the app's
+  code still says Streamline. The case study moved to `/work/cathode-tv/`, links
+  point at cathodetv.app, and the icon comes from the marketing repo
+  (`cathodetv/xcode/app-store/AppIcon-1024.png`). Mentions of Streamline below are
+  historical.
 - **Streamline lost its homepage plate.** Every existing Streamline screenshot
   is dominated by network logos and copyrighted artwork. On an IPTV player that
   reads as redistributed channels, which contradicts "your own playlists".

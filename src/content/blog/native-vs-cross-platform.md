@@ -13,7 +13,7 @@ For Apple platforms, we build with **SwiftUI and Swift 6**. For cross-platform d
 
 ## When We Go Native: SwiftUI
 
-[Streamline](/work/streamline/) is our IPTV player for Apple TV, Mac, iPhone, iPad, and Vision Pro. It's built entirely in SwiftUI. Here's why:
+[Cathode TV](/work/cathode-tv/) is our IPTV player for Apple TV, Mac, iPhone, iPad, and Vision Pro. It's built entirely in SwiftUI. Here's why:
 
 **Platform integration is the product.** An IPTV player on Apple TV needs to work with the tvOS focus engine, the Siri Remote's touch surface, and Apple's video playback APIs (AVKit). On Vision Pro, it needs spatial windows. On iPhone, it needs to feel like a first-party app. None of this works well through an abstraction layer.
 

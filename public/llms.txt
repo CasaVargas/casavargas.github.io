@@ -16,7 +16,7 @@ Each product below has a case study on this site (why it exists, what it does, h
 
 ## In development
 
-- [Streamline](https://casavargas.app/work/streamline/): A native IPTV player for your own M3U or Xtream playlists and XMLTV guides, on iPhone, iPad, Mac, Apple TV and Vision Pro. Due in 2026. Product site: https://getstreamline.tv
+- [Cathode TV](https://casavargas.app/work/cathode-tv/): A native IPTV player for your own M3U or Xtream playlists and XMLTV guides, on iPhone, iPad, Mac, Apple TV and Vision Pro. Due in 2026. Product site: https://cathodetv.app
 - [Nimbus](https://casavargas.app/work/nimbus/): A native Mac app that puts S3, Google Drive, OneDrive, SFTP and other storage into Finder, driven by rclone.
 - [AppPulse](https://casavargas.app/work/apppulse/) (working title): A Mac app updater that installs an update only after verifying it comes from the same developer as the installed app.
 
@@ -25,7 +25,7 @@ Each product below has a case study on this site (why it exists, what it does, h
 - [Why we don't do subscriptions](https://casavargas.app/blog/why-we-dont-do-subscriptions/)
 - [Native vs cross-platform: when to use each](https://casavargas.app/blog/native-vs-cross-platform/)
 - [Building Beltr: AI vocal separation](https://casavargas.app/blog/building-beltr-ai-vocal-separation/)
-- [Introducing Streamline](https://casavargas.app/blog/introducing-streamline-iptv-player/)
+- [Introducing Cathode TV (announced as Streamline)](https://casavargas.app/blog/introducing-streamline-iptv-player/)
 
 ## Contact
 

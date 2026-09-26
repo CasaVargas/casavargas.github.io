@@ -1,13 +1,14 @@
 ---
 import CaseStudy from '../../layouts/CaseStudy.astro';
 import Composition from '../../components/ui/Composition.astro';
-import StreamlineIdioms from '../../components/figures/StreamlineIdioms.astro';
+import CathodeTvIdioms from '../../components/figures/CathodeTvIdioms.astro';
 import { bySlug } from '../../data/work';
 
-const item = bySlug('streamline');
+const item = bySlug('cathode-tv');
 
-// Facts checked 2026-09-24 against getstreamline.tv and the repo (dev branch).
-// Streamline is presented strictly as a player for the user's own M3U / Xtream
+// Facts checked 2026-09-24 against getstreamline.tv and the repo (dev branch);
+// renamed from Streamline 2026-09-26, product site now cathodetv.app.
+// Cathode TV is presented strictly as a player for the user's own M3U / Xtream
 // playlists and XMLTV guides. Never: Stremio, add-ons, debrid, torrents, VLCKit,
 // the companion server, DVR, multi-view, measured switch times, a price or a
 // date more specific than 2026. Screenshots come only from the fictional
@@ -16,11 +17,11 @@ const item = bySlug('streamline');
 ---
 
 <CaseStudy
-  slug="streamline"
-  title="Streamline, a native IPTV player for every Apple screen | CasaVargas"
-  description="How Streamline is being built: one SwiftUI codebase across iPhone, iPad, Mac, Apple TV and Vision Pro, a streaming XMLTV parser, and channel changes on a time budget. A case study from CasaVargas."
-  intro="Streamline is an IPTV player for iPhone, iPad, Mac, Apple TV and Vision Pro. It plays the playlists and program guides you already have. It is one SwiftUI codebase, with each platform built around its own input: touch, keyboard, the Siri Remote, or eyes and hands. It is in development and due in 2026, as a single purchase."
-  problem="An IPTV playlist is just a list of channels. The guide data that makes it watchable usually arrives as a large, compressed XML file that most players handle poorly. And on Apple TV especially, a player has to get focus, remote input and channel changes exactly right, or it feels broken however good it looks. Streamline treats the guide and the channel change as the core of the product, not as features."
+  slug="cathode-tv"
+  title="Cathode TV, a native IPTV player for every Apple screen | CasaVargas"
+  description="How Cathode TV is being built: one SwiftUI codebase across iPhone, iPad, Mac, Apple TV and Vision Pro, a streaming XMLTV parser, and channel changes on a time budget. A case study from CasaVargas."
+  intro="Cathode TV is an IPTV player for iPhone, iPad, Mac, Apple TV and Vision Pro. It plays the playlists and program guides you already have. It is one SwiftUI codebase, with each platform built around its own input: touch, keyboard, the Siri Remote, or eyes and hands. It is in development and due in 2026, as a single purchase."
+  problem="An IPTV playlist is just a list of channels. The guide data that makes it watchable usually arrives as a large, compressed XML file that most players handle poorly. And on Apple TV especially, a player has to get focus, remote input and channel changes exactly right, or it feels broken however good it looks. Cathode TV treats the guide and the channel change as the core of the product, not as features."
   features={[
     { title: 'Plays your own playlists', body: 'M3U and M3U8 playlists, the Xtream Codes API and XMLTV guides.' },
     { title: 'A seven-day guide', body: 'Every channel gets a timeline that opens at the current time, with now and next, genre filters and the week ahead.' },
@@ -35,8 +36,8 @@ const item = bySlug('streamline');
     { title: 'Predictable focus on Apple TV', body: 'The player’s on-screen controls run on a five-state machine that replaced four separate flags and their sixteen combinations; only one element can hold focus at a time, so the focus engine never has to choose. The guide grid never recycles the focused cell, and when it rebuilds it keeps you at the same time of day, not the same scroll offset.' },
     { title: 'Large catalogs on SQLite', body: 'Channels live in SQLite with a full-text index for search, and lists load in pages. The Apple TV work was tested against a synthetic catalog of about 80,000 channels.' },
   ]}
-  closing="Streamline is in development and due in 2026, as a single purchase with no subscription."
+  closing="Cathode TV is in development and due in 2026, as a single purchase with no subscription."
 >
   <Composition slot="lead" plate={item.plate!} eager />
-  <StreamlineIdioms slot="figure" />
+  <CathodeTvIdioms slot="figure" />
 </CaseStudy>
