@@ -1,7 +1,7 @@
 import type { ImageMetadata } from 'astro';
 
 import beltrIcon from '../assets/icons/beltr.png';
-import streamlineIcon from '../assets/icons/streamline.png';
+import cathodeTvIcon from '../assets/icons/cathode-tv.png';
 import onescribeIcon from '../assets/icons/onescribe.png';
 import debridIcon from '../assets/icons/debrid.png';
 
@@ -14,9 +14,9 @@ import osWine from '../assets/onescribe/wine.jpg';
 
 import debridTorrents from '../assets/debrid/torrents.jpg';
 
-import slGuide from '../assets/streamline/guide.jpg';
-import slHome from '../assets/streamline/home.jpg';
-import slPlayer from '../assets/streamline/player-mini-guide.jpg';
+import ctvGuide from '../assets/cathode-tv/guide.jpg';
+import ctvHome from '../assets/cathode-tv/home.jpg';
+import ctvPlayer from '../assets/cathode-tv/player-mini-guide.jpg';
 
 /**
  * Every claim in this file must match the product's own public site or store
@@ -179,25 +179,25 @@ export const work: Work[] = [
     },
   },
   {
-    slug: 'streamline',
-    name: 'Streamline',
+    slug: 'cathode-tv',
+    name: 'Cathode TV',
     what: 'A native IPTV player for every Apple screen',
     tagline:
-      'Streamline plays your own M3U or Xtream playlist, with its XMLTV guide, on iPhone, iPad, Mac, Apple TV and Vision Pro.',
+      'Cathode TV plays your own M3U or Xtream playlist, with its XMLTV guide, on iPhone, iPad, Mac, Apple TV and Vision Pro.',
     group: 'workshop',
     runsOn: ['iPhone', 'iPad', 'Mac', 'Apple TV', 'Vision Pro'],
     builtWith: ['SwiftUI', 'AVFoundation', 'SQLite'],
-    links: [{ label: 'getstreamline.tv', url: 'https://getstreamline.tv' }],
-    icon: streamlineIcon,
+    links: [{ label: 'cathodetv.app', url: 'https://cathodetv.app' }],
+    icon: cathodeTvIcon,
     // Captured 2026-09-24 against a fictional demo lineup (runbook in Tolaria:
-    // streamline-marketing-screenshots-fictional-lineup-runbook). Never use
+    // cathodetv-marketing-screenshots-runbook). Never use
     // captures of a real provider's channels: logos and shows read as piracy.
     plate: {
       layout: 'phones',
       shots: [
-        { src: slGuide, kind: 'phone', alt: 'Streamline’s guide: fictional channels with tonight’s programs' },
-        { src: slHome, kind: 'phone', alt: 'Streamline’s home screen with a live soccer match and tonight’s highlights' },
-        { src: slPlayer, kind: 'phone', alt: 'Streamline playing video with the On Now mini guide open' },
+        { src: ctvGuide, kind: 'phone', alt: 'Cathode TV’s guide: fictional channels with tonight’s programs' },
+        { src: ctvHome, kind: 'phone', alt: 'Cathode TV’s home screen with a live soccer match and tonight’s highlights' },
+        { src: ctvPlayer, kind: 'phone', alt: 'Cathode TV playing video with the On Now mini guide open' },
       ],
       credit: 'Shown with a demo lineup: channels, programs and artwork are fictional. Video: Big Buck Bunny © Blender Foundation, CC BY 3.0.',
     },
