@@ -1,58 +1,62 @@
 ---
 title: "Native vs Cross-Platform: When to Use Each"
-description: "CasaVargas ships SwiftUI, Electron, and Tauri apps. Here's how we decide which approach to use for each product, with real examples."
+description: "CasaVargas ships SwiftUI, Electron and Tauri apps, and one product that ended up as both. How we choose, with real examples and what each choice cost us."
 date: 2026-04-05
+updated: 2026-09-28
 tags: [engineering, swiftui, tauri, electron, architecture]
 ---
 
-The native vs cross-platform debate usually goes like this: someone picks a side, defends it religiously, and dismisses everyone who disagrees. At [CasaVargas](/), we use both, and the choice depends entirely on the product, not a philosophical position.
+The native vs cross-platform argument usually comes down to taste: someone picks a side and defends it. At [CasaVargas](/) we ship both, and the choice depends on the product. Here's how that plays out across four apps, including one that ended up being both.
 
-## Our Stack
+The short version: go native when the platform *is* the product. Go cross-platform when the job is the same everywhere. And expect the answer to change as a product grows.
 
-For Apple platforms, we build with **SwiftUI and Swift 6**. For cross-platform desktop apps, we use **Electron** or **Tauri with Rust and React**, depending on the project. These are very different tools, and they're each best at different things.
+## Native: Cathode TV
 
-## When We Go Native: SwiftUI
+[Cathode TV](/work/cathode-tv/) is an IPTV player for iPhone, iPad, Mac, Apple TV and Vision Pro, built as one SwiftUI codebase. The shared part is the data: playlists, the program guide, favorites, profiles. The part that can't be shared is input. Touch, a keyboard, the Siri Remote, and eyes and hands on Vision Pro are four different ways of pointing at things, and each platform gets an interface built around its own.
 
-[Cathode TV](/work/cathode-tv/) is our IPTV player for Apple TV, Mac, iPhone, iPad, and Vision Pro. It's built entirely in SwiftUI. Here's why:
+Apple TV is where native pays for itself. On tvOS, the focus engine decides what the remote is pointing at, and a player that fights it feels broken however good it looks. Cathode TV's on-screen player controls used to be governed by four separate flags, which allows sixteen combinations, several of them nonsense. They're now a single five-state machine, and only one element can hold focus at a time, so the focus engine never has to guess. The guide grid never recycles the cell you're focused on, and when it rebuilds, it keeps you at the same time of day rather than the same scroll position.
 
-**Platform integration is the product.** An IPTV player on Apple TV needs to work with the tvOS focus engine, the Siri Remote's touch surface, and Apple's video playback APIs (AVKit). On Vision Pro, it needs spatial windows. On iPhone, it needs to feel like a first-party app. None of this works well through an abstraction layer.
+None of that is reachable through a cross-platform layer. You'd spend the whole project working around it.
 
-**Performance is non-negotiable for video.** Streaming live TV requires tight integration with AVFoundation, hardware-accelerated decoding, and low-latency rendering. A cross-platform wrapper would add overhead in exactly the place where you can't afford it.
+## Native: OneScribe
 
-**The platforms diverge.** What works on a 65-inch TV operated by a remote is fundamentally different from what works on a phone you hold in your hand. SwiftUI lets us share business logic while building completely different UIs per platform with `NavigationSplitView` on iPad, `TabView` on iPhone, and focus-driven layouts on tvOS.
+[OneScribe](/work/onescribe/) goes further, because the product is Apple's frameworks. A single Vision request per page returns the text in reading order, with its structure and barcodes, and adopting it let us delete about 1,200 lines of our own layout code. A Core ML classifier decides what kind of document it is. Then Apple's on-device language model fills in typed Swift structs, one per document type, instead of writing free text we'd have to parse. There's no cross-platform equivalent of any of it.
 
-[OneScribe](/work/onescribe/) is similar. It relies on VisionKit and CoreML for document scanning and OCR. These are Apple frameworks with no cross-platform equivalent. Going native isn't a preference, it's a requirement.
+## Cross-platform: DebridDownloader
 
-## When We Go Cross-Platform: Electron & Tauri
+[DebridDownloader](/work/debrid-downloader/) is a desktop client for debrid services on macOS, Windows and Linux, built with Tauri, Rust and React. A download manager's job is identical on every operating system: queue files, move bytes, put them where your media server looks.
 
-[Beltr](/work/beltr/) is our karaoke engine for Mac, Windows, and Linux, built with Electron. [DebridDownloader](/work/debrid-downloader/) is our download manager for the same platforms, built with Tauri, Rust, and React. Two cross-platform apps, two different frameworks, each chosen for a reason.
+Tauri draws the interface with the system's own web view and runs everything else in Rust, so there's no browser engine to ship and the installers stay small: 5.9 MB on Windows and 8.9 MB on macOS. One GitHub Actions workflow builds five targets. The platform-specific parts are exactly where you'd expect them. Tokens live in the macOS Keychain, Windows Credential Manager or Linux Secret Service, never in a settings file, and it can register as the system's handler for the links it opens.
 
-**The platform doesn't matter as much as the function.** A download manager needs to download files. A karaoke app needs to play audio and separate vocals. These operations aren't tied to any OS's unique capabilities. They work the same on Mac, Windows, and Linux.
+## Both: Beltr
 
-**Electron for Beltr.** Beltr's AI vocal separation pipeline and real-time audio mixing benefit from Electron's mature ecosystem for media handling. The Chromium runtime provides robust audio APIs and a rich UI layer for the karaoke experience. Lyrics display, visualizations, and the queue system all benefit from the web platform's strengths.
+[Beltr](/work/beltr/) looked like the easiest call of the four. Karaoke runs on the computer plugged into the TV, and that computer could be a Mac, a Windows PC or a Linux box. More to the point, guests join from their phones by scanning a QR code, with nothing to install. That means the phone remote *has* to be a web page. Once it is, the big screen may as well be one too.
 
-**Tauri for DebridDownloader.** A download manager doesn't need a full browser runtime. Tauri uses the OS's native webview for the UI and pure Rust for the backend. The result is a tiny binary, low memory usage, and maximum download throughput. For a utility that sits in the background moving files, Tauri's lightweight footprint is the right call.
+So Beltr is a Python server that runs the AI on ONNX Runtime, plus web pages for the TV and the phones. Electron is only the shell on the computer: it starts the server and opens the TV page. That's a narrower job than people assume when they hear "Electron app".
 
-**Three platforms, one codebase.** Writing DebridDownloader three times, once in SwiftUI, once in WPF and once in GTK, would be insane for a small studio. Cross-platform frameworks let us ship on all three platforms with a single codebase.
+Then Beltr grew native apps anyway: a free Beltr Remote for iPhone and Android, and a free Beltr Client that puts the lyrics on an Apple TV or Android TV. Apple TV has no web browser at all, so a native app was the only way onto it. Now there are six clients, and what keeps them honest is a contract. They all speak the same WebSocket room protocol, and the JSON the server sends is the spec. Pitch scoring is ported to Swift and Kotlin and checked against reference results produced by running the real JavaScript scorer, so a score means the same thing on every screen.
 
-## The Decision Framework
+Cross-platform at the core, native at the edges. For Beltr, that's the right answer.
 
-Here's the mental model we use:
+## What cross-platform costs
 
-**Go native (SwiftUI) when:**
-- The app lives on Apple platforms only
-- Platform-specific APIs are core to the product (AVKit, VisionKit, CoreML, HealthKit)
-- The UI needs to adapt deeply per platform (TV vs phone vs spatial)
-- Performance requires direct hardware access
+Cross-platform doesn't mean platform-free. Two Beltr bugs show where the platform leaks through.
 
-**Go cross-platform (Electron or Tauri) when:**
-- The app needs to run on Mac, Windows, and Linux
-- The core functionality is OS-agnostic
-- Shipping on three platforms as a small studio needs to be practical
-- Pick Electron when you need rich media/UI capabilities; pick Tauri when you want a minimal footprint
+**A folder named after a browser file.** The desktop app keeps its data in the same folder Electron uses for Chromium's own files. We kept preferences in a directory called `preferences/`. On first launch, Chromium writes a file called `Preferences` in that same folder, and macOS and Windows filesystems ignore case, so the two names were the same path. Creating our directory failed, and every Settings change in the installed app quietly refused to save. Linux is case-sensitive and never saw it, and neither did development checkouts, which don't use Electron's folder. That's how it shipped. The directory is `prefs/` now, existing installs are renamed once at startup, and there's a standing rule: never name anything in that folder after something Chromium writes.
 
-## The Wrong Answer
+**Every quit looked like a crash.** On macOS and Linux, the shell asks the server to stop and the server shuts down cleanly. Windows has no gentle equivalent for a child process, so every normal quit ended with the process being terminated outright, and the next launch warned that the previous run hadn't shut down cleanly. The fix was to ask politely first: the shell calls a shutdown endpoint that only answers on the local machine and only with a token generated for that launch, and forces the issue only if the server hasn't exited after eight seconds.
 
-The wrong answer is picking one approach for everything. Building an Apple TV app in Tauri would be absurd. You'd fight the platform the entire time. Building a download manager three times in three native frameworks would be a waste of months.
+## The decision framework
 
-The right tool for each job. That's it. No ideology required.
+**Go native when:**
+- The input model is the product: a TV remote, a pencil, eyes and hands
+- The core feature is a platform framework: Vision, Core ML, Foundation Models, AVKit
+- The interface has to differ per device, not just resize
+
+**Go cross-platform when:**
+- The job is the same on every operating system
+- The interface already has to be a web page for some other reason
+- A small studio needs Mac, Windows and Linux from one codebase
+- Pick Electron when you need a full browser engine you control; pick Tauri when footprint matters most
+
+**And revisit it.** The wrong answer is picking one approach for everything, but the second-worst is picking once and never looking again. Beltr started as a cross-platform app and grew native companions when the platforms it needed (a TV with no browser) left no other way in.
