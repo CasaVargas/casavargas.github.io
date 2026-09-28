@@ -25,6 +25,7 @@ const blogPostingSchema = {
   headline: post.data.title,
   description: post.data.description,
   datePublished: post.data.date.toISOString(),
+  dateModified: (post.data.updated ?? post.data.date).toISOString(),
   author: { '@type': 'Person', name: 'Jon Vargas' },
   publisher: {
     '@type': 'Organization',
@@ -49,7 +50,7 @@ const blogPostingSchema = {
 
     <article>
       <header class="post__head">
-        <time class="ui post__date" datetime={post.data.date.toISOString()}>{fmt.format(post.data.date)}</time>
+        <p class="ui post__date"><time datetime={post.data.date.toISOString()}>{fmt.format(post.data.date)}</time>{post.data.updated && <>, updated <time datetime={post.data.updated.toISOString()}>{fmt.format(post.data.updated)}</time></>}</p>
         <h1>{post.data.title}</h1>
         <p class="post__desc">{post.data.description}</p>
       </header>

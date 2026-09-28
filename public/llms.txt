@@ -24,7 +24,7 @@ Each product below has a case study on this site (why it exists, what it does, h
 
 - [Why we don't do subscriptions](https://casavargas.app/blog/why-we-dont-do-subscriptions/)
 - [Native vs cross-platform: when to use each](https://casavargas.app/blog/native-vs-cross-platform/)
-- [Building Beltr: AI vocal separation](https://casavargas.app/blog/building-beltr-ai-vocal-separation/)
+- [Building Beltr: what it takes to turn any song into karaoke](https://casavargas.app/blog/building-beltr-ai-vocal-separation/)
 - [Introducing Cathode TV (announced as Streamline)](https://casavargas.app/blog/introducing-streamline-iptv-player/)
 
 ## Contact

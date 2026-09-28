@@ -1,40 +1,57 @@
 ---
-title: "Building Beltr: AI Vocal Separation for Cross-Platform Karaoke"
-description: "A deep dive into how Beltr uses on-device AI to separate vocals from any song you own, and why we built it as a cross-platform desktop app that phones join by QR."
+title: "Building Beltr: What It Takes to Turn Any Song into Karaoke"
+description: "Taking the singer out on your own computer, dropping PyTorch, timing lyrics word by word, keeping a phone in step with the TV, and two bugs worth remembering."
 date: 2026-04-09
-tags: [beltr, ai, cross-platform, engineering]
+updated: 2026-09-28
+tags: [beltr, ai, audio, engineering]
 ---
 
-Every karaoke app has the same problem: you need karaoke versions of songs. Instrumental tracks, CDG files, or a streaming catalog that's always missing the one song you want to sing. We built [Beltr](/work/beltr/) to kill that problem entirely.
+Every karaoke setup has the same problem: somebody has to make the karaoke version. Catalog services license tracks and rent them back to you by the month. Lyric videos are hit and miss. [Beltr](/work/beltr/) starts from the other end. The music you already own is the catalog, and your own computer does the work of turning each song into something you can sing.
 
-## The Core Idea
+That one sentence hides five hard problems. Here's how each one is solved, and two things that went wrong along the way.
 
-What if every song was a karaoke song? Not through a catalog, but through AI. Beltr takes any audio file from your music library and separates the vocals from the instrumental on your own machine. It takes a minute or two for a typical song (quicker on a recent Apple Silicon Mac, longer on an older CPU), and then that song is karaoke forever. No catalog to buy from, no hunting for instrumental versions, and nothing uploaded.
+## 1. Taking the singer out
 
-This is possible because of modern source separation models that have gotten remarkably good at isolating individual stems from mixed audio. The AI doesn't just lower the center channel (the old karaoke trick that killed everything panned center, including snare drums and bass). It actually understands what a human voice sounds like and surgically removes it while preserving the full instrumental.
+The old karaoke trick was to subtract one stereo channel from the other. Lead vocals are usually mixed dead center, so they cancel out. So does everything else mixed center: the kick, the snare, the bass. What's left sounds like the band is playing in the next room.
 
-## Why Desktop?
+Beltr uses a neural network instead. MDX-Net has learned what a voice sounds like, and it splits a song into two stems: the vocal on its own, and everything else. A typical song takes a minute or two on your own machine, quicker on a recent Apple Silicon Mac and longer on an older PC with only a CPU. Nothing is uploaded.
 
-Karaoke is a living room activity. It happens on a TV or a big screen with speakers, not hunched over a phone. That means the app needs to run on the machine connected to your display: your Mac, Windows PC, or Linux box.
+Two decisions shape how that feels in practice. Songs are separated **one at a time**, not in parallel, because separation is memory-hungry and a whole folder should be able to queue up without the machine falling over. And a song is **handed over as soon as it can be sung**, while the rest of the work finishes in the background.
 
-We built Beltr for all three platforms. The audio processing pipeline is performance-critical, so it needs native access to the hardware. A web app would introduce latency that makes singing along feel wrong. Even 100ms of audio delay is noticeable when you're trying to stay on beat.
+## 2. One runtime, and no PyTorch
 
-## Phone as Remote
+The first versions ran their models on PyTorch, which is how most audio research ships. PyTorch is also enormous. We moved every model (separation, lyric alignment, the fallback transcriber and pitch detection) onto ONNX Runtime, and dropping PyTorch took two to three gigabytes out of each installer.
 
-But nobody wants to walk to the computer to pick the next song. That's why Beltr uses your phone as a wireless remote, and as a microphone. Starting a room puts a four-character code and a QR on the screen; phones scan it to join. There's no app to install, no pairing, and no accounts. You browse your library, queue songs, and control playback from the couch while the audio plays through your desktop setup.
+The risky part was alignment, the model that decides exactly when each word is sung. Its word timing had already been measured at a 0 ms median start offset across 3,085 words, and switching to a different aligner would have meant starting that work again. So we kept the model, exported it to ONNX, and rewrote its Viterbi decoding step in NumPy. Word timing stayed compatible with the version we'd already measured.
 
-This architecture, with the desktop as the engine and the phone as the controller, gives you the best of both worlds. The heavy lifting happens on hardware with real processing power, and the interface is in your hand where it's convenient.
+## 3. Lyrics that land on the word
 
-## Multi-Microphone Support
+Line-synced lyrics come from LRCLIB, a free community database, or from your own paste. Line timing isn't enough for karaoke, though: the highlight has to sweep across each word as it's sung. So Beltr aligns the words against the separated vocal track, where the voice is clean.
 
-Solo karaoke is fun. Group karaoke is a party. Beltr supports multiple microphones simultaneously with independent volume controls per mic. You can balance a quiet singer and a loud one without touching the computer. That mixing is live. It's the separation step, done once per song ahead of time, that takes a minute or two.
+Alignment gives you word times. The display still has to be honest about them. An early bug: the aligner would sometimes stamp the last words of a line at or after the moment the next line took over. Those words were never reached, so the sweep visibly stopped halfway across the line and jumped. The fix re-seats each line's words inside that line's own window, so the sweep always finishes before the line changes. It only ever compresses, never stretches: a line whose words genuinely end early keeps its pause.
 
-## No Subscriptions
+Hand corrections are stored apart from the aligner's output, so re-running alignment never throws away someone's careful fix.
 
-Beltr is a one-time purchase. We don't rent you karaoke; you own it. There's no monthly fee to use your own music library, no premium tier for "better" vocal separation, no feature unlocks. You buy it once and it's yours.
+## 4. Keeping a phone in step with the TV
 
-This is a core principle at [CasaVargas](/): software should be owned, not rented. We think the subscription model for standalone apps is disrespectful to users, and we refuse to participate in it.
+Guests join from their phones by scanning a QR code, with nothing to install. The phone shows the lyrics too, which means it has to know where the TV is in the song, across a Wi-Fi network it knows nothing about.
 
-## What's Next
+Beltr borrows the trick network time servers use. When a song loads, the phone fires a quick burst of pings. The TV stamps each one against its own audio clock, and the phone keeps the reply with the shortest round trip, because that's the one the network distorted least. After that, one ping every few seconds keeps the estimate from drifting.
 
-Beltr is live now on macOS, Windows, and Linux. We're continuing to improve the vocal separation quality, adding more customization options for the singing experience, and refining the phone experience. If you've ever wished you could sing along to any song without hunting for a karaoke version, [give Beltr a try](https://beltr.app).
+The interesting lesson was which way to be wrong. We tried trusting the very first reply to shave off the start-up delay. But the first ping arrives while the TV is busy starting playback, so its timestamp runs late, and phone lyrics raced ahead of the singer for most of a second. In karaoke, a word that lights up early is much worse than one that lights up late, because you sing the wrong word. Beltr now waits for the burst to settle, and until it has, it errs on the side of behind.
+
+## 5. The discs people already own
+
+Plenty of people have boxes of karaoke discs and folders of MP3+G files. Beltr plays CDG, MP3+G, .kar, .mid and Thai NCN files with the lyrics read straight from the file.
+
+MIDI and .kar files have no recording to separate, so Beltr renders them at import with a software synthesizer, putting the melody in the vocal stem as a guide and everything else in the instrumental. From then on they look exactly like a separated song, so the TV, the mixer and pitch scoring need no special cases. Old files also carry old text encodings (TIS-620 for Thai, Shift-JIS for Japanese, Big5 for Chinese), so those are detected on import instead of turning into garbage characters on the TV.
+
+## Two bugs worth remembering
+
+**A button that ate clicks.** The dashboard's play and pause button redrew itself from a status update the TV sends ten times a second. A mouse click takes roughly a tenth of a second from press to release, so the button a click started on had usually been replaced by the time it ended, and the click landed on nothing. No error, no log line. It looked like network lag, which sent the first round of debugging to entirely the wrong place. The tell was that the buttons next to it, which never redraw, always worked. The fix: never rebuild a clickable element from a stream. Change it only when the state actually changes.
+
+**A slow network share froze everything.** Scanning a music folder on a NAS can take minutes. Those scans originally ran on the server's shared pool of worker threads, and a burst of them against a large share once filled every thread, so every other request waited behind them: the whole app went unresponsive for well over ten minutes. Scans now run on a small pool of their own, one per folder at a time, and the rest of the app never notices.
+
+## Built on your machine, paid for once
+
+Doing all of this locally is also what lets Beltr be a one-time purchase. There's no server separating songs for each user, so there's nothing to rent. Beltr is $19.99 once, and five songs are free to try with no card. [Try it at beltr.app](https://beltr.app).
