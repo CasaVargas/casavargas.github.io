@@ -129,7 +129,7 @@ CasaVargas (mark + wordmark)                   Work  Notes  Studio  Contact
   Software,
       made to be kept.                        ← Newsreader ~10rem, weight 290, hanging indent
 
-                           CasaVargas is a one-person studio in North Carolina
+                           CasaVargas is an independent studio in North Carolina
                            making apps for the Mac, iPhone, iPad, Apple TV,
                            Windows and Linux. Each app is paid for once, if it
                            costs anything at all.      ← standfirst, right half
@@ -166,7 +166,8 @@ CasaVargas (mark + wordmark)                   Work  Notes  Studio  Contact
 
 ─ Studio ──────────────────────────────────────────────────────────────────────
   Bio (third person, factual) + the tools and infrastructure, as a short facts table.
-  The bio never names or describes Jon's day job or employer (removed 2026-09-28).
+  The bio never names or describes Jon's day job or employer (removed 2026-09-28),
+  and the site never describes the studio as one person or a solo developer.
 
 ─ Notes ───────────────────────────────────────────────────────────────────────
   Latest three posts: date, title, one-line description.
