@@ -22,7 +22,7 @@ Most apps aren't services. A document scanner runs on your phone. A download man
 
 Here's the part that surprised us: "no subscriptions" turned out to be an engineering rule as much as a pricing one. If an app needs our server to do its work for every user, every user costs us money every month, and sooner or later a subscription follows to cover it. So the apps are built not to need one.
 
-- **[Beltr](/work/beltr/) ships its entire AI engine inside the installer.** That's why the download is 700 MB to 1 GB instead of a few megabytes. Separating the vocals from a song runs on your computer, so a song you separate costs us nothing, and once Beltr is set up it works offline.
+- **[Beltr](/work/beltr/) ships its entire AI engine inside the installer.** That's why the download runs to hundreds of megabytes instead of a few. Separating the vocals from a song runs on your computer, so a song you separate costs us nothing, and once Beltr is set up it works offline.
 - **[OneScribe](/work/onescribe/) reads documents with Apple's on-device models.** There's no account to create and no OneScribe server to send anything to. Scanning is free; Pro is one $9.99 purchase.
 - **[DebridDownloader](/work/debrid-downloader/) talks to the service you already pay for,** directly from your machine. It's free and open source under GPL-3.0.
 

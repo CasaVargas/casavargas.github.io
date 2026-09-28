@@ -1,0 +1,80 @@
+---
+title: "The Long Road to OneScribe 2.0"
+description: "It started as a note uploader, deleted most of itself three weeks after launch, and took 285 days and 2,164 commits to become an app you can ask questions. How OneScribe 2.0 happened."
+date: 2026-09-28
+tags: [onescribe, ios, apple-intelligence, engineering, journey]
+---
+
+[OneScribe](/work/onescribe/) 2.0 went live on the App Store on September 26, 2026. That was 285 days and 2,164 commits after the first line of code, and it's a very different app from the one that first launched. This is how it got from there to here, including the parts we'd do differently.
+
+## It started as something else
+
+The first commit, in December 2025, described a different app: a bridge that read handwritten notes from a Kindle Scribe with on-device text recognition and sent them to Microsoft OneNote. You can still hear it in the name. By mid-January it had grown six cloud export destinations, each with its own sign-in, and on January 15, 2026 it launched on the App Store.
+
+That launch build was 91 Swift files, about 44,000 lines, and not a single test. The first tests arrived three weeks later.
+
+## Three weeks later, most of it went
+
+On February 1, OneScribe got its first Data Cards: instead of a page of text, a scan became a structured card with the fields that matter, like the vendor, the dates and the total. There were 18 kinds on day one.
+
+Two days after that came a commit that called itself "Operation Scorched Earth." It deleted every cloud integration, 8,803 lines of them, a follow-up removed 2,463 more, and from then on everything left the app through the Share Sheet. The product had become the card, not the upload, and the integrations were weight.
+
+## Trust Apple, then check the plumbing
+
+Early on, we replaced about 1,200 lines of our own page-layout detection with a single call to Apple's Vision framework, which returns a page's text in reading order with its structure and barcodes. Deleting that much code felt great.
+
+Six months later we found it had been quietly losing information, and not because of Vision:
+
+- Our wrapper only read titles and paragraphs, so text inside tables and lists never reached extraction at all.
+- The code that stripped list bullets also stripped minus signs, so "-5.00" became "5.00". A refund read as a charge.
+- Every page was being run through Vision twice.
+
+All three were fixed on the same day in August. The lesson wasn't "don't trust the framework." It was that the thirty lines around the framework deserve the same suspicion as the thousand you deleted.
+
+## Teaching a model to fill in forms
+
+Each document type in OneScribe is a Swift struct marked `@Generable`, so Apple's on-device model fills in typed fields instead of writing prose we'd have to parse. A validator checks the result for impossible dates, negative amounts and totals that don't add up, and a critical problem gets one retry.
+
+Getting reliable answers out of that took a few surprises:
+
+- **Same receipts, different answers.** Every extraction shared one model session, so each document was read in the context of the ones before it. Run the same test receipts three times and you got three different results. Each extraction now gets a fresh session.
+- **Field order matters.** With the optional total declared early in the receipt schema, the model tended to skip it. Declaring it last fixed that, and cut a receipt call from about 13 seconds to about 2.3.
+- **The Simulator lies.** One model setting passed every test in the Simulator and made every on-device answer fail on a real iPhone. A device test script caught it before release. Going the other way, a call that took over half an hour on the Simulator's CPU took seconds on the phone. Model work gets tested on hardware now, full stop.
+
+## The roadmap that promised no big bang
+
+In July 2026 we wrote a roadmap for what became 2.0: five releases, each shipping one piece, with a line promising "no big-bang 2.0 gap." Four of those five pieces then merged on the same day in August.
+
+Roadmaps are for deciding what matters, not for predicting when it lands. The order held up; the calendar didn't.
+
+## The model that wouldn't use its tools
+
+The headline of 2.0 is asking your whole library a question in plain English. OneScribe could already answer questions before 2.0, but only from one document at a time. Answering across all of them was the hard part.
+
+The obvious design was to give the on-device model a search tool and let it look things up. It wouldn't use it. It either never called the tool or called it in a loop until it failed. So the design flipped: the app finds the relevant documents itself, and the model only answers from what it's handed.
+
+That became a rule we now apply everywhere: **the model cites, Swift computes.** Every answer names the documents it used, as sources you can tap. Money totals are added up in Swift from those cited documents, not generated by the model, because Apple advises against using its on-device model for arithmetic.
+
+## Private Cloud Compute, the long way round
+
+Some questions are too big for the model on the phone. For those, 2.0 can use Apple's Private Cloud Compute, and every answer is labelled "On device" or "Private Cloud Compute" so you always know which answered. The switch is optional, off by default and part of Pro, and it sends summaries and extracted fields, never page images. A one-tap Deep Review sends a document's full text, and asks first if the document is locked.
+
+The code for it was written in June. It didn't actually run until September. A stand-in type we'd written to get the project compiling was shadowing Apple's real one, so the code built cleanly and never actually reached Apple's service. Nothing crashed, which is exactly why nobody noticed.
+
+## What didn't make it
+
+Not every idea survived. The biggest casualty was a custom Create ML model meant to replace our field-extraction rules. It needed training data that Apple's model couldn't generate usefully, transfer learning didn't work, and the first version failed its quality gate. None of it shipped, and the rules it was meant to replace are still there.
+
+The subscription didn't make it either. OneScribe sold a monthly plan alongside a one-time unlock until May 19, 2026. Now Pro is a single $9.99 purchase. We wrote about why in [Why We Don't Do Subscriptions](/blog/why-we-dont-do-subscriptions/).
+
+## What 2.0 is
+
+- **Ask your library** in plain English, with every answer naming its sources.
+- **Totals you can trust,** added up on the iPhone from the documents cited.
+- **A label on every answer** saying whether it came from the device or Private Cloud Compute.
+- **Locked documents stay out** of answers unless you include one for a single question.
+- **A new Home, Library and Document view,** and a first run that reads a document before it asks you for anything.
+
+And, under the hood, the gap between launch and now: from 91 Swift files and no tests to 807 files, about 224,000 lines and roughly 2,000 test functions, with the whole app target on Swift 6. Getting there took 468 compiler diagnostics down to zero in the last week before release.
+
+Scanning is free and unlimited. Pro is $9.99 once. OneScribe needs Apple Intelligence on an iPhone 15 Pro or later, or an iPad with M1 or A17 Pro. [Get it at getonescribe.app](https://getonescribe.app).

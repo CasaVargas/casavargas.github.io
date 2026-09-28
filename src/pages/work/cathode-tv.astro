@@ -13,7 +13,9 @@ const item = bySlug('cathode-tv');
 // the companion server, DVR, multi-view, measured switch times, a price or a
 // date more specific than 2026. Screenshots come only from the fictional
 // demo lineup (captured 2026-09-24); the old ones were full of network logos
-// and copyrighted artwork. See PLAN.md §8.
+// and copyrighted artwork. See PLAN.md §8. 2026-09-28: the sleep timer (only
+// reachable from previews) and the kids zone (no longer in the code) are cut;
+// check a feature is reachable on dev before listing it.
 ---
 
 <CaseStudy
@@ -25,8 +27,8 @@ const item = bySlug('cathode-tv');
   features={[
     { title: 'Plays your own playlists', body: 'M3U and M3U8 playlists, the Xtream Codes API and XMLTV guides.' },
     { title: 'A seven-day guide', body: 'Every channel gets a timeline that opens at the current time, with now and next, genre filters and the week ahead.' },
-    { title: 'Quick channel changes', body: 'A mini-guide overlay, gesture controls, a sleep timer and picture in picture.' },
-    { title: 'A home screen from your guide', body: 'Rows for what’s live now, tonight’s highlights, live sports and movies starting soon, plus a PIN-locked kids zone.' },
+    { title: 'Quick channel changes', body: 'A mini-guide overlay, gesture controls and picture in picture.' },
+    { title: 'A home screen from your guide', body: 'Rows for what’s live now, tonight’s highlights, live sports and movies starting soon.' },
     { title: 'Programme details from TMDB', body: 'Posters, cast and ratings for guide programs and for your provider’s on-demand library.' },
     { title: 'Profiles that sync', body: 'Several profiles with parental controls, and favorites synced over iCloud.' },
   ]}
