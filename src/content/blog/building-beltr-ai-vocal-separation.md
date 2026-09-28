@@ -20,7 +20,7 @@ Two decisions shape how that feels in practice. Songs are separated **one at a t
 
 ## 2. One runtime, and no PyTorch
 
-The first versions ran their models on PyTorch, which is how most audio research ships. PyTorch is also enormous. We moved every model (separation, lyric alignment, the fallback transcriber and pitch detection) onto ONNX Runtime, and dropping PyTorch took two to three gigabytes out of each installer.
+The first versions ran their models on PyTorch, which is how most audio research ships. PyTorch is also enormous. We moved every model (separation, lyric alignment, the fallback transcriber and pitch detection) onto ONNX Runtime. Dropping PyTorch took the macOS download from 705 MB to 410 MB, and the installed Mac app from 1.6 GB to 813 MB.
 
 The risky part was alignment, the model that decides exactly when each word is sung. Its word timing had already been measured at a 0 ms median start offset across 3,085 words, and switching to a different aligner would have meant starting that work again. So we kept the model, exported it to ONNX, and rewrote its Viterbi decoding step in NumPy. Word timing stayed compatible with the version we'd already measured.
 
