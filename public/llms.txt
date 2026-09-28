@@ -22,6 +22,9 @@ Each product below has a case study on this site (why it exists, what it does, h
 
 ## Notes
 
+- [The long road to OneScribe 2.0](https://casavargas.app/blog/the-long-road-to-onescribe-2/)
+- [217 tags later: seven months of building Beltr](https://casavargas.app/blog/beltr-217-tags-later/)
+- [GlassTV, Streamline, Cathode TV: building an IPTV player the long way](https://casavargas.app/blog/glasstv-streamline-cathode-tv/)
 - [Why we don't do subscriptions](https://casavargas.app/blog/why-we-dont-do-subscriptions/)
 - [Native vs cross-platform: when to use each](https://casavargas.app/blog/native-vs-cross-platform/)
 - [Building Beltr: what it takes to turn any song into karaoke](https://casavargas.app/blog/building-beltr-ai-vocal-separation/)
