@@ -48,8 +48,8 @@ The guide grid follows the same principle. It never recycles the cell you're foc
 ## Everything around the player
 
 - **A seven-day guide.** Every channel gets a timeline that opens at the current time, with now and next, genre filters and the week ahead.
-- **Quick switching.** A mini-guide overlay, gesture controls, a sleep timer and picture in picture.
-- **A home screen built from your guide.** Rows for what's live now, tonight's highlights, live sports and movies starting soon, plus a PIN-locked kids zone.
+- **Quick switching.** A mini-guide overlay, gesture controls and picture in picture.
+- **A home screen built from your guide.** Rows for what's live now, tonight's highlights, live sports and movies starting soon.
 - **Program details from TMDB.** Posters, cast and ratings for guide programs and for your provider's on-demand library.
 - **Profiles that sync.** Several profiles with parental controls, and favorites synced over iCloud.
 
