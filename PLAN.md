@@ -166,6 +166,7 @@ CasaVargas (mark + wordmark)                   Work  Notes  Studio  Contact
 
 ─ Studio ──────────────────────────────────────────────────────────────────────
   Bio (third person, factual) + the tools and infrastructure, as a short facts table.
+  The bio never names or describes Jon's day job or employer (removed 2026-09-28).
 
 ─ Notes ───────────────────────────────────────────────────────────────────────
   Latest three posts: date, title, one-line description.
