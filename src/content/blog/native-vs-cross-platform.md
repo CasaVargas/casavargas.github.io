@@ -33,7 +33,7 @@ For Apple platforms, we build with **SwiftUI and Swift 6**. For cross-platform d
 
 **Tauri for DebridDownloader.** A download manager doesn't need a full browser runtime. Tauri uses the OS's native webview for the UI and pure Rust for the backend. The result is a tiny binary, low memory usage, and maximum download throughput. For a utility that sits in the background moving files, Tauri's lightweight footprint is the right call.
 
-**Three platforms, one codebase.** Writing DebridDownloader three times, once in SwiftUI, once in WPF and once in GTK, would be insane for a solo developer. Cross-platform frameworks let us ship on all three platforms with a single codebase.
+**Three platforms, one codebase.** Writing DebridDownloader three times, once in SwiftUI, once in WPF and once in GTK, would be insane for a small studio. Cross-platform frameworks let us ship on all three platforms with a single codebase.
 
 ## The Decision Framework
 
@@ -48,7 +48,7 @@ Here's the mental model we use:
 **Go cross-platform (Electron or Tauri) when:**
 - The app needs to run on Mac, Windows, and Linux
 - The core functionality is OS-agnostic
-- Shipping on three platforms as a solo dev needs to be practical
+- Shipping on three platforms as a small studio needs to be practical
 - Pick Electron when you need rich media/UI capabilities; pick Tauri when you want a minimal footprint
 
 ## The Wrong Answer

@@ -29,7 +29,7 @@ This creates the right incentive structure. We make money by building something 
 
 The honest answer: it's harder. Subscription revenue is predictable and compounds. One-time purchases require you to keep finding new customers or keep building new products that existing customers want to buy.
 
-But CasaVargas is a solo indie studio, not a VC-funded startup chasing recurring revenue metrics. The overhead is low. There's no board demanding MRR growth. If an app sells well enough to justify the time spent building it, that's a win.
+But CasaVargas is an independent studio, not a VC-funded startup chasing recurring revenue metrics. The overhead is low. There's no board demanding MRR growth. If an app sells well enough to justify the time spent building it, that's a win.
 
 We also use [GitHub Sponsors](https://github.com/sponsors/prjoni99) for open-source projects like [DebridDownloader](/work/debrid-downloader/). If people find the software valuable and want to support continued development, they can, voluntarily, not because a paywall forces them to.
 

@@ -20,7 +20,7 @@ const cards = [
   {
     file: 'casavargas',
     title: 'Software, made to be kept.',
-    sub: 'A one-person studio making apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux. Paid for once, if at all.',
+    sub: 'An independent studio making apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux. Paid for once, if at all.',
     kicker: 'casavargas.app',
     big: false,
   },
