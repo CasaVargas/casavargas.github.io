@@ -6,7 +6,7 @@ This file gives the fuller per-product facts behind the summary in /llms.txt: wh
 
 ## Beltr
 
-Product site: https://beltr.app · Case study: https://casavargas.app/work/beltr/
+Product site: https://beltr.app | Case study: https://casavargas.app/work/beltr/
 
 Beltr is living-room karaoke built on your own music library. It removes the vocals from songs you already own, times the lyrics to them word by word, and puts them on the TV while guests join from their phones. All of the processing runs on your own computer or home server. Runs on macOS, Windows, Linux and Docker (home server). Price: $19.99 once; five songs are free to try, no card needed.
 
@@ -28,7 +28,7 @@ Companion apps: Beltr Remote (iPhone, Android) and Beltr Client (Apple TV, Andro
 
 ## OneScribe
 
-Product site: https://getonescribe.app · Case study: https://casavargas.app/work/onescribe/ · App Store: https://apps.apple.com/us/app/onescribe-ai-note-scanner/id6756506734
+Product site: https://getonescribe.app | Case study: https://casavargas.app/work/onescribe/ | App Store: https://apps.apple.com/us/app/onescribe-ai-note-scanner/id6756506734
 
 OneScribe turns a photo of a receipt, a lease or a boarding pass into a structured card: the vendor, the dates, the amounts, the deadlines. The reading happens on the device; there's no account to create and no OneScribe server to send anything to. Runs on iOS 26 and iPadOS 26. Price: free to scan; Pro is $9.99 once.
 
