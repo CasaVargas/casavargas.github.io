@@ -82,7 +82,8 @@ does not 301 off-site.
 3. Create `src/pages/work/<slug>.astro` with the `CaseStudy` layout: `intro`,
    `problem`, `features`, `engineering`, optional `record` (verifiable numbers
    only), `closing`, `schema`, and a `lead` or `figure` slot.
-4. Add a card to `scripts/og-cards.mjs` and run it. Update `public/llms.txt`.
+4. Add a card to `scripts/og-cards.mjs` and run it. Update `public/llms.txt`
+   and `public/llms-full.txt`.
 5. The homepage, index, footer and sitemap pick it up automatically.
 
 ## Claims go stale — check them against the product's own site
@@ -119,7 +120,9 @@ is invisible to grep, diffing and CI. Rejected so far, and why:
 Every page has a canonical URL, OG and Twitter tags, and JSON-LD (Organization,
 ItemList, SoftwareApplication/MobileApplication per shipped product,
 BreadcrumbList, BlogPosting). `public/llms.txt` summarises the site for AI
-crawlers — keep it in step with `work.ts`.
+crawlers and `public/llms-full.txt` carries the fuller per-product facts —
+keep `llms.txt` in step with `work.ts`, and `llms-full.txt` in step with the
+case studies it is drawn from (prices, platforms, `record` numbers).
 
 ## Before saying it works
 
