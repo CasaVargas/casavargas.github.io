@@ -258,10 +258,11 @@ layout.
 - No image over 200 KB on the wire; the LCP image under 150 KB (the LCP is text now,
   which is better still).
 - `public/` holds the files that need stable URLs — `CNAME` (read by GitHub Pages),
-  `robots.txt`, `llms.txt`, `casavargas-logo-orange.svg` (the icon link in
-  `src/layouts/Layout.astro`), `casavargas-logo-orange.png` (the schema `logo` in
-  `src/pages/index.astro` and `src/pages/blog/[slug].astro`), and the OG cards in
-  `og/` — plus four files nothing in the repo references:
+  `robots.txt`, `llms.txt`, `llms-full.txt` (linked from `llms.txt`),
+  `casavargas-logo-orange.svg` (the icon link in `src/layouts/Layout.astro`),
+  `casavargas-logo-orange.png` (the schema `logo` in `src/pages/index.astro` and
+  `src/pages/blog/[slug].astro`), and the OG cards in `og/` — plus four files
+  nothing in the repo references:
   `casavargas-logo-dark.svg`, `beltr-logo-text.svg`, `OneScribe.png` and
   `streamline/icon.png` (two SVG logos and two 1024×1024 PNG app icons; the OneScribe
   icon the site actually renders is `src/assets/icons/onescribe.png`). There is no
