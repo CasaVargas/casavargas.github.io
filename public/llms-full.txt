@@ -48,30 +48,77 @@ On the record: 19 export modes. 151 typed schemas, with about 1,420 field instru
 
 ## DebridDownloader (open source)
 
-Repo: https://github.com/CasaVargas/DebridDownloader · Case study: https://casavargas.app/work/debrid-downloader/
+Repo: https://github.com/CasaVargas/DebridDownloader | Case study: https://casavargas.app/work/debrid-downloader/
 
-DebridDownloader is a free, open-source desktop app for people who pay for Real-Debrid, TorBox or Premiumize. It replaces the browser tab: add a link or a file, the service fetches it, and you download, stream or file the results without leaving the app. Runs on macOS, Windows and Linux. Built with Tauri, Rust and React. License: GPL-3.0. Free; requires an account with one of the three services.
+DebridDownloader is a free, open-source desktop app for people who pay for Real-Debrid, TorBox or Premiumize. It replaces the browser tab: you add a link or a file, the service fetches it, and you download, stream or file the results without leaving the app. Runs on macOS (Apple Silicon only), Windows and Linux. Built with Tauri, Rust and React. License: GPL-3.0. Free; requires an account with one of the three services.
 
-What it does: connects to all three services and switches between them; a queue of one to ten downloads at once with live speed and an optional limit; streams a preview before downloading; sorts downloads into TMDB-matched library folders and can trigger a Plex, Jellyfin or Emby scan or send files to an rclone remote; can be set as the system's default handler for debrid links; keeps tokens in the OS keychain, never in a settings file.
+Why it exists: debrid services are run from a web dashboard, where you add a link, wait, then click through file links one at a time while the browser saves each one. There is no queue to control, nothing files finished downloads where a media server expects them, and API tokens tend to end up pasted into scripts and extensions. DebridDownloader moves that workflow into a native app and keeps credentials in the operating system's keychain.
 
-On the record: GPL-3.0 licensed. 16 releases, from version 1.0 in March 2026 to 1.6.4 in May 2026. Installer size 5.9 MB on Windows, 8.9 MB on macOS.
+What it does:
+- Three services in one app. Connect Real-Debrid (with OAuth or a token), TorBox or Premiumize, and switch between them at any time.
+- A queue you control. Run one to ten downloads at once, with live speed and time remaining, an optional speed limit and a notification when each one finishes.
+- Stream before you download. Preview a video straight from your provider in a floating mini-player, without saving it first.
+- Files land where your library looks. Sort downloads into movie and TV folders using TMDB, trigger a library scan in Plex, Jellyfin or Emby, or send files to an rclone remote.
+- Handles links from the system. Set it as the default handler and new links add themselves. It stays in the tray and can start at login.
+- Keyboard first, secrets in the keychain. Command-K to search, arrow keys to move, Return to download. Tokens live in Keychain, Credential Manager or Secret Service, never in a settings file.
+
+How it's built: a Rust async trait defines about a dozen operations, and each provider's client translates its own API into shared types; the active provider can be swapped at runtime, and commands clone it and release the lock before awaiting so a slow network call never blocks a switch. A Tokio semaphore caps how many downloads run at once, each streaming to disk with its own cancellation handle, with progress reaching the React front end as events at most every 100 ms and one speed limiter covering both local and rclone destinations. A local Axum server on a random localhost port serves one URL per preview session and forwards range requests so the player can seek inside a remote file. Links arrive three ways, the system deep link, a hand-off from a second instance, and command-line arguments on a cold start, and all three pass the same validator before anything reaches a provider. A GitHub Actions matrix builds five targets from one workflow: macOS on Apple Silicon, Windows on x64 and ARM64, and Linux on x64 and ARM64, with signed and notarized macOS builds and signed update bundles; because Tauri uses the system web view, the installers stay under 9 MB.
+
+On the record: GPL-3.0 licensed. 16 releases, from version 1.0 in March 2026 to 1.6.4 in May 2026. Installer size 5.9 MB on Windows, 8.9 MB on macOS. Open to pull requests; version 1.6.4 included seven from an outside contributor.
 
 ## In development
 
 ### Cathode TV
-Product site: https://cathodetv.app · Case study: https://casavargas.app/work/cathode-tv/
+Product site: https://cathodetv.app | Case study: https://casavargas.app/work/cathode-tv/
 
-A native IPTV player for iPhone, iPad, Mac, Apple TV and Vision Pro that plays the M3U/M3U8 playlists, Xtream Codes API feeds and XMLTV guides you already have. One SwiftUI codebase, each platform built around its own input (touch, keyboard, the Siri Remote, or eyes and hands). In development, due in 2026, as a single purchase with no subscription. (Previously announced as Streamline.)
+Cathode TV is an IPTV player for iPhone, iPad, Mac, Apple TV and Vision Pro. It plays the playlists and program guides you already have. It is one SwiftUI codebase, with each platform built around its own input: touch, keyboard, the Siri Remote, or eyes and hands. It is in development and due in 2026, as a single purchase with no subscription.
+
+Why it exists: an IPTV playlist is just a list of channels. The guide data that makes it watchable usually arrives as a large, compressed XML file that most players handle poorly, and on Apple TV especially, a player has to get focus, remote input and channel changes exactly right, or it feels broken however good it looks. Cathode TV treats the guide and the channel change as the core of the product, not as features.
+
+What it does:
+- Plays your own playlists. M3U and M3U8 playlists, the Xtream Codes API and XMLTV guides.
+- A seven-day guide. Every channel gets a timeline that opens at the current time, with now and next, genre filters and the week ahead.
+- Quick channel changes. A mini-guide overlay, gesture controls and picture in picture.
+- A home screen from your guide. Rows for what's live now, tonight's highlights, live sports and movies starting soon.
+- Programme details from TMDB. Posters, cast and ratings for guide programs and for your provider's on-demand library.
+- Profiles that sync. Several profiles with parental controls, and favorites synced over iCloud.
+
+How it's built: channel changes run on a time budget. The player swaps items rather than rebuilding the video layer, a small pool of warm players pre-buffers the channels you are likely to switch to next in the direction you have been switching, the stream format that worked last time is remembered per channel so the fallback sequence isn't repeated, and a signpost measures every change from tap to first frame. The guide parser streams a gzipped XMLTV file: it is decompressed to disk and read with a streaming parser that first checks the opening bytes to catch an HTML error page posing as a guide; programmes are sorted per channel, so "what's on now" is a binary search, and a compressed disk cache lets the app open without a network. On Apple TV, the player's on-screen controls run on a five-state machine that replaced four separate flags and their sixteen combinations, so only one element can hold focus at a time and the focus engine never has to choose; the guide grid never recycles the focused cell, and when it rebuilds it keeps you at the same time of day, not the same scroll offset. Channels live in SQLite with a full-text index for search, lists load in pages, and the Apple TV work was tested against a synthetic catalog of about 80,000 channels.
 
 ### Nimbus
 Case study: https://casavargas.app/work/nimbus/
 
-A native Mac app that puts S3, Google Drive, OneDrive, SFTP and the rest of rclone's remotes into Finder via a File Provider extension, plus mounting any remote as a volume. Driven entirely by rclone; no provider is reimplemented. In development; there is no release date yet.
+Nimbus is a Mac app for cloud storage. It lets you browse, copy, sync and mount remotes from S3, Google Drive, OneDrive, SFTP and the rest of rclone's long list. It doesn't reimplement any provider: it drives rclone and puts a native interface on top, including a Finder extension so your remotes show up where your files already are. Nimbus is in development. There is no release date yet.
+
+Why it exists: rclone is the most capable cloud-storage engine there is, but using it means a terminal and a config file. The usual alternative is one vendor app per cloud, each with its own sync folder and its own idea of how a Mac should behave. Nimbus keeps rclone's reach and its open config format, and drops the command line.
+
+What it does:
+- Your remotes, in Finder. A File Provider extension lists your remotes in Finder. Files download when you open them, and edits go back up.
+- Mount a remote as a volume. Mount any remote as a Finder volume. Mounts marked to open at launch, or left open when you quit, come back on the next launch.
+- Add a remote without the config file. A guided sheet asks only the questions rclone needs for that provider, and providers that use OAuth sign in through your browser. Existing rclone configs import as they are.
+- Browse, copy and sync. List and grid views with Quick Look and type-to-select; drag between clouds to copy; copy or sync any two remotes or folders, with progress in a Transfers view and the menu bar.
+
+How it's built: the app and its Finder extension talk to the same local rclone process through RcloneKit, a typed Swift client for rclone's remote-control API. The engine's port is shared through the app group, and no provider is ever reimplemented in Swift. The rclone contract is tested, not assumed: four behaviors were checked against the real rclone and fixed, among them that listings return paths relative to the remote's root and that the API has no download call, so file contents come through rclone's own file server, with the lesson that a mock proves the client's shape, not the server's contract. Adding a remote walks rclone's own configuration flow instead of a hand-built form per provider, 13 questions for S3 instead of 78 options and 8 for Google Drive instead of 52, and a test pins those counts so an rclone upgrade that changes the flow fails loudly rather than silently. Deciding what to restore and which stale mounts to clean up are pure, unit-tested functions; leftover NFS servers from a crashed session are stopped before a new mount starts, and automatic remounting happens at most once per session. The build fails on hard-coded font sizes, which protects Dynamic Type, and on any remote Swift package dependency.
+
+On the record: more than 50 providers, through rclone. About 200 test functions across the app and RcloneKit.
 
 ### AppPulse (working title)
 Case study: https://casavargas.app/work/apppulse/
 
-A Mac app updater that finds third-party apps, checks for newer versions from Homebrew cask data and Sparkle feeds verified with EdDSA, and installs only after confirming the update is signed by the same developer Team ID as the installed app. Installs with rollback; no telemetry, no account, no sudo. In development; there is no release date yet.
+AppPulse finds the third-party apps on your Mac, checks for newer versions, and installs them after a chain of checks. The last check confirms the download was signed by the same developer as the app you already have. Every step is logged. There's no telemetry, no account and no sudo. AppPulse is in development. There is no release date yet.
+
+Why it exists: a valid code signature only tells you that some registered developer signed a file. It doesn't tell you that the same developer made the app you're about to replace. An updater that trusts its metadata and then checks only the signature can be pointed at the wrong app, and many apps have no reliable update channel at all. AppPulse is built around being honest about both problems.
+
+What it does:
+- Updates from two sources. It reads Homebrew's cask data as plain data, without running brew to check, and Sparkle update feeds verified with EdDSA.
+- Installs with rollback. The old app is cloned before the new one is swapped in, and any failure swaps it back.
+- Says so when it can't compare. When two version schemes don't line up, it reports them as incomparable instead of guessing. Downgrades are shown, never applied.
+- Shows its work. A summary of your library, a step-by-step install timeline, and a log of every decision it makes.
+- Control per app. Skip, snooze, ignore or pin to a major version. Checks run on a schedule while it's open, and silent installs are opt-in behind a five-part gate.
+
+How it's built: the first time AppPulse sees an app, it records the installed copy's Team ID and treats it as the pin. From then on, a different Team ID is a hard stop, whatever the metadata says, so the check still holds if every upstream source is wrong. Authenticated sources come first: Sparkle with EdDSA, then Homebrew's cask data, then Sparkle without a signature, because the EdDSA key already sits inside the installed app so a network attacker can't swap it, and cask data can't be the integrity anchor since some casks skip the checksum entirely. It never runs .pkg installers, whose scripts run as root. It never uses sudo, never replaces a running app, and never launches an app to see whether an update worked. A disk image that needs a license agreement becomes a download-only update. The core library can't import AppKit or touch the file system, network or processes outside its adapter layer, and a CI script fails the build if it tries. Every process call passes an argument array, never a shell string. The Hardened Runtime is on, with no entitlements.
+
+On the record: 272 automated tests, 19 of them against real system tools. An integration test installs a real app update over a copy of the installed version, then rolls it back.
 
 ## Notes (blog)
 
