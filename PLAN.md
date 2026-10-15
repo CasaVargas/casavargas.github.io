@@ -32,7 +32,7 @@ ytfree / Loafr (terms-of-service risk), and personal or throwaway projects.
    platforms and has three credible products in development. "Four apps" undersold it.
 2. **The claims had gone stale again.**
    - Beltr was tagged `AVFoundation · CoreML` (it is Electron, Python and ONNX Runtime) and listed as macOS/Windows/Linux only (it also has an iPhone Remote, an Apple TV Client, Android apps and Docker images).
-   - OneScribe was described as "iOS" with "Google Docs / OneNote export" (it is iPhone and iPad, 83 document types, $9.99 lifetime Pro).
+   - OneScribe was described as "iOS" with "Google Docs / OneNote export" (it is iPhone and iPad, dozens of document types, Pro is a single $9.99 purchase).
 3. **Some of it was broken.**
    - `/beltr` 301s to beltr.app, because the Beltr repo's Pages custom domain claims that path, so the Astro page never served (Tolaria: `casavargas-site-beltr-route-shadowed-by-pages-custom-domain`).
    - The DebridDownloader screenshot was a cropped, near-empty window.
@@ -235,9 +235,10 @@ layout.
   - Phones join by QR with nothing to install, *and* optional native Remote apps exist.
   - **Never** mention Demucs, "real time", "thirty seconds", YouTube or yt-dlp features.
 - **OneScribe:** iPhone and iPad, iOS 26+; free scanning; Pro is $9.99 one-time;
-  83 document types; on-device.
-- **Streamline:** a native IPTV player for the user's own M3U / Xtream playlists and
-  XMLTV guides; coming 2026. **No mention of Stremio, add-ons, debrid, or content
+  dozens of document types, never a count ("83" is retired); on-device.
+- **Cathode TV:** a native IPTV player for the user's own M3U / Xtream playlists and
+  XMLTV guides; in development and due in 2026, as a single purchase with no
+  subscription. **No mention of Stremio, add-ons, debrid, or content
   sourcing.**
 - **DebridDownloader:**
   - GPL-3.0; Real-Debrid, TorBox, Premiumize.
@@ -256,7 +257,15 @@ layout.
   `astro:assets` as AVIF/WebP at explicit widths.
 - No image over 200 KB on the wire; the LCP image under 150 KB (the LCP is text now,
   which is better still).
-- `public/` holds only files that need stable URLs: favicons, logo, OG cards.
+- `public/` holds the files that need stable URLs — `CNAME` (read by GitHub Pages),
+  `robots.txt`, `llms.txt`, `casavargas-logo-orange.svg` (the icon link in
+  `src/layouts/Layout.astro`), `casavargas-logo-orange.png` (the schema `logo` in
+  `src/pages/index.astro` and `src/pages/blog/[slug].astro`), and the OG cards in
+  `og/` — plus four files nothing in the repo references:
+  `casavargas-logo-dark.svg`, `beltr-logo-text.svg`, `OneScribe.png` and
+  `streamline/icon.png` (two SVG logos and two 1024×1024 PNG app icons; the OneScribe
+  icon the site actually renders is `src/assets/icons/onescribe.png`). There is no
+  favicon file; the icon link points at `/casavargas-logo-orange.svg`.
 - New OG card: `public/og/casavargas.png` (1200×630), typeset in the site's own system.
 
 ## 10. Changes made during the build
