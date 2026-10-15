@@ -1,0 +1,89 @@
+# CasaVargas, full facts
+
+> Casa Vargas LLC is an independent software studio in North Carolina, founded by Jon Vargas. It makes apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux, sold as one-time purchases or free, with no subscriptions.
+
+This file gives the fuller per-product facts behind the summary in /llms.txt: what each product does, why it exists, how it's built, and its pricing. Each product's own site is the source of truth for prices and features; this file and the case studies it is drawn from are kept in sync with those sites.
+
+## Beltr
+
+Product site: https://beltr.app · Case study: https://casavargas.app/work/beltr/
+
+Beltr is living-room karaoke built on your own music library. It removes the vocals from songs you already own, times the lyrics to them word by word, and puts them on the TV while guests join from their phones. All of the processing runs on your own computer or home server. Runs on macOS, Windows, Linux and Docker (home server). Price: $19.99 once; five songs are free to try, no card needed.
+
+Why it exists: home karaoke has mostly become a subscription, a licensed catalog rented by the year and limited to whatever it carries this month. Beltr starts from the other end: your library is the catalog and your own hardware does the work, so there is nothing to rent.
+
+What it does:
+- Your music folder is the catalog. Point Beltr at a folder or an Apple Music library and every MP3, FLAC and WAV appears, searchable by artist, album and genre. Nothing is copied or moved.
+- Vocal separation on your machine. On-device AI splits each song into vocals and instrumental in a minute or two. Nothing is uploaded.
+- Lyrics timed word by word. Lyrics come from LRCLIB or your own paste and are aligned to the vocal track. When none exist, a local speech model drafts them first.
+- Phones join with a QR code. Guests queue songs, control playback and sing from their phones, with live pitch scoring. There is no app or account to set up.
+- Plays and exports karaoke files. CDG, MP3+G, .kar, .mid and Thai NCN files play with lyrics read straight from the file, and songs export to MP3+G, CDG or .kar for hardware machines.
+- Runs on a home server too. The same engine ships as a Docker image for Unraid and other home servers, in CPU, NVIDIA and Intel GPU builds.
+
+How it's built: one inference runtime (ONNX Runtime, no PyTorch), one WebSocket room protocol shared by the TV page, web remote and four native apps, bounded-memory separation that can offload to a faster machine on the network, old karaoke formats rendered into the same pipeline as separated songs, and one tagged release building signed and notarized macOS, Windows (including a Microsoft Store package), Linux and container builds.
+
+On the record: 83 public desktop releases between May 21 and September 24, 2026. About 800 test files across Python, JavaScript and Playwright. A desktop app, four native companion apps and three container builds.
+
+Companion apps: Beltr Remote (iPhone, Android) and Beltr Client (Apple TV, Android TV), both free.
+
+## OneScribe
+
+Product site: https://getonescribe.app · Case study: https://casavargas.app/work/onescribe/ · App Store: https://apps.apple.com/us/app/onescribe-ai-note-scanner/id6756506734
+
+OneScribe turns a photo of a receipt, a lease or a boarding pass into a structured card: the vendor, the dates, the amounts, the deadlines. The reading happens on the device; there's no account to create and no OneScribe server to send anything to. Runs on iOS 26 and iPadOS 26. Price: free to scan; Pro is $9.99 once.
+
+Why it exists: most scans end up as a flat image or a block of text, so the information people actually need, like when a warranty ends or what a lease says about notice, stays buried. Many of these documents are also among the most private a person owns (tax forms, prescriptions, IDs), which made on-device processing the starting point, not a feature.
+
+What it does:
+- A card for every document. OneScribe knows dozens of kinds of document, each with its own Data Card. A receipt card holds the line items, tax and total; a contract card holds the deadlines and renewal windows.
+- Ask in plain English. Search the whole library in natural language, or chat with a single document. Voice conversations run on the device too.
+- A daily briefing. Each morning it lists what needs attention, from upcoming deadlines to recent spending.
+- Alerts before deadlines. You hear about it before a warranty lapses, a return window closes or a policy comes up for renewal.
+- Documents that link up. Related documents connect automatically: a receipt with its warranty, an invoice with its payment, an insurance card with a vehicle registration.
+- Exports to the right app. Contracts go to Calendar, business cards to Contacts, meeting notes to Reminders and receipts to a spreadsheet.
+
+How it's built: every document type is a Swift `@Generable` struct across 151 typed schemas and about 1,420 field instructions, so Apple's on-device model fills typed fields instead of writing prose, checked afterward by a validator that flags impossible dates, negative amounts and balances that don't add up. A single Vision document request per page returns text in reading order with structure and barcodes; a Core ML classifier identifies the document type first and only sends ambiguous documents to the language model. Document links come from a pure rule engine, and the daily briefing is built from rules, with the model only writing the headline and first paragraph.
+
+On the record: 19 export modes. 151 typed schemas, with about 1,420 field instructions. On the App Store since January 2026.
+
+## DebridDownloader (open source)
+
+Repo: https://github.com/CasaVargas/DebridDownloader · Case study: https://casavargas.app/work/debrid-downloader/
+
+DebridDownloader is a free, open-source desktop app for people who pay for Real-Debrid, TorBox or Premiumize. It replaces the browser tab: add a link or a file, the service fetches it, and you download, stream or file the results without leaving the app. Runs on macOS, Windows and Linux. Built with Tauri, Rust and React. License: GPL-3.0. Free; requires an account with one of the three services.
+
+What it does: connects to all three services and switches between them; a queue of one to ten downloads at once with live speed and an optional limit; streams a preview before downloading; sorts downloads into TMDB-matched library folders and can trigger a Plex, Jellyfin or Emby scan or send files to an rclone remote; can be set as the system's default handler for debrid links; keeps tokens in the OS keychain, never in a settings file.
+
+On the record: GPL-3.0 licensed. 16 releases, from version 1.0 in March 2026 to 1.6.4 in May 2026. Installer size 5.9 MB on Windows, 8.9 MB on macOS.
+
+## In development
+
+### Cathode TV
+Product site: https://cathodetv.app · Case study: https://casavargas.app/work/cathode-tv/
+
+A native IPTV player for iPhone, iPad, Mac, Apple TV and Vision Pro that plays the M3U/M3U8 playlists, Xtream Codes API feeds and XMLTV guides you already have. One SwiftUI codebase, each platform built around its own input (touch, keyboard, the Siri Remote, or eyes and hands). In development, due in 2026, as a single purchase with no subscription. (Previously announced as Streamline.)
+
+### Nimbus
+Case study: https://casavargas.app/work/nimbus/
+
+A native Mac app that puts S3, Google Drive, OneDrive, SFTP and the rest of rclone's remotes into Finder via a File Provider extension, plus mounting any remote as a volume. Driven entirely by rclone; no provider is reimplemented. In development; there is no release date yet.
+
+### AppPulse (working title)
+Case study: https://casavargas.app/work/apppulse/
+
+A Mac app updater that finds third-party apps, checks for newer versions from Homebrew cask data and Sparkle feeds verified with EdDSA, and installs only after confirming the update is signed by the same developer Team ID as the installed app. Installs with rollback; no telemetry, no account, no sudo. In development; there is no release date yet.
+
+## Notes (blog)
+
+- The long road to OneScribe 2.0: https://casavargas.app/blog/the-long-road-to-onescribe-2/
+- 217 tags later: seven months of building Beltr: https://casavargas.app/blog/beltr-217-tags-later/
+- GlassTV, Streamline, Cathode TV: building an IPTV player the long way: https://casavargas.app/blog/glasstv-streamline-cathode-tv/
+- Why we don't do subscriptions: https://casavargas.app/blog/why-we-dont-do-subscriptions/
+- Native vs cross-platform: when to use each: https://casavargas.app/blog/native-vs-cross-platform/
+- Building Beltr: what it takes to turn any song into karaoke: https://casavargas.app/blog/building-beltr-ai-vocal-separation/
+- Introducing Cathode TV (announced as Streamline): https://casavargas.app/blog/introducing-streamline-iptv-player/
+
+## Contact
+
+- Email: hello@casavargas.app
+- GitHub: https://github.com/CasaVargas
