@@ -30,7 +30,7 @@ const facts: [string, string][] = [
   ['Price', 'Free and open source, GPL-3.0-or-later'],
   ['Runs on', 'macOS 14 or later (Apple silicon and Intel), Windows 11'],
   ['Needs', 'A Kindle, and Kindle Previewer 4, free from Amazon'],
-  ['Status', 'Pre-alpha. The Daily is a preview.'],
+  ['Status', 'Pre-alpha. Verified on a Kindle Scribe (2024), other models pending. The Daily is a preview.'],
 ];
 
 const paper = [
@@ -68,7 +68,6 @@ const next = [
   { n: 54, title: 'Puzzles in the paper, with answers in the next edition' },
   { n: 53, title: 'An optional editor that writes a short brief for each section' },
   { n: 60, title: '“Yesterday on your Kindle”: your highlights, back in the paper' },
-  { n: 27, title: 'A typographic cover for books that have none (in review)' },
   { n: 44, title: 'Delivery over Wi-Fi on your own network (in review)' },
 ];
 
@@ -170,7 +169,9 @@ const schema = {
         </p>
         <p>
           A Mac asleep at 5:30 builds the paper when it wakes. The paper always keeps its
-          front page as the cover, on every Kindle.
+          front page as the cover, on every Kindle. The
+          <a class="textlink" href={`${repo}/blob/main/docs/daily.md`} rel="noopener">Daily reference</a>
+          has every setting.
         </p>
       </div>
     </section>
@@ -279,12 +280,13 @@ const schema = {
             <p>
               From the <a class="textlink" href={download} rel="noopener">latest release</a>.
               On a Mac, open the <code>.dmg</code> and drag Deckle to Applications; it is signed
-              and notarized by Apple. On Windows, run the <code>-setup.exe</code>, which installs
-              for your user with no admin, or the <code>.msi</code>.
+              and notarized by Apple. On Windows, run the code-signed <code>-setup.exe</code>,
+              which installs for your user with no admin, or the <code>.msi</code>. A new
+              certificate can still bring up SmartScreen: choose More info, then Run anyway.
             </p>
             <p class="dk-note">
-              Version 0.1.0 predates the Daily, the library, the Kindle tab and Word, text and
-              web import. They are on the main branch and arrive in the next release.
+              The Daily, the library, the Kindle tab and Word, text and web import ship in
+              version 0.2.1. If the latest release still says 0.1.0, 0.2.1 is on its way.
             </p>
           </li>
           <li>
