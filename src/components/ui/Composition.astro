@@ -20,8 +20,10 @@ const { plate, eager = false, class: className } = Astro.props;
     </>
   )}
 
-  {plate.layout === 'phones' &&
-    plate.shots.map((shot, i) => <Shot shot={shot} class={`comp__phone comp__phone--${i}`} />)}
+  {(plate.layout === 'phones' || plate.layout === 'readers') &&
+    plate.shots.map((shot, i) => (
+      <Shot shot={shot} class={`comp__phone comp__phone--${i}`} eager={eager && i === 1} sizes={plate.layout === 'readers' ? '(max-width: 900px) 34vw, 26vw' : undefined} />
+    ))}
 
   {plate.layout === 'compact' && (
     <Shot shot={plate.shots[0]} width={1100} sizes="(max-width: 900px) 100vw, 60vw" eager={eager} />
@@ -62,6 +64,20 @@ const { plate, eager = false, class: className } = Astro.props;
     transform: translateY(-1.5rem);
   }
 
+  /* readers: the same row, wider devices for 3:4 pages. */
+  .comp--readers {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: clamp(0.75rem, 2.5vw, 2.25rem);
+    padding-top: 1.5rem;
+  }
+  .comp--readers :global(.comp__phone) { width: min(28%, 360px); }
+  .comp--readers :global(.comp__phone--1) {
+    width: min(33%, 420px);
+    transform: translateY(-1.5rem);
+  }
+
   @media (max-width: 900px) {
     .comp--feature { padding-right: 14%; padding-bottom: 10%; }
     .comp--feature :global(.comp__aside) { width: 26%; }
@@ -69,5 +85,8 @@ const { plate, eager = false, class: className } = Astro.props;
     .comp--phones { gap: 0.75rem; }
     .comp--phones :global(.comp__phone) { width: 31%; }
     .comp--phones :global(.comp__phone--1) { width: 35%; transform: translateY(-0.75rem); }
+    .comp--readers { gap: 0.6rem; }
+    .comp--readers :global(.comp__phone) { width: 31%; }
+    .comp--readers :global(.comp__phone--1) { width: 36%; transform: translateY(-0.75rem); }
   }
 </style>

@@ -9,7 +9,8 @@ import kindle from '../../assets/deckle/kindle.jpg';
 // docs/devices.md. Pre-alpha: never "works with every Kindle". Kindle Previewer
 // is Amazon's and never bundled; Deckle is not affiliated with Amazon. No DRM
 // talk of any kind. The KFX writer is a port of jhowell's kfxlib: credit it,
-// never present the formats as our discovery. See PLAN.md §13.
+// never present the formats as our discovery. The Daily leads (PLAN.md §14);
+// its demo edition is fictional. See PLAN.md §13.
 const item = bySlug('deckle');
 
 const schema = {
@@ -29,19 +30,20 @@ const schema = {
 <CaseStudy
   slug="deckle"
   ogImage="/og/work-deckle.png"
-  title="Deckle, store-quality Kindle books from the EPUBs you own | CasaVargas"
-  description="How Deckle gives sideloaded EPUBs what store books have on a Kindle: Enhanced Typesetting, covers, page numbers, X-Ray and Word Wise. Built with Rust, Tauri and React. A case study from CasaVargas."
-  intro="Deckle is a free, open-source desktop app that turns an EPUB you own into a Kindle book that reads like one bought from the store, and puts it on your Kindle. Drop the books on the window, plug in the Kindle and press Send. It runs on macOS and Windows."
+  title="Deckle, a morning paper and store-quality books for your Kindle | CasaVargas"
+  description="How Deckle prints a morning newspaper on your Kindle and gives sideloaded books what store books have: Enhanced Typesetting, covers, page numbers, X-Ray and Word Wise. Built with Rust, Tauri and React. A case study from CasaVargas."
+  intro="Deckle is a free, open-source desktop app for the Kindle. Every morning it sets a real newspaper on your own computer, from your town’s news and weather, your feeds and the articles you saved, and puts it on the Kindle. It also turns the EPUBs you own into Kindle books that read like ones from the store. It runs on macOS and Windows."
   problem="Books you load onto a Kindle yourself are second-class. They miss Enhanced Typesetting, lose their covers, and get no page numbers, X-Ray or Word Wise. Every fix exists somewhere as a calibre plugin or a forum recipe, each with its own install story, and they fight each other: the one that gives you X-Ray takes away your cover on a 2024 Kindle Scribe. Deckle is one tool that does all of it, and picks the trade-off for each Kindle instead of leaving it to you."
   features={[
+    { title: 'A morning paper', body: 'A front page that doubles as the cover, so the library tile is today’s paper; whole stories with grayscale photos; a horoscope Deckle writes itself. It builds at the hour you pick and waits on the Kindle. In preview.' },
     { title: 'Enhanced Typesetting', body: 'Deckle drives Amazon’s free Kindle Previewer to produce the Enhanced Typesetting that store books get. It never bundles Previewer; you install it once, free.' },
     { title: 'Covers that stay', body: 'It decides per Kindle whether a book can have both its cover and X-Ray, and writes its own cover thumbnail where the Kindle allows it.' },
     { title: 'X-Ray and Word Wise', body: 'People and terms are found in the text, with optional descriptions written by an AI model you choose. Word Wise hints point at the Kindle’s own dictionary.' },
-    { title: 'More than EPUB', body: 'Word documents, web articles and finished KFX files go through the same pipeline. A morning paper, the Deckle Daily, is in preview.' },
-    { title: 'A library that is just folders', body: 'Every book sent is kept as Author/Title with a small JSON file beside it. No database: move it, sync it or back it up with anything.' },
-    { title: 'Private by default', body: 'No account, no telemetry, no auto-updater. Every online lookup is listed, and all but a one-time Word Wise download are off until you turn them on.' },
+    { title: 'More than EPUB', body: 'Word documents, plain text, web articles and finished KFX files go through the same pipeline as EPUBs.' },
+    { title: 'Private by default', body: 'No account, no telemetry, no auto-updater. Every online lookup is listed, and all but a one-time Word Wise download are off until you turn them on. The paper fetches only the sources you give it.' },
   ]}
   engineering={[
+    { title: 'A paper that always goes to press', body: 'Every source sits behind one small network interface and is gathered on its own, so a feed that is down becomes an “unavailable today” line in its section and the edition still builds, even with no network at all. The front page is drawn in Rust with bundled open-licence fonts and becomes the EPUB’s cover, and the paper is always sent as a personal document so that cover shows on every Kindle.' },
     { title: 'A KFX writer, ported byte for byte', body: 'Kindle Previewer produces a KPF: a zip around a SQLite database of Ion fragments. A Kindle wants a single monolithic KFX. jhowell’s kfxlib has the complete path between them; Deckle’s KFX writer is a Rust port of it, tested byte for byte against kfxlib’s own output, so no Python ships with the app.' },
     { title: 'One rule for covers and features', body: 'X-Ray and Word Wise only load for books marked EBOK with an ASIN, and an EBOK the store doesn’t know shows a grey cover once the Kindle goes online. So Deckle reads each Kindle: where system/thumbnails is writable it sends EBOK and restores its own thumbnail on every send; on MTP-only Kindles it sends PDOC, so the cover wins, unless the book matched a real Amazon edition.' },
     { title: 'Its own MTP client', body: 'The 2024 Scribe, Colorsoft and Paperwhite only speak MTP, and macOS has none. Deckle carries a small PTP/MTP client over USB that always uses the 32-bit ObjectInfo layout, because libmtp’s layout switch makes every write to a Kindle fail with 0xA806.' },

@@ -15,7 +15,9 @@ import osWine from '../assets/onescribe/wine.jpg';
 
 import debridTorrents from '../assets/debrid/torrents.jpg';
 
-import deckleBooks from '../assets/deckle/books-done.jpg';
+import deckleFront from '../assets/deckle/paper/front.jpg';
+import deckleInside from '../assets/deckle/paper/inside.jpg';
+import deckleStory from '../assets/deckle/paper/story.jpg';
 
 import ctvGuide from '../assets/cathode-tv/guide.jpg';
 import ctvHome from '../assets/cathode-tv/home.jpg';
@@ -35,17 +37,18 @@ export interface WorkLink {
 export interface Shot {
   src: ImageMetadata;
   alt: string;
-  /** window: macOS titlebar. screen: a bare display (TV). phone: a lit bezel. */
-  kind: 'window' | 'screen' | 'phone';
+  /** window: macOS titlebar. screen: a bare display (TV). phone: a lit bezel. reader: an e-reader. */
+  kind: 'window' | 'screen' | 'phone' | 'reader';
 }
 
 export interface Plate {
   /**
    * feature: one large display with a phone overlapping its corner.
    * phones:  a row of devices, the middle one forward.
+   * readers: the same row of e-readers, sized for 3:4 pages.
    * compact: a smaller window beside the text, for thin imagery.
    */
-  layout: 'feature' | 'phones' | 'compact';
+  layout: 'feature' | 'phones' | 'readers' | 'compact';
   shots: Shot[];
   /** Attribution shown under the images (e.g. a CC BY licence credit). */
   credit?: string;
@@ -184,9 +187,9 @@ export const work: Work[] = [
   {
     slug: 'deckle',
     name: 'Deckle',
-    what: 'Books you own, finished for your Kindle',
+    what: 'A morning paper for your Kindle, and better books',
     tagline:
-      'Deckle turns an EPUB you own into a Kindle book that reads like one from the store, with Enhanced Typesetting, a cover that stays, page numbers, X-Ray and Word Wise.',
+      'Deckle prints a real morning newspaper on your Kindle, built on your own computer from your town’s news and weather and the reading you saved, and turns the books you own into Kindle books that read like the store’s.',
     group: 'open-source',
     runsOn: ['macOS', 'Windows'],
     builtWith: ['Tauri', 'Rust', 'React'],
@@ -196,15 +199,16 @@ export const work: Work[] = [
       { label: 'Source on GitHub', url: 'https://github.com/CasaVargas/deckle' },
     ],
     icon: deckleIcon,
+    // A demo edition built by Deckle's own digest code: the town and its stories
+    // are fictional (PLAN.md §14.3). Never invented news about a real place.
     plate: {
-      layout: 'compact',
+      layout: 'readers',
       shots: [
-        {
-          src: deckleBooks,
-          kind: 'window',
-          alt: 'Deckle’s Books tab: five public-domain novels finished for a connected Kindle, each with its X-Ray and Word Wise counts',
-        },
+        { src: deckleInside, kind: 'reader', alt: 'Inside page of The Morning Deckle on an e-reader: the index of today’s sections' },
+        { src: deckleFront, kind: 'reader', alt: 'The front page of The Morning Deckle on an e-reader: masthead, date, weather and the lead headlines' },
+        { src: deckleStory, kind: 'reader', alt: 'A local story from The Morning Deckle on an e-reader, with a grayscale photo' },
       ],
+      credit: 'A demo edition: Linden Falls and its stories are fictional. Photos are public domain.',
     },
   },
   {

@@ -473,3 +473,80 @@ Same house: walnut ground, Newsreader, amber used sparingly. Premium means air.
 
 Known: the app's own UI copy shows two em dashes inside the screenshots ("1 book can
 be updated — …", the Daily result line). That is Deckle's text, not the site's.
+
+---
+
+## 14. Deckle leads with the Daily (2026-10-21, revision of §13)
+
+The owner's call, the same night as launch: analog and retro media are what younger
+readers are picking up, so **the Deckle Daily, a morning newspaper printed on your
+Kindle, is the headline feature.** Turning owned EPUBs into store-quality Kindle books
+becomes the second act. §13's routes, content rules and screenshot rules still apply.
+
+### 14.1 Positioning
+
+- One line: **"Your morning paper, printed on your Kindle."** "Printed" is the retro
+  wink: e-ink is paper.
+- What it is: a real newspaper built on your own computer each morning from your
+  town's weather and news, your feeds, and the articles you saved, waiting on the
+  Kindle before you're up. No account, no subscription, nothing sent anywhere.
+- Then: and every book you own, finished like the store's.
+- **Still a preview.** The Daily is marked "preview" in the app and isn't in the 0.1.0
+  download. The page says so until a release ships it. No "available now" language.
+
+### 14.2 `/deckle/` order
+
+1. Opening: statement, standfirst (paper first, books second), Download and Source,
+   facts table.
+2. **The paper itself**: three e-readers, the generated front page in the middle,
+   an inside page either side. Caption: a demo edition, the town and its stories are
+   fictional.
+3. **A newspaper, not a feed**: front page as the library tile, sections in order,
+   full stories with grayscale photos, paywalled stories stay headlines, nothing opens
+   a browser, a horoscope Deckle writes itself, On this day.
+4. **On the doorstep by 5:30**: schedule, plug-in delivery, Wi-Fi by email, the newest
+   three kept. The app's Daily tab screenshot.
+5. **Save it for tomorrow**: bookmarklet, Inbox folder, iPhone Shortcut, long reads
+   as their own book.
+6. **And every book you own**: §13.2's store-book list and cover rule, condensed;
+   more than EPUB, the library and the Kindle tab, with the Books tab screenshot.
+7. Network (the paper's sources named), install, on the bench (Daily items added),
+   credits, close.
+
+### 14.3 Paper imagery
+
+- Built by Deckle's real digest code (`deckle_digest::build` with a canned `Net`), so
+  every pixel of the paper is the product's own output: the generated masthead cover
+  and the EPUB's own pages, rendered at Kindle Paperwhite size in grayscale.
+- **Fictional town and stories** ("The Morning Deckle", Linden Falls, NC). Never
+  invented news about a real place. Public-domain photos only, credited in the page
+  file. Weather and On this day come from the digest's test fixtures.
+- Shown in a plain e-reader bezel drawn in CSS (`ui/Reader.astro`, `kind: 'reader'`).
+  No Kindle UI or Amazon trade dress in the frame or the image.
+
+### 14.4 Also touched
+
+- `work.ts`: Deckle's `what`, `tagline` and plate (three readers) lead with the paper.
+- Case study intro and features: the Daily first.
+- OG cards and `llms*.txt` reworded.
+
+### 14.5 Verification (results, 2026-10-21, against `astro preview`)
+
+- [x] Build clean; no em dashes in the Deckle pages or `llms*.txt`; JSON-LD parses;
+      internal links resolve; no image over 200 KB on the wire
+- [x] 390 px: no document overflow on `/`, `/deckle/`, `/work/deckle/` (the network
+      table scrolls inside its own container; the mobile grid is `minmax(0, 1fr)` so
+      it can)
+- [x] Every paper image opened and read: fictional town, outlets and `.example`
+      domains, no named people, photos grayscale (NPS and USDA, public domain)
+- [x] 1440 visual pass (headless Chrome, full page). Caught and fixed: the reader
+      bezel's percentage padding resolved against the plate, not the frame, so pages
+      rendered at half size; the padding now sits on an inner `.reader__face`.
+- [x] Lighthouse (mobile): `/deckle/` 97 / 100 / 100 / 100, `/` 92 / 100 / 100 / 100,
+      `/work/deckle/` 94 / 100 / 100 / 100
+
+Product notes from building the demo edition (Deckle, not this site): a figure's
+caption can come loose from its photo when the photo is also the page's `og:image`;
+an in-body byline prints twice; front-page index metadata wraps mid-time; the
+weather table assumes `daily[0]` is the edition date; the cover's tagline "All the
+news that fits" sits close to the New York Times motto.
