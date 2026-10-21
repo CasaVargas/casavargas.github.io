@@ -5,7 +5,7 @@ import Shot from '../../components/ui/Shot.astro';
 import { bySlug } from '../../data/work';
 import kindle from '../../assets/deckle/kindle.jpg';
 
-// Facts checked 2026-10-21 against the Deckle README, docs/formats/ and
+// Facts checked 2026-10-21 (README rewrite and 0.2.1 changelog) against the Deckle README, docs/formats/ and
 // docs/devices.md. Pre-alpha: never "works with every Kindle". Kindle Previewer
 // is Amazon's and never bundled; Deckle is not affiliated with Amazon. No DRM
 // talk of any kind. The KFX writer is a port of jhowell's kfxlib: credit it,
@@ -53,6 +53,7 @@ const schema = {
   record={[
     ['License', 'GPL-3.0-or-later'],
     ['First release', '0.1.0 on 19 October 2026, for macOS, Windows and Linux'],
+    ['Verified on', 'A Kindle Scribe (2024) over MTP: cover, X-Ray and Word Wise. Other models pending.'],
     ['Codebase', 'About 36,000 lines of Rust in 11 crates, with a React front end'],
     ['Credits', 'Built on research by jhowell (KFX Input and kfxlib), xxyzz (WordDumb), jloutsch, seapy and calibre’s Kindle driver'],
   ]}
