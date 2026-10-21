@@ -1,0 +1,667 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
+import Facts from '../components/ui/Facts.astro';
+import Shot from '../components/ui/Shot.astro';
+import { bySlug } from '../data/work';
+import kindle from '../assets/deckle/kindle.jpg';
+import daily from '../assets/deckle/daily.jpg';
+
+// Deckle's product page: it has no domain of its own. Every claim here comes
+// from the Deckle README, docs/devices.md and its `roadmap` issues (PLAN.md §13).
+// Pre-alpha: never "works with every Kindle". Kindle Previewer is Amazon's and
+// never bundled. No DRM talk of any kind. No em dashes.
+const item = bySlug('deckle');
+
+const repo = 'https://github.com/CasaVargas/deckle';
+const download = `${repo}/releases/latest`;
+const issue = (n: number) => `${repo}/issues/${n}`;
+
+const facts: [string, string][] = [
+  ['Price', 'Free and open source, GPL-3.0-or-later'],
+  ['Runs on', 'macOS 14 or later (Apple silicon and Intel), Windows 11'],
+  ['Needs', 'Kindle Previewer 4, free from Amazon'],
+  ['Status', 'Pre-alpha, version 0.1.0. Testing on real Kindles is under way.'],
+];
+
+const storeBook = [
+  { title: 'Enhanced Typesetting', body: 'The typesetting store books get, produced by Amazon’s own converter, Kindle Previewer, which Deckle drives for you.' },
+  { title: 'A cover that stays', body: 'Sideloaded covers tend to turn grey the moment a Kindle goes online. Deckle picks, per Kindle, how to keep yours.' },
+  { title: 'Page numbers', body: 'Approximate page numbers calculated from the text, so the book counts pages, not just locations.' },
+  { title: 'X-Ray', body: 'The people and terms in the book, where each appears, and optional spoiler-free descriptions from an AI model you choose, or Wikipedia.' },
+  { title: 'Word Wise', body: 'Short hints above harder words, pointing at the Kindle’s own English dictionary when it has one, so they look like a store book’s.' },
+  { title: 'Real metadata', body: 'Title, author, series and description, filled from Open Library when the book leaves them empty, if you turn that on.' },
+];
+
+const coverRule: [string, string][] = [
+  ['Kindles that show as a USB drive', 'Features and the cover: Deckle writes its own cover thumbnail and restores it on every send.'],
+  ['Kindles that only speak MTP (Scribe 2024, Colorsoft, Paperwhite 2024)', 'The cover wins, unless the book matches a real Amazon edition. Then you can have both.'],
+  ['Exported to a folder', 'The cover wins.'],
+];
+
+const network: [string, string, string][] = [
+  ['Word Wise dictionary, 12 MB, from Deckle’s own releases', 'Once, the first time a book gets Word Wise', 'On'],
+  ['Descriptions for X-Ray, from Anthropic or any OpenAI-compatible endpoint, including a local Ollama', 'Each book with features', 'Off'],
+  ['Wikipedia summaries for X-Ray terms', 'Each book with features', 'Off'],
+  ['Amazon edition lookup, through Open Library', 'Books for MTP-only Kindles', 'Off'],
+  ['Missing book details, from Open Library', 'Each book sent', 'Off'],
+  ['The Daily, by email, through your own mail account', 'Each morning paper', 'Off'],
+];
+
+const next = [
+  { n: 31, title: 'Footnotes become Kindle pop-up notes' },
+  { n: 40, title: 'Series tracking and reading order' },
+  { n: 27, title: 'A typographic cover for books that have none' },
+  { n: 86, title: 'Plain text files as books' },
+];
+
+const considering = [
+  { n: 18, title: 'PDF to a reflowable book' },
+  { n: 20, title: 'Comics, manga and picture books, kept fixed-layout' },
+  { n: 23, title: 'A Markdown or notes folder as a book' },
+  { n: 60, title: 'Your highlights and vocabulary, back out as Markdown' },
+  { n: 36, title: 'Kindle Collections sync' },
+  { n: 44, title: 'Delivery over Wi-Fi on your own network' },
+  { n: 42, title: 'Backup and restore of what you have sideloaded' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Deckle',
+  description: item.tagline,
+  url: 'https://casavargas.app/deckle/',
+  downloadUrl: download,
+  codeRepository: repo,
+  operatingSystem: 'macOS, Windows',
+  applicationCategory: 'UtilitiesApplication',
+  license: 'https://www.gnu.org/licenses/gpl-3.0.html',
+  author: { '@type': 'Organization', name: 'Casa Vargas LLC', url: 'https://casavargas.app' },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+---
+
+<Layout
+  title="Deckle | Store-quality Kindle books from the EPUBs you own"
+  description="Deckle is a free, open-source app for Mac and Windows that turns an EPUB you own into a Kindle book that reads like one from the store: Enhanced Typesetting, a cover that stays, page numbers, X-Ray and Word Wise."
+  ogImage="/og/deckle.png"
+>
+  <JsonLd data={schema} />
+  <Nav />
+
+  <main id="main" class="dk">
+    <section class="dk-open" aria-labelledby="dk-title">
+      <div class="lamp" aria-hidden="true"></div>
+      <div class="wrap dk-open__inner">
+        <p class="dk-mark">
+          <Image src={item.icon!} alt="" widths={[64, 128]} sizes="64px" format="webp" quality={84} loading="eager" fetchpriority="high" class="dk-mark__icon" />
+          <span class="dk-mark__name">Deckle</span>
+        </p>
+
+        <h1 id="dk-title" class="statement">
+          <span class="statement__line">Books you own,</span>
+          <span class="statement__line">finished for your Kindle.</span>
+        </h1>
+
+        <div class="dk-open__body">
+          <p class="standfirst">
+            Deckle turns any EPUB you own into a Kindle book that reads like one from the
+            store, and puts it on your Kindle. Drop the books in, plug the Kindle in, press
+            Send.
+          </p>
+          <p class="dk-actions">
+            <a class="dk-button" href={download} rel="noopener">Download Deckle</a>
+            <a class="textlink" href={repo} rel="noopener">Source on GitHub</a>
+          </p>
+        </div>
+
+        <Facts rows={facts} class="dk-open__facts" />
+      </div>
+    </section>
+
+    <div class="wrap dk-lead">
+      <Shot shot={item.plate!.shots[0]} width={1600} sizes="(max-width: 900px) 100vw, 82vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-store">
+      <div>
+        <h2 id="dk-store" class="dk-h2">What a store book has that yours doesn’t</h2>
+        <p class="dk-side">Each of these exists as a separate plugin or forum recipe, and they fight each other. Deckle does all of them in one window.</p>
+      </div>
+      <dl class="dk-features">
+        {storeBook.map((f) => (
+          <div>
+            <dt>{f.title}</dt>
+            <dd>{f.body}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-cover">
+      <h2 id="dk-cover" class="dk-h2">Covers and features pull in opposite directions</h2>
+      <div class="dk-prose">
+        <p>
+          A Kindle only loads X-Ray and Word Wise for books it files as store books, and it
+          gives a store book it doesn’t recognise a grey cover. Personal documents always keep
+          their cover, but get neither feature. Most tools make you pick. Deckle reads each
+          Kindle when it connects and makes the choice for that device:
+        </p>
+        <Facts rows={coverRule} class="dk-rule" />
+        <p>
+          On any book, the row menu overrides the choice. For the Scribe and other MTP-only
+          Kindles, give a book the ASIN of its Kindle edition and the Kindle fetches Amazon’s
+          own cover, with X-Ray and Word Wise intact.
+        </p>
+      </div>
+    </section>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-more">
+      <h2 id="dk-more" class="dk-h2">More than EPUB</h2>
+      <div class="dk-prose">
+        <p>
+          <strong>Word documents</strong> come through with their headings as the contents
+          and their footnotes as pop-up notes. <strong>A web address</strong> becomes one
+          clean article with its photos and a cover of its own. <strong>A finished
+          KFX</strong> is sent as it is.
+        </p>
+        <p>
+          <strong>Your library is plain folders.</strong> Choose one and Deckle keeps a copy
+          of every book you send, as Author/Title with a small JSON file that records where it
+          went. No database: move it, sync it or back it up with anything.
+        </p>
+        <p>
+          <strong>The Kindle tab</strong> shows what is on the device, with its covers, mode,
+          X-Ray and Word Wise, and the free space left. When Deckle has learned to build a
+          book better since it was sent, the tab says so, and Update all lines those books up to send again.
+        </p>
+      </div>
+    </section>
+
+    <div class="wrap dk-figure">
+      <Shot shot={{ src: kindle, kind: 'window', alt: 'Deckle’s Kindle tab: the books on a connected Kindle with their covers, mode and X-Ray and Word Wise status, and the free space left' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-daily">
+      <div>
+        <h2 id="dk-daily" class="dk-h2">The Deckle Daily</h2>
+        <p class="dk-side ui">In preview</p>
+      </div>
+      <div class="dk-prose">
+        <p>
+          A morning paper built on your own computer: the weather, local news, your feeds,
+          “On this day”, and a front page as its cover, so the Kindle’s library tile is
+          today’s paper. Every story comes with its full text and photos, so nothing sends you
+          to a browser.
+        </p>
+        <p>
+          Save an article during the day and it prints in tomorrow’s edition. Set it for 5:30
+          and it is waiting when you plug in, or arrives over Wi-Fi by email if you prefer. No
+          keys and no accounts.
+        </p>
+      </div>
+    </section>
+
+    <div class="wrap dk-figure dk-figure--left">
+      <Shot shot={{ src: daily, kind: 'window', alt: 'Deckle’s Daily tab: the paper’s name and town, its sections and feeds, and a morning schedule' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-network">
+      <div>
+        <h2 id="dk-network" class="dk-h2">What goes over the network</h2>
+        <p class="dk-side">Nothing about you, ever. No account, no subscription, no telemetry, no auto-updater.</p>
+      </div>
+      <div class="dk-prose">
+        <div class="dk-table-wrap">
+          <table class="dk-table">
+            <thead class="ui">
+              <tr><th scope="col">What</th><th scope="col">When</th><th scope="col">Default</th></tr>
+            </thead>
+            <tbody>
+              {network.map(([what, when, def]) => (
+                <tr><td>{what}</td><td>{when}</td><td>{def}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="dk-note">
+          A Kindle may itself ask Amazon about a book sent with features, because it carries an
+          ASIN. That is the Kindle’s doing; sending as a personal document avoids it. The Daily
+          fetches the sources you give it, by design.
+        </p>
+      </div>
+    </section>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-install">
+      <h2 id="dk-install" class="dk-h2">Install</h2>
+      <div class="dk-prose">
+        <ol class="dk-steps">
+          <li>
+            <h3>Install Kindle Previewer 4</h3>
+            <p>
+              It is <a class="textlink" href="https://kdp.amazon.com/en_US/help/topic/G202131170" rel="noopener">free from Amazon</a>.
+              Deckle drives it to produce Enhanced Typesetting and never bundles it.
+            </p>
+          </li>
+          <li>
+            <h3>Download Deckle</h3>
+            <p>
+              From the <a class="textlink" href={download} rel="noopener">latest release</a>.
+              On a Mac, open the <code>.dmg</code> and drag Deckle to Applications; it is signed
+              and notarized by Apple. On Windows, run the <code>-setup.exe</code>, which installs
+              for your user with no admin, or the <code>.msi</code>.
+            </p>
+            <p class="dk-note">
+              Version 0.1.0 predates the library, the Kindle tab, Word and web import and the
+              Daily. They are on the main branch and arrive in the next release.
+            </p>
+          </li>
+          <li>
+            <h3>Plug in your Kindle and send</h3>
+            <p>
+              Drop EPUBs on the window and press Send to Kindle. Close calibre, Android File
+              Transfer and Amazon’s Send to Kindle first: only one program at a time can talk to
+              an MTP Kindle.
+            </p>
+          </li>
+        </ol>
+
+        <p>Everything the app does, the command line does too:</p>
+        <pre class="dk-code"><code>deckle devices
+deckle run book.epub --to device
+deckle run notes.docx --to device
+deckle digest schedule --at 05:30</code></pre>
+        <p class="dk-note">
+          Linux builds run every step except conversion, which needs Kindle Previewer (Mac and
+          Windows only). Build from source with Rust, Node 22 and pnpm; the
+          <a class="textlink" href={`${repo}#readme`} rel="noopener">README</a> has the details.
+        </p>
+      </div>
+    </section>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-bench">
+      <div>
+        <h2 id="dk-bench" class="dk-h2">On the bench</h2>
+        <p class="dk-side">From the open issues. No dates promised; every feature is designed in the open before it is built.</p>
+      </div>
+      <div class="dk-bench">
+        <div>
+          <h3 class="dk-bench__head ui">Next</h3>
+          <ul>
+            {next.map((r) => <li><a class="textlink" href={issue(r.n)} rel="noopener">{r.title}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h3 class="dk-bench__head ui">Being considered</h3>
+          <ul>
+            {considering.map((r) => <li><a class="textlink" href={issue(r.n)} rel="noopener">{r.title}</a></li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-credits">
+      <h2 id="dk-credits" class="dk-h2">Credits</h2>
+      <div class="dk-prose">
+        <p>
+          Deckle stands on research and code from the MobileRead community: jhowell’s KFX Input
+          and Output and kfxlib, of which Deckle’s KFX writer is a Rust port; jloutsch’s kfxgen;
+          xxyzz’s WordDumb and Proficiency; seapy’s kindle-cli; and calibre’s Kindle driver.
+          Word Wise definitions come from Wiktionary through kaikki.org, and word frequencies
+          from wordfreq, both CC BY-SA 4.0.
+        </p>
+        <p class="dk-note">
+          Kindle Previewer is Amazon’s and is never bundled. Kindle is a trademark of
+          Amazon.com, Inc. Deckle is not affiliated with Amazon.
+        </p>
+      </div>
+    </section>
+
+    <section class="dk-close" aria-label="Get Deckle">
+      <div class="wrap dk-close__grid">
+        <p class="dk-close__line">Deckle is free and open source. Bug reports and pull requests are welcome.</p>
+        <div class="dk-close__actions">
+          <a class="dk-button" href={download} rel="noopener">Download Deckle</a>
+          <p class="dk-close__links">
+            <a class="textlink" href={repo} rel="noopener">Source</a>
+            <a class="textlink" href={`${repo}/issues`} rel="noopener">Issues</a>
+            <a class="textlink" href="/work/deckle/">Case study</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .dk-open {
+    position: relative;
+    isolation: isolate;
+    overflow-x: clip;
+  }
+
+  /* The lamp, as on the homepage: the one motion moment on the page. */
+  .lamp {
+    position: absolute;
+    z-index: -1;
+    top: -40%;
+    left: -14%;
+    width: min(1250px, 115vw);
+    aspect-ratio: 1.3;
+    background: radial-gradient(closest-side, rgba(239, 159, 39, 0.17), rgba(239, 159, 39, 0.06) 55%, transparent);
+    pointer-events: none;
+    animation: lamp-on 2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .dk-open__inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2.5vw, 2rem);
+    padding-block: clamp(2.5rem, 8vh, 6rem) clamp(3rem, 7vw, 5rem);
+  }
+
+  .dk-mark {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 0 0 clamp(1.75rem, 4vh, 2.75rem);
+  }
+  :global(.dk-mark__icon) {
+    width: 56px;
+    height: 56px;
+    border-radius: 22.5%;
+    box-shadow: 0 0 0 1px var(--well-ring);
+  }
+  .dk-mark__name {
+    font-size: 1.5rem;
+    font-weight: 450;
+    letter-spacing: -0.01em;
+  }
+
+  .statement {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-weight: 290;
+    font-size: clamp(3rem, 8.4vw, 8.25rem);
+    line-height: 0.92;
+    letter-spacing: -0.036em;
+    text-wrap: balance;
+  }
+  .statement__line {
+    display: block;
+    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .statement__line + .statement__line {
+    padding-left: 0.62em;
+    animation-delay: 0.12s;
+  }
+
+  .dk-open__body {
+    grid-column: 1 / span 6;
+    margin-top: clamp(2.5rem, 6vh, 4rem);
+    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both;
+  }
+  .standfirst {
+    margin: 0;
+    max-width: 27em;
+    font-size: clamp(1.15rem, 1.55vw, 1.375rem);
+    line-height: 1.55;
+    color: var(--color-ink-2);
+    text-wrap: pretty;
+  }
+  .dk-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.6rem;
+    margin: 2rem 0 0;
+    font-size: 1.0625rem;
+  }
+
+  :global(.dk-open__facts) {
+    grid-column: 8 / -1;
+    align-self: end;
+    margin-top: clamp(2.5rem, 6vh, 4rem) !important;
+    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.45s both;
+  }
+
+  /* The solid button, as at the end of a case study. */
+  .dk-button {
+    display: inline-block;
+    padding: 0.85rem 1.4rem;
+    border-radius: 8px;
+    background: var(--color-ink);
+    color: var(--color-ground);
+    font-family: var(--font-sans);
+    font-size: 0.975rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.18s ease;
+  }
+  .dk-button:hover { background: var(--color-amber); }
+
+  .dk-lead { padding-bottom: clamp(3.5rem, 8vw, 6rem); }
+
+  .dk-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: 1.5rem clamp(2rem, 5vw, 4.5rem);
+  }
+
+  .dk-section {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    background: linear-gradient(var(--color-line), var(--color-line)) center top / calc(100% - 2 * var(--gutter)) 1px no-repeat;
+  }
+
+  .dk-h2 {
+    margin: 0;
+    font-weight: 340;
+    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+  .dk-side {
+    margin: 1rem 0 0;
+    max-width: 20em;
+    color: var(--color-ink-3);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  .dk-side.ui { font-size: 0.875rem; }
+
+  .dk-prose { max-width: 36em; }
+  .dk-prose > p {
+    margin: 0 0 1.2rem;
+    font-size: 1.1875rem;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+  }
+  .dk-prose > p:last-child { margin-bottom: 0; }
+  .dk-prose strong { font-weight: 500; color: var(--color-ink); }
+
+  .dk-note { font-size: 1rem !important; color: var(--color-ink-3) !important; }
+
+  .dk-features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem clamp(1.5rem, 3vw, 2.5rem);
+    margin: 0;
+  }
+  .dk-features dt { font-size: 1.1875rem; font-weight: 500; }
+  .dk-features dd {
+    margin: 0.4rem 0 0;
+    color: var(--color-ink-2);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  :global(.dk-rule) { margin: 0.5rem 0 1.6rem !important; }
+  :global(.dk-rule .facts__row) { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr) !important; }
+  :global(.dk-rule dt) { font-size: 0.9375rem !important; color: var(--color-ink-2) !important; }
+
+  .dk-figure { padding-bottom: clamp(3rem, 7vw, 5rem); }
+  .dk-figure :global(.frame) { max-width: 56rem; margin-left: auto; }
+  .dk-figure--left :global(.frame) { margin-left: 0; margin-right: auto; }
+
+  .dk-table-wrap { overflow-x: auto; }
+  .dk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+  }
+  .dk-table th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--color-ink-3);
+    padding: 0 1rem 0.7rem 0;
+    border-bottom: 1px solid var(--color-line-strong);
+  }
+  .dk-table td {
+    padding: 0.8rem 1rem 0.8rem 0;
+    border-bottom: 1px solid var(--color-line);
+    vertical-align: top;
+    color: var(--color-ink-2);
+  }
+  .dk-table td:first-child { color: var(--color-ink); }
+  .dk-table td:last-child,
+  .dk-table th:last-child { padding-right: 0; white-space: nowrap; }
+  .dk-table + * { margin-top: 1.4rem; }
+  .dk-table-wrap + .dk-note { margin-top: 1.4rem; }
+
+  .dk-steps {
+    list-style: none;
+    counter-reset: step;
+    margin: 0 0 2rem;
+    padding: 0;
+    display: grid;
+    gap: 1.8rem;
+  }
+  .dk-steps li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+  .dk-steps li > * { grid-column: 2; }
+  .dk-steps li::before {
+    content: counter(step);
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--color-amber);
+  }
+  .dk-steps h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 450;
+    line-height: 1.3;
+  }
+  .dk-steps p {
+    margin: 0.4rem 0 0;
+    color: var(--color-ink-2);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  /* Monospace is for commands a reader copies, nothing else (PLAN.md §13.3). */
+  code,
+  .dk-code {
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+  code { font-size: 0.88em; color: var(--color-ink); }
+  .dk-code {
+    margin: 0 0 1.4rem;
+    padding: 1.1rem 1.3rem;
+    overflow-x: auto;
+    background: var(--color-screen);
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px var(--well-ring);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-ink);
+  }
+  .dk-code code { font-size: inherit; }
+
+  .dk-bench {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .dk-bench__head {
+    margin: 0 0 0.9rem;
+    font-weight: 500;
+    color: var(--color-ink-3);
+  }
+  .dk-bench ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+  }
+  .dk-bench a { color: var(--color-ink-2); }
+  .dk-bench a:hover { color: var(--color-amber); }
+
+  .dk-close {
+    background: var(--color-ground-deep);
+    border-top: 1px solid var(--color-line);
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+  }
+  .dk-close__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    gap: 2rem;
+    align-items: center;
+  }
+  .dk-close__line {
+    margin: 0;
+    max-width: 22em;
+    font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+    font-weight: 330;
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+  }
+  .dk-close__actions { justify-self: end; }
+  .dk-close__links {
+    display: flex;
+    gap: 1.2rem;
+    margin: 1.1rem 0 0;
+    font-size: 1.0625rem;
+  }
+
+  @keyframes lamp-on {
+    from { opacity: 0; transform: scale(0.94); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes settle {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 860px) {
+    .dk-open__body,
+    :global(.dk-open__facts) { grid-column: 1 / -1; }
+    .dk-grid,
+    .dk-close__grid { grid-template-columns: 1fr; }
+    .dk-features,
+    .dk-bench { grid-template-columns: 1fr; }
+    .dk-close__actions { justify-self: start; }
+    :global(.dk-rule .facts__row) { grid-template-columns: 1fr !important; gap: 0.3rem !important; }
+  }
+
+  @media (max-width: 560px) {
+    .statement__line + .statement__line { padding-left: 0; }
+    .lamp { top: -20%; left: -45%; width: 170vw; }
+  }
+</style>

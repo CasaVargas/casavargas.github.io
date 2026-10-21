@@ -456,12 +456,20 @@ Same house: walnut ground, Newsreader, amber used sparingly. Premium means air.
 - `public/llms.txt`, `public/llms-full.txt`: Deckle facts.
 - Nav unchanged; the footer and index pick Deckle up from `work.ts`.
 
-### 13.5 Verification
+### 13.5 Verification (results, 2026-10-21, against `astro preview`)
 
-- [ ] `npm run build` clean; no em dashes in `src public dist`
-- [ ] 390 px: no document overflow on `/deckle/` and `/work/deckle/`
-- [ ] 1440 px visual pass of both pages and the homepage plate
-- [ ] Every Deckle screenshot opened and read
-- [ ] No image over 200 KB on the wire
-- [ ] JSON-LD parses; internal links resolve
-- [ ] Lighthouse a11y, best practices and SEO 100 on `/deckle/`
+- [x] `npm run build` clean; no em dashes in the Deckle pages, `llms*.txt` or `work.ts`
+- [x] 390 px: `scrollWidth === clientWidth` on `/`, `/work/`, `/deckle/`, `/work/deckle/`
+      (only the lamp is wider, clipped by `overflow-x: clip`)
+- [x] 1440 px visual pass of both pages and the homepage plate (headless Chrome, full page)
+- [x] Every Deckle screenshot opened and read. The first capture was light mode and
+      glared on the walnut ground; all shots are the app's own dark theme.
+- [x] No image over 150 KB on the wire on either page
+- [x] JSON-LD parses on `/`, `/deckle/`, `/work/deckle/`; internal links resolve;
+      both pages are in the sitemap
+- [x] Lighthouse (mobile, simulated): `/deckle/` 99 / 100 / 100 / 100,
+      `/work/deckle/` 94 / 100 / 100 / 100. The icon is `/deckle/`'s LCP element, so
+      it gets `fetchpriority="high"` and the lead shot is lazy (86 → 99).
+
+Known: the app's own UI copy shows two em dashes inside the screenshots ("1 book can
+be updated — …", the Daily result line). That is Deckle's text, not the site's.

@@ -4,6 +4,7 @@ import beltrIcon from '../assets/icons/beltr.png';
 import cathodeTvIcon from '../assets/icons/cathode-tv.png';
 import onescribeIcon from '../assets/icons/onescribe.png';
 import debridIcon from '../assets/icons/debrid.png';
+import deckleIcon from '../assets/icons/deckle.png';
 
 import beltrTv from '../assets/beltr/tv-scoring.jpg';
 import beltrJoin from '../assets/beltr/phone-join.jpg';
@@ -13,6 +14,8 @@ import osBriefing from '../assets/onescribe/briefing.jpg';
 import osWine from '../assets/onescribe/wine.jpg';
 
 import debridTorrents from '../assets/debrid/torrents.jpg';
+
+import deckleBooks from '../assets/deckle/books-done.jpg';
 
 import ctvGuide from '../assets/cathode-tv/guide.jpg';
 import ctvHome from '../assets/cathode-tv/home.jpg';
@@ -175,6 +178,32 @@ export const work: Work[] = [
       layout: 'compact',
       shots: [
         { src: debridTorrents, kind: 'window', alt: 'DebridDownloader’s torrent list, shown with sample data: Linux installers ready to download' },
+      ],
+    },
+  },
+  {
+    slug: 'deckle',
+    name: 'Deckle',
+    what: 'Books you own, finished for your Kindle',
+    tagline:
+      'Deckle turns an EPUB you own into a Kindle book that reads like one from the store, with Enhanced Typesetting, a cover that stays, page numbers, X-Ray and Word Wise.',
+    group: 'open-source',
+    runsOn: ['macOS', 'Windows'],
+    builtWith: ['Tauri', 'Rust', 'React'],
+    price: 'Free and open source (GPL-3.0)',
+    links: [
+      { label: 'Visit the Deckle page', url: '/deckle/' },
+      { label: 'Source on GitHub', url: 'https://github.com/CasaVargas/deckle' },
+    ],
+    icon: deckleIcon,
+    plate: {
+      layout: 'compact',
+      shots: [
+        {
+          src: deckleBooks,
+          kind: 'window',
+          alt: 'Deckle’s Books tab: five public-domain novels finished for a connected Kindle, each with its X-Ray and Word Wise counts',
+        },
       ],
     },
   },
