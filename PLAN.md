@@ -381,3 +381,95 @@ Where the build departed from §5–§9, and why:
 - [x] §11 checklist
 - [x] `AGENTS.md` updated for the new architecture
 - [x] PR to `main` and merge (#1, then #2 for the revised opening)
+
+---
+
+## 13. Deckle (added 2026-10-21, open-source launch)
+
+Deckle goes open source on 2026-10-21. It has no domain of its own, so this site
+carries both its **product page** and its **case study**. Source of truth for every
+claim: the Deckle repo's `README.md` (it is the product's public page on GitHub),
+`docs/devices.md` for what has been tested on real Kindles, and its open issues
+labelled `roadmap` for what's next.
+
+### 13.1 Routes
+
+| Route | What |
+|---|---|
+| `/deckle/` | Product page: what it does, install, privacy, roadmap, credits. The page people are sent to. |
+| `/work/deckle/` | Case study in the standard template (§6). Its first link is `/deckle/`. |
+
+`/deckle/` is unclaimed: no `CasaVargas/deckle` Pages site exists
+(`curl -sI https://casavargas.app/deckle/` returned 404 on 2026-10-21). **Never
+turn on GitHub Pages for `CasaVargas/deckle`**, or that repo claims the path
+(see the `/beltr` gotcha, §2.3).
+
+### 13.2 Product page (`src/pages/deckle.astro`)
+
+Same house: walnut ground, Newsreader, amber used sparingly. Premium means air.
+
+1. **Opening.** Icon, then a short statement set large: "Books you own, finished
+   for your Kindle." Standfirst (one sentence of what it does), then two actions:
+   *Download* (latest GitHub release) and *Source on GitHub*. Facts table: price
+   (free, GPL-3.0-or-later), runs on, needs (Kindle Previewer 4), status.
+2. **Lead shot**: the Books tab with finished books.
+3. **What a store book has**: Enhanced Typesetting, covers that stay, page numbers,
+   X-Ray, Word Wise, real metadata. Two-column definition list.
+4. **The cover rule**: covers and features pull in opposite directions; the
+   per-Kindle table from the README. This is the page's one real explanation.
+5. **More than EPUB**: Word documents, web articles, finished `.kfx`; the library
+   as plain folders; the Kindle tab. Screenshot.
+6. **The Deckle Daily (preview)**: the morning paper. Screenshot.
+7. **What goes over the network**: the README's table, verbatim in substance.
+8. **Install**: three numbered steps (a real sequence), the MTP caveat, and a short
+   command-line block.
+9. **On the bench**: the roadmap from GitHub issues: *next* (`triage/green`) and
+   *being considered* (`triage/decision`), linked, no dates.
+10. **Credits**: the MobileRead community and data licences; not affiliated with
+    Amazon.
+11. Close: "Free and open source", Download button, source and issues links.
+
+### 13.3 Content rules for Deckle
+
+- **Pre-alpha, said plainly.** Real-Kindle acceptance is still being recorded.
+  Never "works with every Kindle". Name only what `docs/devices.md` records.
+- **The 0.1.0 download is older than main** (139 commits on 2026-10-21). The
+  status line says the library, Kindle tab, Word and web import and the Daily
+  are on main until the next release. Update `work.ts` when a release ships.
+- **Kindle Previewer is Amazon's, free, and never bundled.** Kindle is Amazon's
+  trademark; Deckle is not affiliated with Amazon. Say both.
+- **No DRM talk.** Deckle converts books you own as DRM-free EPUBs; never mention
+  removing DRM, and never imply it.
+- **Credit the research.** jhowell's kfxlib (the KFX writer is a Rust port of it),
+  WordDumb, kfxgen, kindle-cli, calibre. Never present those formats as our discovery.
+- **Screenshots** are the real React UI with mocked IPC and public-domain books
+  with typographic covers (like DebridDownloader's). No "(fake)"/"(sim)" device
+  names, no fixture titles, no third-party cover art.
+- **Monospace exception.** Command-line examples on `/deckle/` and the case study
+  are set in the system monospace. They are content a reader copies, not
+  decoration; the "no monospace" rule (§3.2) still holds for labels and UI.
+
+### 13.4 Also touched
+
+- `src/data/work.ts`: a Deckle entry in the open-source group, with a compact plate.
+- `scripts/og-cards.mjs`: cards for `/deckle/` and `/work/deckle/`.
+- `public/llms.txt`, `public/llms-full.txt`: Deckle facts.
+- Nav unchanged; the footer and index pick Deckle up from `work.ts`.
+
+### 13.5 Verification (results, 2026-10-21, against `astro preview`)
+
+- [x] `npm run build` clean; no em dashes in the Deckle pages, `llms*.txt` or `work.ts`
+- [x] 390 px: `scrollWidth === clientWidth` on `/`, `/work/`, `/deckle/`, `/work/deckle/`
+      (only the lamp is wider, clipped by `overflow-x: clip`)
+- [x] 1440 px visual pass of both pages and the homepage plate (headless Chrome, full page)
+- [x] Every Deckle screenshot opened and read. The first capture was light mode and
+      glared on the walnut ground; all shots are the app's own dark theme.
+- [x] No image over 150 KB on the wire on either page
+- [x] JSON-LD parses on `/`, `/deckle/`, `/work/deckle/`; internal links resolve;
+      both pages are in the sitemap
+- [x] Lighthouse (mobile, simulated): `/deckle/` 99 / 100 / 100 / 100,
+      `/work/deckle/` 94 / 100 / 100 / 100. The icon is `/deckle/`'s LCP element, so
+      it gets `fetchpriority="high"` and the lead shot is lazy (86 → 99).
+
+Known: the app's own UI copy shows two em dashes inside the screenshots ("1 book can
+be updated — …", the Daily result line). That is Deckle's text, not the site's.

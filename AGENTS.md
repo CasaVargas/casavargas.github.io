@@ -114,6 +114,11 @@ is invisible to grep, diffing and CI. Rejected so far, and why:
   IPC and neutral data (Linux installers), captured with headless Chrome. Its
   icon is the emerald chevron mark from the DebridDownloader repo
   (`assets/brand/`, 2026-09), not the stock Tauri logo it used to ship.
+- Deckle: the real React UI with mocked Tauri IPC, public-domain novels with
+  typographic covers made for the shot, and a plausibly named Kindle. Never the
+  repo's `docs/screenshots/`: they show test fixtures and "(fake)"/"(sim)"
+  devices. Deckle has no domain, so `/deckle/` is its product page (PLAN.md §13);
+  never enable GitHub Pages on `CasaVargas/deckle`, or it claims that path.
 
 ## SEO
 

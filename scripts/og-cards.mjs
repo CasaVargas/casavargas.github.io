@@ -15,7 +15,7 @@ const serif = b64('node_modules/@fontsource-variable/newsreader/files/newsreader
 const sans = b64('node_modules/@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2');
 const icon = (p) => `data:image/png;base64,${b64(p)}`;
 
-// Kept in step with src/data/work.ts by hand; six cards don't justify a TS loader.
+// Kept in step with src/data/work.ts by hand; a handful of cards don't justify a TS loader.
 const cards = [
   {
     file: 'casavargas',
@@ -27,6 +27,8 @@ const cards = [
   { file: 'beltr', title: 'Beltr', sub: 'Karaoke from the music you already own.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/beltr.png', big: true },
   { file: 'onescribe', title: 'OneScribe', sub: 'A document scanner that reads what it scans.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/onescribe.png', big: true },
   { file: 'debrid-downloader', title: 'DebridDownloader', sub: 'An open-source desktop client for debrid services.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/debrid.png', big: true },
+  { file: 'deckle', title: 'Deckle', sub: 'Books you own, finished for your Kindle. Open source.', kicker: 'casavargas.app/deckle', icon: 'src/assets/icons/deckle.png', big: true },
+  { file: 'work-deckle', title: 'Deckle', sub: 'Books you own, finished for your Kindle.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/deckle.png', big: true },
   { file: 'cathode-tv', title: 'Cathode TV', sub: 'A native IPTV player for every Apple screen.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/cathode-tv.png', big: true },
   { file: 'nimbus', title: 'Nimbus', sub: 'Every cloud you use, in Finder.', kicker: 'A CasaVargas case study', big: true },
   { file: 'apppulse', title: 'AppPulse', sub: 'A Mac app updater that checks who made the update.', kicker: 'A CasaVargas case study', big: true },
