@@ -6,14 +6,20 @@ import Footer from '../components/Footer.astro';
 import JsonLd from '../components/JsonLd.astro';
 import Facts from '../components/ui/Facts.astro';
 import Shot from '../components/ui/Shot.astro';
+import Composition from '../components/ui/Composition.astro';
 import { bySlug } from '../data/work';
-import kindle from '../assets/deckle/kindle.jpg';
+import books from '../assets/deckle/books-done.jpg';
 import daily from '../assets/deckle/daily.jpg';
+import weather from '../assets/deckle/paper/weather.jpg';
+import reading from '../assets/deckle/paper/reading.jpg';
 
-// Deckle's product page: it has no domain of its own. Every claim here comes
-// from the Deckle README, docs/devices.md and its `roadmap` issues (PLAN.md §13).
-// Pre-alpha: never "works with every Kindle". Kindle Previewer is Amazon's and
-// never bundled. No DRM talk of any kind. No em dashes.
+// Deckle's product page: it has no domain of its own. The Daily leads, books
+// second (PLAN.md §14). Every claim comes from the Deckle README, docs/devices.md
+// and its `roadmap` issues. The Daily is a preview and not in the 0.1.0 download:
+// say so. The paper imagery is a demo edition built by Deckle's own code, with a
+// fictional town; never invented news about a real place. Pre-alpha: never
+// "works with every Kindle". Kindle Previewer is Amazon's and never bundled. No
+// DRM talk. No em dashes.
 const item = bySlug('deckle');
 
 const repo = 'https://github.com/CasaVargas/deckle';
@@ -23,17 +29,24 @@ const issue = (n: number) => `${repo}/issues/${n}`;
 const facts: [string, string][] = [
   ['Price', 'Free and open source, GPL-3.0-or-later'],
   ['Runs on', 'macOS 14 or later (Apple silicon and Intel), Windows 11'],
-  ['Needs', 'Kindle Previewer 4, free from Amazon'],
-  ['Status', 'Pre-alpha, version 0.1.0. Testing on real Kindles is under way.'],
+  ['Needs', 'A Kindle, and Kindle Previewer 4, free from Amazon'],
+  ['Status', 'Pre-alpha. The Daily is a preview.'],
+];
+
+const paper = [
+  { title: 'The front page is the cover', body: 'Deckle sets a front page every morning, with the masthead, the date, the weather and the lead headlines, and makes it the cover. Your Kindle’s library tile is today’s paper.' },
+  { title: 'Whole stories, with photos', body: 'Every story comes in full, pulled from the publisher the way Reader View does, with its photos turned grayscale for e-ink. Nothing sends you to a browser. A story behind a paywall stays a headline.' },
+  { title: 'Your town, your feeds', body: 'The weather from Open-Meteo, local news from a Google News search and any local paper’s feed, then each RSS or Atom feed you add as its own section, in the order you choose.' },
+  { title: 'The back pages', body: 'A horoscope Deckle writes itself, On this day from Wikipedia, and the Powerball and Mega Millions numbers, if you want them.' },
+  { title: 'Nothing to sign up for', body: 'No keys, no accounts, no subscription. A source that fails prints “unavailable today” and the paper still comes out.' },
+  { title: 'A real newspaper on e-ink', body: 'Sections in order, an index inside, and navigation from section to story, so it reads like a paper, not a pile of links.' },
 ];
 
 const storeBook = [
   { title: 'Enhanced Typesetting', body: 'The typesetting store books get, produced by Amazon’s own converter, Kindle Previewer, which Deckle drives for you.' },
-  { title: 'A cover that stays', body: 'Sideloaded covers tend to turn grey the moment a Kindle goes online. Deckle picks, per Kindle, how to keep yours.' },
-  { title: 'Page numbers', body: 'Approximate page numbers calculated from the text, so the book counts pages, not just locations.' },
-  { title: 'X-Ray', body: 'The people and terms in the book, where each appears, and optional spoiler-free descriptions from an AI model you choose, or Wikipedia.' },
-  { title: 'Word Wise', body: 'Short hints above harder words, pointing at the Kindle’s own English dictionary when it has one, so they look like a store book’s.' },
-  { title: 'Real metadata', body: 'Title, author, series and description, filled from Open Library when the book leaves them empty, if you turn that on.' },
+  { title: 'A cover that stays', body: 'Sideloaded covers tend to turn grey once a Kindle goes online. Deckle picks, per Kindle, how to keep yours.' },
+  { title: 'X-Ray and Word Wise', body: 'The people and terms in the book, with optional descriptions from an AI model you choose, and Word Wise hints pointing at the Kindle’s own dictionary.' },
+  { title: 'Page numbers and real metadata', body: 'Approximate page numbers from the text, and missing titles, authors and series filled from Open Library if you turn that on.' },
 ];
 
 const coverRule: [string, string][] = [
@@ -43,28 +56,27 @@ const coverRule: [string, string][] = [
 ];
 
 const network: [string, string, string][] = [
+  ['The paper’s sources: Open-Meteo, a Google News search, your feeds and saved links, Wikipedia’s On this day', 'Each edition you build', 'Off until set up'],
+  ['The paper by email, through your own mail account', 'Each morning paper', 'Off'],
   ['Word Wise dictionary, 12 MB, from Deckle’s own releases', 'Once, the first time a book gets Word Wise', 'On'],
   ['Descriptions for X-Ray, from Anthropic or any OpenAI-compatible endpoint, including a local Ollama', 'Each book with features', 'Off'],
   ['Wikipedia summaries for X-Ray terms', 'Each book with features', 'Off'],
-  ['Amazon edition lookup, through Open Library', 'Books for MTP-only Kindles', 'Off'],
-  ['Missing book details, from Open Library', 'Each book sent', 'Off'],
-  ['The Daily, by email, through your own mail account', 'Each morning paper', 'Off'],
+  ['Amazon edition lookup and missing book details, through Open Library', 'Books sent', 'Off'],
 ];
 
 const next = [
-  { n: 31, title: 'Footnotes become Kindle pop-up notes' },
-  { n: 40, title: 'Series tracking and reading order' },
-  { n: 27, title: 'A typographic cover for books that have none' },
-  { n: 86, title: 'Plain text files as books' },
+  { n: 54, title: 'Puzzles in the paper, with answers in the next edition' },
+  { n: 53, title: 'An optional editor that writes a short brief for each section' },
+  { n: 60, title: '“Yesterday on your Kindle”: your highlights, back in the paper' },
+  { n: 27, title: 'A typographic cover for books that have none (in review)' },
+  { n: 44, title: 'Delivery over Wi-Fi on your own network (in review)' },
 ];
 
 const considering = [
   { n: 18, title: 'PDF to a reflowable book' },
   { n: 20, title: 'Comics, manga and picture books, kept fixed-layout' },
   { n: 23, title: 'A Markdown or notes folder as a book' },
-  { n: 60, title: 'Your highlights and vocabulary, back out as Markdown' },
   { n: 36, title: 'Kindle Collections sync' },
-  { n: 44, title: 'Delivery over Wi-Fi on your own network' },
   { n: 42, title: 'Backup and restore of what you have sideloaded' },
 ];
 
@@ -85,8 +97,8 @@ const schema = {
 ---
 
 <Layout
-  title="Deckle | Store-quality Kindle books from the EPUBs you own"
-  description="Deckle is a free, open-source app for Mac and Windows that turns an EPUB you own into a Kindle book that reads like one from the store: Enhanced Typesetting, a cover that stays, page numbers, X-Ray and Word Wise."
+  title="Deckle | Your morning paper, printed on your Kindle"
+  description="Deckle is a free, open-source app for Mac and Windows that builds a real morning newspaper on your own computer, from your town's news and weather, your feeds and your saved reading, and puts it on your Kindle. It also turns the books you own into Kindle books that read like the store's."
   ogImage="/og/deckle.png"
 >
   <JsonLd data={schema} />
@@ -102,15 +114,16 @@ const schema = {
         </p>
 
         <h1 id="dk-title" class="statement">
-          <span class="statement__line">Books you own,</span>
-          <span class="statement__line">finished for your Kindle.</span>
+          <span class="statement__line">Your morning paper,</span>
+          <span class="statement__line">printed on your Kindle.</span>
         </h1>
 
         <div class="dk-open__body">
           <p class="standfirst">
-            Deckle turns any EPUB you own into a Kindle book that reads like one from the
-            store, and puts it on your Kindle. Drop the books in, plug the Kindle in, press
-            Send.
+            Every morning Deckle sets a real newspaper on your own computer, from your
+            town’s news and weather, your feeds and the articles you saved, and has it
+            waiting on your Kindle before you’re up. It also turns the books you own into
+            Kindle books that read like the store’s.
           </p>
           <p class="dk-actions">
             <a class="dk-button" href={download} rel="noopener">Download Deckle</a>
@@ -123,16 +136,16 @@ const schema = {
     </section>
 
     <div class="wrap dk-lead">
-      <Shot shot={item.plate!.shots[0]} width={1600} sizes="(max-width: 900px) 100vw, 82vw" />
+      <Composition plate={item.plate!} eager />
     </div>
 
-    <section class="wrap dk-grid dk-section" aria-labelledby="dk-store">
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-paper">
       <div>
-        <h2 id="dk-store" class="dk-h2">What a store book has that yours doesn’t</h2>
-        <p class="dk-side">Each of these exists as a separate plugin or forum recipe, and they fight each other. Deckle does all of them in one window.</p>
+        <h2 id="dk-paper" class="dk-h2">A newspaper, not a feed</h2>
+        <p class="dk-side">E-ink is the closest a screen gets to paper. Deckle gives it a paper worth reading.</p>
       </div>
       <dl class="dk-features">
-        {storeBook.map((f) => (
+        {paper.map((f) => (
           <div>
             <dt>{f.title}</dt>
             <dd>{f.body}</dd>
@@ -141,73 +154,88 @@ const schema = {
       </dl>
     </section>
 
-    <section class="wrap dk-grid dk-section" aria-labelledby="dk-cover">
-      <h2 id="dk-cover" class="dk-h2">Covers and features pull in opposite directions</h2>
+    <div class="wrap dk-pages">
+      <Shot shot={{ src: weather, kind: 'reader', alt: 'The weather page of The Morning Deckle on an e-reader: today, the days ahead and the moon' }} sizes="(max-width: 900px) 46vw, 24vw" />
+      <Shot shot={{ src: reading, kind: 'reader', alt: 'Your Reading in The Morning Deckle on an e-reader: an article saved the evening before, printed whole' }} sizes="(max-width: 900px) 46vw, 24vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-doorstep">
+      <h2 id="dk-doorstep" class="dk-h2">On the doorstep by 5:30</h2>
       <div class="dk-prose">
         <p>
-          A Kindle only loads X-Ray and Word Wise for books it files as store books, and it
-          gives a store book it doesn’t recognise a grey cover. Personal documents always keep
-          their cover, but get neither feature. Most tools make you pick. Deckle reads each
-          Kindle when it connects and makes the choice for that device:
+          Pick a time and Deckle builds the paper every morning. Plug the Kindle in and
+          today’s edition goes straight over, or let it arrive over Wi-Fi by email through
+          your own mail account. Only the newest three stay on the Kindle, so yesterday’s
+          papers don’t pile up.
         </p>
-        <Facts rows={coverRule} class="dk-rule" />
         <p>
-          On any book, the row menu overrides the choice. For the Scribe and other MTP-only
-          Kindles, give a book the ASIN of its Kindle edition and the Kindle fetches Amazon’s
-          own cover, with X-Ray and Word Wise intact.
+          A Mac asleep at 5:30 builds the paper when it wakes. The paper always keeps its
+          front page as the cover, on every Kindle.
         </p>
       </div>
     </section>
 
-    <section class="wrap dk-grid dk-section" aria-labelledby="dk-more">
-      <h2 id="dk-more" class="dk-h2">More than EPUB</h2>
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-save">
+      <h2 id="dk-save" class="dk-h2">Save it for tomorrow</h2>
       <div class="dk-prose">
         <p>
-          <strong>Word documents</strong> come through with their headings as the contents
-          and their footnotes as pop-up notes. <strong>A web address</strong> becomes one
-          clean article with its photos and a cover of its own. <strong>A finished
-          KFX</strong> is sent as it is.
-        </p>
-        <p>
-          <strong>Your library is plain folders.</strong> Choose one and Deckle keeps a copy
-          of every book you send, as Author/Title with a small JSON file that records where it
-          went. No database: move it, sync it or back it up with anything.
-        </p>
-        <p>
-          <strong>The Kindle tab</strong> shows what is on the device, with its covers, mode,
-          X-Ray and Word Wise, and the free space left. When Deckle has learned to build a
-          book better since it was sent, the tab says so, and Update all lines those books up to send again.
+          Find something worth reading during the day and save it: with the bookmarklet in
+          your browser, by dropping the link into Deckle’s Inbox folder, or from your iPhone
+          with a Shortcut that saves to iCloud Drive. It prints in tomorrow’s paper as
+          <strong>Your Reading</strong>, whole and with its photos. A long piece becomes its
+          own book and rides along with the paper.
         </p>
       </div>
     </section>
 
     <div class="wrap dk-figure">
-      <Shot shot={{ src: kindle, kind: 'window', alt: 'Deckle’s Kindle tab: the books on a connected Kindle with their covers, mode and X-Ray and Word Wise status, and the free space left' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+      <Shot shot={{ src: daily, kind: 'window', alt: 'Deckle’s Daily tab: The Morning Deckle with its front page, today’s sections, and the articles saved for the next edition' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
     </div>
 
-    <section class="wrap dk-grid dk-section" aria-labelledby="dk-daily">
+    <section class="wrap dk-grid dk-section dk-act" aria-labelledby="dk-books">
       <div>
-        <h2 id="dk-daily" class="dk-h2">The Deckle Daily</h2>
-        <p class="dk-side ui">In preview</p>
+        <h2 id="dk-books" class="dk-h2">And every book you own, finished properly</h2>
+        <p class="dk-side">The other half of Deckle, and where it started.</p>
       </div>
       <div class="dk-prose">
         <p>
-          A morning paper built on your own computer: the weather, local news, your feeds,
-          “On this day”, and a front page as its cover, so the Kindle’s library tile is
-          today’s paper. Every story comes with its full text and photos, so nothing sends you
-          to a browser.
+          Books you load onto a Kindle yourself are second-class. Every fix exists as a
+          separate plugin or forum recipe, and they fight each other. Deckle does all of it
+          in one window: drop the books in, plug the Kindle in, press Send.
         </p>
-        <p>
-          Save an article during the day and it prints in tomorrow’s edition. Set it for 5:30
-          and it is waiting when you plug in, or arrives over Wi-Fi by email if you prefer. No
-          keys and no accounts.
-        </p>
+        <dl class="dk-features dk-features--tight">
+          {storeBook.map((f) => (
+            <div>
+              <dt>{f.title}</dt>
+              <dd>{f.body}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
 
     <div class="wrap dk-figure dk-figure--left">
-      <Shot shot={{ src: daily, kind: 'window', alt: 'Deckle’s Daily tab: the paper’s name and town, its sections and feeds, and a morning schedule' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+      <Shot shot={{ src: books, kind: 'window', alt: 'Deckle’s Books tab: five public-domain novels finished for a connected Kindle, each with its X-Ray and Word Wise counts' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
     </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-cover">
+      <h2 id="dk-cover" class="dk-h2">Covers and features pull in opposite directions</h2>
+      <div class="dk-prose">
+        <p>
+          A Kindle only loads X-Ray and Word Wise for books it files as store books, and it
+          gives a store book it doesn’t recognise a grey cover. Personal documents keep their
+          cover but get neither feature. Deckle reads each Kindle when it connects and makes
+          the choice for that device:
+        </p>
+        <Facts rows={coverRule} class="dk-rule" />
+        <p>
+          Word documents, plain text, web articles and finished KFX files go through the
+          same pipeline. Choose a library folder and Deckle keeps every book you send as
+          plain folders, and the Kindle tab shows what is on the device and what Deckle can
+          now build better.
+        </p>
+      </div>
+    </section>
 
     <section class="wrap dk-grid dk-section" aria-labelledby="dk-network">
       <div>
@@ -229,8 +257,8 @@ const schema = {
         </div>
         <p class="dk-note">
           A Kindle may itself ask Amazon about a book sent with features, because it carries an
-          ASIN. That is the Kindle’s doing; sending as a personal document avoids it. The Daily
-          fetches the sources you give it, by design.
+          ASIN. That is the Kindle’s doing; sending as a personal document avoids it. A paper
+          sent by email goes through Amazon, which typesets it its own way.
         </p>
       </div>
     </section>
@@ -243,7 +271,7 @@ const schema = {
             <h3>Install Kindle Previewer 4</h3>
             <p>
               It is <a class="textlink" href="https://kdp.amazon.com/en_US/help/topic/G202131170" rel="noopener">free from Amazon</a>.
-              Deckle drives it to produce Enhanced Typesetting and never bundles it.
+              Deckle drives it to typeset books and the paper, and never bundles it.
             </p>
           </li>
           <li>
@@ -255,25 +283,26 @@ const schema = {
               for your user with no admin, or the <code>.msi</code>.
             </p>
             <p class="dk-note">
-              Version 0.1.0 predates the library, the Kindle tab, Word and web import and the
-              Daily. They are on the main branch and arrive in the next release.
+              Version 0.1.0 predates the Daily, the library, the Kindle tab and Word, text and
+              web import. They are on the main branch and arrive in the next release.
             </p>
           </li>
           <li>
-            <h3>Plug in your Kindle and send</h3>
+            <h3>Set up your paper, plug in your Kindle</h3>
             <p>
-              Drop EPUBs on the window and press Send to Kindle. Close calibre, Android File
-              Transfer and Amazon’s Send to Kindle first: only one program at a time can talk to
-              an MTP Kindle.
+              Name the paper and pick your town and feeds on the Daily tab, then turn on the
+              morning schedule. For books, drop EPUBs on the window and press Send to Kindle.
+              Close calibre and Android File Transfer first: only one program at a time can
+              talk to an MTP Kindle.
             </p>
           </li>
         </ol>
 
         <p>Everything the app does, the command line does too:</p>
-        <pre class="dk-code"><code>deckle devices
-deckle run book.epub --to device
-deckle run notes.docx --to device
-deckle digest schedule --at 05:30</code></pre>
+        <pre class="dk-code"><code>deckle digest init
+deckle digest run --to device
+deckle digest schedule --at 05:30
+deckle run book.epub --to device</code></pre>
         <p class="dk-note">
           Linux builds run every step except conversion, which needs Kindle Previewer (Mac and
           Windows only). Build from source with Rust, Node 22 and pnpm; the
@@ -285,7 +314,10 @@ deckle digest schedule --at 05:30</code></pre>
     <section class="wrap dk-grid dk-section" aria-labelledby="dk-bench">
       <div>
         <h2 id="dk-bench" class="dk-h2">On the bench</h2>
-        <p class="dk-side">From the open issues. No dates promised; every feature is designed in the open before it is built.</p>
+        <p class="dk-side">
+          From the open issues. No dates promised; every feature is designed in the open
+          before it is built. <a class="textlink" href={`${repo}/issues?q=is%3Aopen+label%3Aroadmap`} rel="noopener">The whole roadmap</a>.
+        </p>
       </div>
       <div class="dk-bench">
         <div>
@@ -311,11 +343,14 @@ deckle digest schedule --at 05:30</code></pre>
           and Output and kfxlib, of which Deckle’s KFX writer is a Rust port; jloutsch’s kfxgen;
           xxyzz’s WordDumb and Proficiency; seapy’s kindle-cli; and calibre’s Kindle driver.
           Word Wise definitions come from Wiktionary through kaikki.org, and word frequencies
-          from wordfreq, both CC BY-SA 4.0.
+          from wordfreq, both CC BY-SA 4.0. The paper’s weather comes from Open-Meteo and
+          On this day from Wikipedia.
         </p>
         <p class="dk-note">
-          Kindle Previewer is Amazon’s and is never bundled. Kindle is a trademark of
-          Amazon.com, Inc. Deckle is not affiliated with Amazon.
+          The demo paper on this page is fictional: Linden Falls and its stories were made up
+          for it. Its photos are public domain. Kindle Previewer is Amazon’s and is never
+          bundled. Kindle is a trademark of Amazon.com, Inc. Deckle is not affiliated with
+          Amazon.
         </p>
       </div>
     </section>
@@ -447,6 +482,22 @@ deckle digest schedule --at 05:30</code></pre>
   .dk-button:hover { background: var(--color-amber); }
 
   .dk-lead { padding-bottom: clamp(3.5rem, 8vw, 6rem); }
+
+  /* Two inside pages, set side by side under the features. */
+  .dk-pages {
+    display: flex;
+    justify-content: flex-end;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+  }
+  .dk-pages :global(.reader) { width: min(46%, 340px); }
+  .dk-pages :global(.reader:nth-child(2)) { transform: translateY(2rem); }
+
+  .dk-features--tight { margin-top: 2rem; }
+
+  /* The second act: a stronger rule marks the turn from the paper to books. */
+  .dk-act { padding-top: clamp(3.5rem, 8vw, 6rem); }
+
 
   .dk-grid {
     display: grid;
@@ -653,7 +704,7 @@ deckle digest schedule --at 05:30</code></pre>
     .dk-open__body,
     :global(.dk-open__facts) { grid-column: 1 / -1; }
     .dk-grid,
-    .dk-close__grid { grid-template-columns: 1fr; }
+    .dk-close__grid { grid-template-columns: minmax(0, 1fr); }
     .dk-features,
     .dk-bench { grid-template-columns: 1fr; }
     .dk-close__actions { justify-self: start; }

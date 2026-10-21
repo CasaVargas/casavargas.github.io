@@ -1,6 +1,7 @@
 ---
 import Frame from './Frame.astro';
 import Phone from './Phone.astro';
+import Reader from './Reader.astro';
 import type { Shot } from '../../data/work';
 
 interface Props {
@@ -16,6 +17,8 @@ const { shot, width, sizes, eager, class: className } = Astro.props;
 
 {shot.kind === 'phone' ? (
   <Phone src={shot.src} alt={shot.alt} sizes={sizes} class={className} />
+) : shot.kind === 'reader' ? (
+  <Reader src={shot.src} alt={shot.alt} sizes={sizes} eager={eager} class={className} />
 ) : (
   <Frame
     src={shot.src}

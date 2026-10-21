@@ -530,8 +530,23 @@ becomes the second act. §13's routes, content rules and screenshot rules still 
 - Case study intro and features: the Daily first.
 - OG cards and `llms*.txt` reworded.
 
-### 14.5 Verification
+### 14.5 Verification (results, 2026-10-21, against `astro preview`)
 
-- [ ] Build clean; no em dashes; no 390 px overflow on `/`, `/deckle/`, `/work/deckle/`
-- [ ] Every paper image opened and read: fictional names only, photos grayscale
-- [ ] Visual pass at 1440 and 390; Lighthouse a11y/BP/SEO 100 on `/deckle/`
+- [x] Build clean; no em dashes in the Deckle pages or `llms*.txt`; JSON-LD parses;
+      internal links resolve; no image over 200 KB on the wire
+- [x] 390 px: no document overflow on `/`, `/deckle/`, `/work/deckle/` (the network
+      table scrolls inside its own container; the mobile grid is `minmax(0, 1fr)` so
+      it can)
+- [x] Every paper image opened and read: fictional town, outlets and `.example`
+      domains, no named people, photos grayscale (NPS and USDA, public domain)
+- [x] 1440 visual pass (headless Chrome, full page). Caught and fixed: the reader
+      bezel's percentage padding resolved against the plate, not the frame, so pages
+      rendered at half size; the padding now sits on an inner `.reader__face`.
+- [x] Lighthouse (mobile): `/deckle/` 97 / 100 / 100 / 100, `/` 92 / 100 / 100 / 100,
+      `/work/deckle/` 94 / 100 / 100 / 100
+
+Product notes from building the demo edition (Deckle, not this site): a figure's
+caption can come loose from its photo when the photo is also the page's `og:image`;
+an in-body byline prints twice; front-page index metadata wraps mid-time; the
+weather table assumes `daily[0]` is the edition date; the cover's tagline "All the
+news that fits" sits close to the New York Times motto.
