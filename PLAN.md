@@ -96,7 +96,9 @@ dark-on-dark problem in the ground itself, instead of mechanically on every imag
 - **Screens, not cards.**
   - Screenshots sit in `--screen` wells with a thin warm ring and a specular top lip.
   - Desktop shots keep a slim window titlebar.
-  - Phones keep a lit bezel.
+  - iPhones sit in Apple's official product bezel (Silver iPhone 18 Pro Max), flattened
+    into the image by `scripts/bezel-shots.mjs`, with nothing drawn around it (Apple's
+    rule for product images). Never a CSS-drawn phone.
   - Radius follows hierarchy: 18 px on large wells, 10 px on small, 0 on tables.
 
 ## 4. Information architecture
