@@ -552,3 +552,20 @@ caption can come loose from its photo when the photo is also the page's `og:imag
 an in-body byline prints twice; front-page index metadata wraps mid-time; the
 weather table assumes `daily[0]` is the edition date; the cover's tagline "All the
 news that fits" sits close to the New York Times motto.
+
+## 15. Deckle, in progress (added 2026-10-22)
+
+`/deckle/` now says what is being built, not only what shipped.
+
+- **Status lines follow the release.** 0.3.1 is current; the app updates itself from 0.3.0
+  on, so "no auto-updater" is gone from `/deckle/`, `/work/deckle/` and `llms-full.txt`
+  (the network table lists the update check). Windows is `-setup.exe` only; Linux is
+  unsupported.
+- **"Being built right now"** (`building` in `src/pages/deckle.astro`) mirrors the Deckle
+  changelog's *Unreleased* list, checked against closed issues. **When a release ships,
+  delete the shipped items from it.** Designs with a written plan but no code (`designing`)
+  link their issues.
+- **The Daily shot is the real app**, dark mode, window titlebar cropped because `Frame`
+  draws its own, in a fictional town (Larkspur Falls, VT) with NASA, Ars Technica, Hacker
+  News and Atlas Obscura feeds so no real place or political headline is on the page. It is
+  1x (1100 px); replace it with a 2x capture when one is available.
