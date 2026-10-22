@@ -9,7 +9,7 @@ import Shot from '../components/ui/Shot.astro';
 import Composition from '../components/ui/Composition.astro';
 import { bySlug } from '../data/work';
 import books from '../assets/deckle/books-done.jpg';
-import daily from '../assets/deckle/daily.jpg';
+import daily from '../assets/deckle/daily-tomorrow.png';
 import weather from '../assets/deckle/paper/weather.jpg';
 import reading from '../assets/deckle/paper/reading.jpg';
 
@@ -30,7 +30,7 @@ const facts: [string, string][] = [
   ['Price', 'Free and open source, GPL-3.0-or-later'],
   ['Runs on', 'macOS 14 or later (Apple silicon and Intel), Windows 11'],
   ['Needs', 'A Kindle, and Kindle Previewer 4, free from Amazon'],
-  ['Status', 'Pre-alpha. Verified on a Kindle Scribe (2024), other models pending. The Daily is a preview.'],
+  ['Status', 'Pre-alpha, version 0.3.1. Verified on a Kindle Scribe (2024), other models pending. The Daily is a preview.'],
 ];
 
 const paper = [
@@ -58,17 +58,33 @@ const coverRule: [string, string][] = [
 const network: [string, string, string][] = [
   ['The paper’s sources: Open-Meteo, a Google News search, your feeds and saved links, Wikipedia’s On this day', 'Each edition you build', 'Off until set up'],
   ['The paper by email, through your own mail account', 'Each morning paper', 'Off'],
+  ['A check for a newer Deckle, on GitHub; nothing installs without a click', 'When the app starts', 'On'],
   ['Word Wise dictionary, 12 MB, from Deckle’s own releases', 'Once, the first time a book gets Word Wise', 'On'],
   ['Descriptions for X-Ray, from Anthropic or any OpenAI-compatible endpoint, including a local Ollama', 'Each book with features', 'Off'],
   ['Wikipedia summaries for X-Ray terms', 'Each book with features', 'Off'],
   ['Amazon edition lookup and missing book details, through Open Library', 'Books sent', 'Off'],
 ];
 
+// Built on main and not yet in a release (the Deckle changelog's Unreleased list,
+// checked 2026-10-22). Move each into the release notes line when it ships.
+const building = [
+  { title: 'Tomorrow’s paper, so far', body: 'The Daily tab opens on the next edition: a press bar with a countdown and a Stop the presses button, a live sketch of the front page that fills in as you save articles and your feeds post, a page plan you drag to reorder, and the week’s reads.' },
+  { title: 'Local news for more places', body: 'Add a relative’s town or a vacation spot and each gets its own local section after yours. Weather stays on your place.' },
+  { title: 'A puzzle page', body: 'A five by five mini crossword whose theme answers are yesterday’s headlines, a word ladder, and yesterday’s answers. Answer a clue as a Kindle note and the next paper tells you how many you solved.' },
+  { title: 'Weather and almanac', body: 'A five-day strip, sunrise and sunset worked out on your Mac, the usual first frost for your place, the moon and the meteor shower of the night.' },
+  { title: 'Your Day', body: 'Today’s events from your calendar files on the page, with a line when rain is likely during one.' },
+  { title: 'Highlights out, and how far you read', body: 'Highlights and notes from the Kindle as Markdown, one file per book, in a folder you choose. And a local-only readout of which sections of the paper you actually reach.' },
+];
+
+const designing = [
+  { n: 109, title: 'The Morgue: every edition kept, searchable, and sendable again' },
+  { n: 110, title: 'One Mac, many papers: a separate paper for each Kindle in the house' },
+  { n: 112, title: 'From Your Shelf: a page drawn from your own Kindle’s reading' },
+];
+
 const next = [
-  { n: 54, title: 'Puzzles in the paper, with answers in the next edition' },
   { n: 53, title: 'An optional editor that writes a short brief for each section' },
   { n: 60, title: '“Yesterday on your Kindle”: your highlights, back in the paper' },
-  { n: 44, title: 'Delivery over Wi-Fi on your own network (in review)' },
 ];
 
 const considering = [
@@ -190,7 +206,7 @@ const schema = {
     </section>
 
     <div class="wrap dk-figure">
-      <Shot shot={{ src: daily, kind: 'window', alt: 'Deckle’s Daily tab: The Morning Deckle with its front page, today’s sections, and the articles saved for the next edition' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+      <Shot shot={{ src: daily, kind: 'window', alt: 'Deckle’s Daily tab: Tomorrow’s paper, so far, a live sketch of the next front page beside the page plan and the week’s reads' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
     </div>
 
     <section class="wrap dk-grid dk-section dk-act" aria-labelledby="dk-books">
@@ -241,7 +257,7 @@ const schema = {
     <section class="wrap dk-grid dk-section" aria-labelledby="dk-network">
       <div>
         <h2 id="dk-network" class="dk-h2">What goes over the network</h2>
-        <p class="dk-side">Nothing about you, ever. No account, no subscription, no telemetry, no auto-updater.</p>
+        <p class="dk-side">Nothing about you, ever. No account, no subscription, no telemetry.</p>
       </div>
       <div class="dk-prose">
         <div class="dk-table-wrap">
@@ -281,12 +297,13 @@ const schema = {
               From the <a class="textlink" href={download} rel="noopener">latest release</a>.
               On a Mac, open the <code>.dmg</code> and drag Deckle to Applications; it is signed
               and notarized by Apple. On Windows, run the code-signed <code>-setup.exe</code>,
-              which installs for your user with no admin, or the <code>.msi</code>. A new
+              which installs for your user with no admin. A new
               certificate can still bring up SmartScreen: choose More info, then Run anyway.
             </p>
             <p class="dk-note">
-              The Daily, the library, the Kindle tab and Word, text and web import ship in
-              version 0.2.1. If the latest release still says 0.1.0, 0.2.1 is on its way.
+              From version 0.3.0 on, Deckle updates itself: the footer says when a new
+              version is out, and Settings, About, Update installs it. Coming from 0.2.x,
+              install the latest by hand once; on Windows, uninstall a 0.2.x <code>.msi</code> first.
             </p>
           </li>
           <li>
@@ -306,10 +323,36 @@ deckle digest run --to device
 deckle digest schedule --at 05:30
 deckle run book.epub --to device</code></pre>
         <p class="dk-note">
-          Linux builds run every step except conversion, which needs Kindle Previewer (Mac and
-          Windows only). Build from source with Rust, Node 22 and pnpm; the
+          Linux is unsupported: Kindle Previewer does the converting, and it only runs on Mac
+          and Windows. To build from source you need Rust, Node 22 and pnpm; the
           <a class="textlink" href={`${repo}#readme`} rel="noopener">README</a> has the details.
         </p>
+      </div>
+    </section>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-now">
+      <div>
+        <h2 id="dk-now" class="dk-h2">Being built right now</h2>
+        <p class="dk-side">
+          On the main branch today and not in the download yet. It ships in the next
+          release. The screenshot above is this build.
+        </p>
+      </div>
+      <div class="dk-prose">
+        <dl class="dk-features dk-features--tight">
+          {building.map((f) => (
+            <div>
+              <dt>{f.title}</dt>
+              <dd>{f.body}</dd>
+            </div>
+          ))}
+        </dl>
+        <p>
+          Designed and waiting for code, each with a written plan:
+        </p>
+        <ul class="dk-plans">
+          {designing.map((r) => <li><a class="textlink" href={issue(r.n)} rel="noopener">{r.title}</a></li>)}
+        </ul>
       </div>
     </section>
 
@@ -665,6 +708,15 @@ deckle run book.epub --to device</code></pre>
   }
   .dk-bench a { color: var(--color-ink-2); }
   .dk-bench a:hover { color: var(--color-amber); }
+  .dk-plans {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+  }
 
   .dk-close {
     background: var(--color-ground-deep);

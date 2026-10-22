@@ -40,7 +40,7 @@ const schema = {
     { title: 'Covers that stay', body: 'It decides per Kindle whether a book can have both its cover and X-Ray, and writes its own cover thumbnail where the Kindle allows it.' },
     { title: 'X-Ray and Word Wise', body: 'People and terms are found in the text, with optional descriptions written by an AI model you choose. Word Wise hints point at the Kindle’s own dictionary.' },
     { title: 'More than EPUB', body: 'Word documents, plain text, web articles and finished KFX files go through the same pipeline as EPUBs.' },
-    { title: 'Private by default', body: 'No account, no telemetry, no auto-updater. Every online lookup is listed, and all but a one-time Word Wise download are off until you turn them on. The paper fetches only the sources you give it.' },
+    { title: 'Private by default', body: 'No account, no telemetry. Deckle checks GitHub for a newer version when it starts and installs nothing without a click. Every online lookup is listed, and all but a one-time Word Wise download are off until you turn them on. The paper fetches only the sources you give it.' },
   ]}
   engineering={[
     { title: 'A paper that always goes to press', body: 'Every source sits behind one small network interface and is gathered on its own, so a feed that is down becomes an “unavailable today” line in its section and the edition still builds, even with no network at all. The front page is drawn in Rust with bundled open-licence fonts and becomes the EPUB’s cover, and the paper is always sent as a personal document so that cover shows on every Kindle.' },
