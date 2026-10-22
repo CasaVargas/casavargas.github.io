@@ -17,6 +17,11 @@ deploys; `gitea` is a mirror.
 - `npm run preview` — serve the production build
 - `node scripts/og-cards.mjs` — re-render the Open Graph cards in `public/og/`
   (needs Google Chrome). Run it after changing a product name or tagline.
+- `BEZELS_DIR=… node scripts/bezel-shots.mjs` — set the iPhone screenshots in
+  Apple's official bezel (`*-bezel.webp` beside each original; import those).
+  Needs Apple's Bezel-iPhone-18.dmg unpacked locally (default
+  `/Volumes/DATA/Apple-Bezels-2026-10`). Apple's license forbids committing the
+  bezels themselves; only flattened shots ship, with nothing drawn around them.
 
 **Verify against `npm run preview`, not `npm run dev`.** The dev server
 generates image transforms on demand, so lazy images below the fold read as

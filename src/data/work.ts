@@ -7,11 +7,11 @@ import debridIcon from '../assets/icons/debrid.png';
 import deckleIcon from '../assets/icons/deckle.png';
 
 import beltrTv from '../assets/beltr/tv-scoring.jpg';
-import beltrJoin from '../assets/beltr/phone-join.jpg';
+import beltrJoin from '../assets/beltr/phone-join-bezel.webp';
 
-import osBoarding from '../assets/onescribe/boarding.jpg';
-import osBriefing from '../assets/onescribe/briefing.jpg';
-import osWine from '../assets/onescribe/wine.jpg';
+import osBoarding from '../assets/onescribe/boarding-bezel.webp';
+import osBriefing from '../assets/onescribe/briefing-bezel.webp';
+import osWine from '../assets/onescribe/wine-bezel.webp';
 
 import debridTorrents from '../assets/debrid/torrents.jpg';
 
@@ -19,9 +19,9 @@ import deckleFront from '../assets/deckle/paper/front.jpg';
 import deckleInside from '../assets/deckle/paper/inside.jpg';
 import deckleStory from '../assets/deckle/paper/story.jpg';
 
-import ctvGuide from '../assets/cathode-tv/guide.jpg';
-import ctvHome from '../assets/cathode-tv/home.jpg';
-import ctvPlayer from '../assets/cathode-tv/player-mini-guide.jpg';
+import ctvGuide from '../assets/cathode-tv/guide-bezel.webp';
+import ctvHome from '../assets/cathode-tv/home-bezel.webp';
+import ctvPlayer from '../assets/cathode-tv/player-mini-guide-bezel.webp';
 
 /**
  * Every claim in this file must match the product's own public site or store
@@ -37,7 +37,7 @@ export interface WorkLink {
 export interface Shot {
   src: ImageMetadata;
   alt: string;
-  /** window: macOS titlebar. screen: a bare display (TV). phone: a lit bezel. reader: an e-reader. */
+  /** window: macOS titlebar. screen: a bare display (TV). phone: an iPhone screenshot already set in Apple's bezel (scripts/bezel-shots.mjs). reader: an e-reader. */
   kind: 'window' | 'screen' | 'phone' | 'reader';
 }
 
