@@ -9,7 +9,7 @@ import Shot from '../components/ui/Shot.astro';
 import Composition from '../components/ui/Composition.astro';
 import { bySlug } from '../data/work';
 import books from '../assets/deckle/books-done.jpg';
-import daily from '../assets/deckle/daily-tomorrow.png';
+import daily from '../assets/deckle/daily-today.png';
 import weather from '../assets/deckle/paper/weather.jpg';
 import reading from '../assets/deckle/paper/reading.jpg';
 
@@ -30,7 +30,7 @@ const facts: [string, string][] = [
   ['Price', 'Free and open source, GPL-3.0-or-later'],
   ['Runs on', 'macOS 14 or later (Apple silicon and Intel), Windows 11'],
   ['Needs', 'A Kindle, and Kindle Previewer 4, free from Amazon'],
-  ['Status', 'Pre-alpha, version 0.3.1. Verified on a Kindle Scribe (2024) and a Kindle Paperwhite, other models pending. The Daily is a preview.'],
+  ['Status', 'Pre-alpha, version 0.4.0. Verified on a Kindle Scribe (2024) and a Kindle Paperwhite, other models pending. The Daily is a preview.'],
 ];
 
 const paper = [
@@ -38,6 +38,9 @@ const paper = [
   { title: 'Whole stories, with photos', body: 'Every story comes in full, pulled from the publisher the way Reader View does, with its photos turned grayscale for e-ink. Nothing sends you to a browser. A story behind a paywall stays a headline.' },
   { title: 'Your town, your feeds', body: 'The weather from Open-Meteo, local news from a Google News search and any local paper’s feed, then each RSS or Atom feed you add as its own section, in the order you choose.' },
   { title: 'The back pages', body: 'A horoscope Deckle writes itself, On this day from Wikipedia, and the Powerball and Mega Millions numbers, if you want them.' },
+  { title: 'Tomorrow’s paper, so far', body: 'The Daily tab opens on the next edition: a press bar with a countdown and a Stop the presses button, a live sketch of the front page that fills in as you save articles and your feeds post, a page plan you drag to reorder, and the week’s reads.' },
+  { title: 'A puzzle and an almanac', body: 'A five by five mini crossword whose theme answers are yesterday’s headlines, a word ladder, and a weather page with sunrise and sunset worked out on your Mac, the usual first frost, the moon and the meteor shower of the night.' },
+  { title: 'From Your Shelf', body: 'A page drawn from your own Kindle: the books you are in the middle of, a past highlight, and the words you looked up this week. It stays on your Mac, and one button forgets it.' },
   { title: 'Nothing to sign up for', body: 'No keys, no accounts, no subscription. A source that fails prints “unavailable today” and the paper still comes out.' },
   { title: 'A real newspaper on e-ink', body: 'Sections in order, an index inside, and navigation from section to story, so it reads like a paper, not a pile of links.' },
 ];
@@ -66,20 +69,18 @@ const network: [string, string, string][] = [
 ];
 
 // Built on main and not yet in a release (the Deckle changelog's Unreleased list,
-// checked 2026-10-22). Move each into the release notes line when it ships.
+// checked 2026-10-23). Move each into the release notes line when it ships.
 const building = [
-  { title: 'Tomorrow’s paper, so far', body: 'The Daily tab opens on the next edition: a press bar with a countdown and a Stop the presses button, a live sketch of the front page that fills in as you save articles and your feeds post, a page plan you drag to reorder, and the week’s reads.' },
-  { title: 'Local news for more places', body: 'Add a relative’s town or a vacation spot and each gets its own local section after yours. Weather stays on your place.' },
-  { title: 'A puzzle page', body: 'A five by five mini crossword whose theme answers are yesterday’s headlines, a word ladder, and yesterday’s answers. Answer a clue as a Kindle note and the next paper tells you how many you solved.' },
-  { title: 'Weather and almanac', body: 'A five-day strip, sunrise and sunset worked out on your Mac, the usual first frost for your place, the moon and the meteor shower of the night.' },
-  { title: 'Your Day', body: 'Today’s events from your calendar files on the page, with a line when rain is likely during one.' },
-  { title: 'Highlights out, and how far you read', body: 'Highlights and notes from the Kindle as Markdown, one file per book, in a folder you choose. And a local-only readout of which sections of the paper you actually reach.' },
+  { title: 'The Morgue', body: 'Every edition kept in a folder you can see, with the stories’ text, for a year. A month of front pages, a search that lights up the matching days, how far you read, and Send again to put an old edition back on the Kindle.' },
+  { title: 'The paper beyond the Kindle', body: 'The same edition also goes to an iPad or Boox through an iCloud Drive or Dropbox folder, to a reMarkable as a PDF over its USB web interface, and to a Kobo or PocketBook when one is plugged in. Not yet checked on a real Kobo, PocketBook or reMarkable.' },
+  { title: 'The Daily tab, in rooms', body: 'Fourteen cards grouped into five rooms down the left: Today, Editions, Reading, Delivery and The paper, each with a line on what is in it.' },
+  { title: 'PDFs, Word documents and text', body: 'Drop a text PDF and it reflows into a Kindle book: columns read in order, running heads dropped, tables and equations kept as pictures. Word documents and text files drop in too. And the words you looked up on the Kindle export to Anki.' },
+  { title: 'Bind several files into one book', body: 'EPUBs, Word documents, PDFs and web articles made into one book, in the order you choose, with a contents list that runs through every part.' },
+  { title: 'The edition as data', body: 'A documented, versioned bundle format with each story’s text, photos, weather and crossword, for a reader app to use. The spec is CC-BY-4.0 and the schema is MIT.' },
 ];
 
 const designing = [
-  { n: 109, title: 'The Morgue: every edition kept, searchable, and sendable again' },
   { n: 110, title: 'One Mac, many papers: a separate paper for each Kindle in the house' },
-  { n: 112, title: 'From Your Shelf: a page drawn from your own Kindle’s reading' },
 ];
 
 const next = [
@@ -88,7 +89,6 @@ const next = [
 ];
 
 const considering = [
-  { n: 18, title: 'PDF to a reflowable book' },
   { n: 20, title: 'Comics, manga and picture books, kept fixed-layout' },
   { n: 23, title: 'A Markdown or notes folder as a book' },
   { n: 36, title: 'Kindle Collections sync' },
@@ -206,7 +206,7 @@ const schema = {
     </section>
 
     <div class="wrap dk-figure">
-      <Shot shot={{ src: daily, kind: 'window', alt: 'Deckle’s Daily tab: Tomorrow’s paper, so far, a live sketch of the next front page beside the page plan and the week’s reads' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+      <Shot shot={{ src: daily, kind: 'window', alt: 'Deckle’s Daily tab, in dark mode: Tomorrow’s paper, so far, a live sketch of the next front page beside the page plan and the week’s reads, with the Today, Editions, Reading, Delivery and The paper rooms down the left. Shown with a fictional town.' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
     </div>
 
     <section class="wrap dk-grid dk-section dk-act" aria-labelledby="dk-books">
