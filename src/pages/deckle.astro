@@ -10,6 +10,7 @@ import Composition from '../components/ui/Composition.astro';
 import { bySlug } from '../data/work';
 import books from '../assets/deckle/books-done.jpg';
 import daily from '../assets/deckle/daily-today.png';
+import delivery from '../assets/deckle/daily-delivery.png';
 import weather from '../assets/deckle/paper/weather.jpg';
 import reading from '../assets/deckle/paper/reading.jpg';
 
@@ -72,8 +73,7 @@ const network: [string, string, string][] = [
 // checked 2026-10-23). Move each into the release notes line when it ships.
 const building = [
   { title: 'The Morgue', body: 'Every edition kept in a folder you can see, with the stories’ text, for a year. A month of front pages, a search that lights up the matching days, how far you read, and Send again to put an old edition back on the Kindle.' },
-  { title: 'The paper beyond the Kindle', body: 'The same edition also goes to an iPad or Boox through an iCloud Drive or Dropbox folder, to a reMarkable as a PDF over its USB web interface, and to a Kobo or PocketBook when one is plugged in. Not yet checked on a real Kobo, PocketBook or reMarkable.' },
-  { title: 'The Daily tab, in rooms', body: 'Fourteen cards grouped into five rooms down the left: Today, Editions, Reading, Delivery and The paper, each with a line on what is in it.' },
+    { title: 'The Daily tab, in rooms', body: 'Fourteen cards grouped into five rooms down the left: Today, Editions, Reading, Delivery and The paper, each with a line on what is in it.' },
   { title: 'PDFs, Word documents and text', body: 'Drop a text PDF and it reflows into a Kindle book: columns read in order, running heads dropped, tables and equations kept as pictures. Word documents and text files drop in too. And the words you looked up on the Kindle export to Anki.' },
   { title: 'Bind several files into one book', body: 'EPUBs, Word documents, PDFs and web articles made into one book, in the order you choose, with a contents list that runs through every part.' },
   { title: 'The edition as data', body: 'A documented, versioned bundle format with each story’s text, photos, weather and crossword, for a reader app to use. The spec is CC-BY-4.0 and the schema is MIT.' },
@@ -113,7 +113,7 @@ const schema = {
 
 <Layout
   title="Deckle | Your morning paper, printed on your Kindle"
-  description="Deckle is a free, open-source app for Mac and Windows that builds a real morning newspaper on your own computer, from your town's news and weather, your feeds and your saved reading, and puts it on your Kindle. It also turns the books you own into Kindle books that read like the store's."
+  description="Deckle is a free, open-source app for Mac and Windows that builds a real morning newspaper on your own computer, from your town's news and weather, your feeds and your saved reading, and puts it on your Kindle, or an iPad, reMarkable, Kobo or PocketBook. It also turns the books you own into Kindle books that read like the store's."
   ogImage="/og/deckle.png"
 >
   <JsonLd data={schema} />
@@ -138,7 +138,8 @@ const schema = {
             Every morning Deckle sets a real newspaper on your own computer, from your
             town’s news and weather, your feeds and the articles you saved, and has it
             waiting on your Kindle before you’re up. It also turns the books you own into
-            Kindle books that read like the store’s.
+            Kindle books that read like the store’s. The same paper can go to an iPad, a
+            reMarkable, a Kobo or a PocketBook too.
           </p>
           <p class="dk-actions">
             <a class="dk-button" href={download} rel="noopener">Download Deckle</a>
@@ -191,6 +192,36 @@ const schema = {
         </p>
       </div>
     </section>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-readers">
+      <div>
+        <h2 id="dk-readers" class="dk-h2">Not only a Kindle</h2>
+        <p class="dk-side">The same paper, wherever you read. On the main branch and not in the download yet.</p>
+      </div>
+      <div class="dk-prose">
+        <p>
+          Add an <strong>export folder</strong> and every morning’s edition is also put there
+          as an EPUB, plugged in or not. Point it at iCloud Drive and it shows up in an iPad’s
+          Files app; point it at Dropbox for a Boox. Photos can stay in color for a tablet,
+          and the long reads can come along.
+        </p>
+        <p>
+          A <strong>reMarkable</strong> gets the paper as a PDF laid out for its screen
+          (reMarkable 2, Paper Pro or Paper Pro Move), uploaded over its USB web interface
+          when it is plugged in, with no account. A <strong>Kobo</strong> gets a KEPUB, and a
+          <strong>PocketBook</strong> an EPUB, in a Deckle folder the first time one is
+          connected. None of them need Kindle Previewer.
+        </p>
+        <p class="dk-note">
+          Honest status: only checked against simulated drives and a stand-in server so
+          far. A real Kobo, PocketBook and reMarkable are still on the test list.
+        </p>
+      </div>
+    </section>
+
+    <div class="wrap dk-figure">
+      <Shot shot={{ src: delivery, kind: 'window', alt: 'Deckle’s Daily tab, Delivery room: where the paper goes, with the Kindle, a reMarkable Paper Pro, an iPad folder in iCloud Drive and automatic Kobo and PocketBook support. Shown with a fictional setup.' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
 
     <section class="wrap dk-grid dk-section" aria-labelledby="dk-save">
       <h2 id="dk-save" class="dk-h2">Save it for tomorrow</h2>
