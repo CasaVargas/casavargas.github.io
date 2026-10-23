@@ -30,7 +30,7 @@ const facts: [string, string][] = [
   ['Price', 'Free and open source, GPL-3.0-or-later'],
   ['Runs on', 'macOS 14 or later (Apple silicon and Intel), Windows 11'],
   ['Needs', 'A Kindle, and Kindle Previewer 4, free from Amazon'],
-  ['Status', 'Pre-alpha. Verified on a Kindle Scribe (2024) and a Kindle Paperwhite, other Kindles pending. Kobo, PocketBook and reMarkable support is checked only against simulated devices so far.'],
+  ['Status', 'Pre-alpha, version 0.5.0. Verified on a Kindle Scribe (2024) and a Kindle Paperwhite, other Kindles pending. Kobo, PocketBook and reMarkable support is checked only against simulated devices so far.'],
 ];
 
 const paper = [
@@ -69,6 +69,14 @@ const network: [string, string, string][] = [
   ['Amazon edition lookup and missing book details, through Open Library', 'Books sent', 'Off'],
 ];
 
+const onKindle = [
+  { title: 'Upgrade what is already there', body: 'Deckle reads the AZW3 and MOBI books on your Kindle and, when it finds the original in your calibre library or a folder you name, rebuilds it with Enhanced Typesetting, page numbers, X-Ray and Word Wise. The Kindle’s own copy is kept with its highlights, and Put back undoes it. Store books and anything with DRM are never touched.' },
+  { title: 'A shelf you can read', body: 'Every book on the Kindle with its cover, a progress bar and when you last opened it, filtered by Reading, Finished, Sideloaded and more, and searchable.' },
+  { title: 'Make room', body: 'See the space split by kind, then clear finished books over 10 MB, second copies of a book and old papers.' },
+  { title: 'Back up and restore', body: 'Copy every DRM-free book and its highlights and reading position to your computer, and put a backup on any Kindle later. Amazon’s own books are left out.' },
+  { title: 'A library beside the queue', body: 'The Books tab shows your library, with covers from calibre and your folders, search, series grouped with the gaps called out, and what a given Kindle does not have yet. Before you send, click a book to see what Deckle will do, a before and after of the typography, and a cover you can swap.' },
+];
+
 const moreBooks = [
   { title: 'PDFs, reflowed', body: 'A text PDF becomes a Kindle book that reflows: columns read in order, running heads and page numbers dropped, broken words joined, tables and equations kept as pictures cut from the page. A scan is refused, with the reason.' },
   { title: 'Word documents and text files', body: 'Drop a .docx or .txt on the window and it is built and sent like an EPUB, its row showing the title and author it imports with.' },
@@ -89,7 +97,6 @@ const considering = [
   { n: 20, title: 'Comics, manga and picture books, kept fixed-layout' },
   { n: 23, title: 'A Markdown or notes folder as a book' },
   { n: 36, title: 'Kindle Collections sync' },
-  { n: 42, title: 'Backup and restore of what you have sideloaded' },
 ];
 
 const schema = {
@@ -301,6 +308,21 @@ const schema = {
           now build better.
         </p>
       </div>
+    </section>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-kindle">
+      <div>
+        <h2 id="dk-kindle" class="dk-h2">And the books already on your Kindle</h2>
+        <p class="dk-side">Deckle looks at what is there before it sends anything.</p>
+      </div>
+      <dl class="dk-features dk-features--tight">
+        {onKindle.map((f) => (
+          <div>
+            <dt>{f.title}</dt>
+            <dd>{f.body}</dd>
+          </div>
+        ))}
+      </dl>
     </section>
 
     <section class="wrap dk-grid dk-section" aria-labelledby="dk-network">
