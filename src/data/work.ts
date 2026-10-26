@@ -187,9 +187,9 @@ export const work: Work[] = [
   {
     slug: 'deckle',
     name: 'Deckle',
-    what: 'A morning paper for your Kindle, and better books',
+    what: 'The app for your e-ink reader: a paper, and better books',
     tagline:
-      'Deckle prints a real morning newspaper on your Kindle, built on your own computer from your town’s news and weather and the reading you saved, and turns the books you own into Kindle books that read like the store’s.',
+      'Deckle is the app for your e-ink reader. It prints a real morning newspaper on your Kindle, Kobo, PocketBook or reMarkable, built on your own computer from your town’s news and weather and the reading you saved, and turns the books you own into Kindle books that read like the store’s.',
     group: 'open-source',
     runsOn: ['macOS', 'Windows'],
     builtWith: ['Tauri', 'Rust', 'React'],
