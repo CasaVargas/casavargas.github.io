@@ -569,3 +569,42 @@ news that fits" sits close to the New York Times motto.
   draws its own, in a fictional town (Larkspur Falls, VT) with NASA, Ars Technica, Hacker
   News and Atlas Obscura feeds so no real place or political headline is on the page. It is
   1x (1100 px); replace it with a 2x capture when one is available.
+
+## 16. Deckle, the app for your e-ink reader (2026-10-25, revision of §14)
+
+The owner's call: Deckle is **the app to use for an e-ink reader**, not a Kindle utility
+that happens to reach other readers. §13's routes, content rules and screenshot rules
+still apply; §14's "paper first, books second" order stays.
+
+### 16.1 Positioning
+
+- One line: **"The app for your e-ink reader."** Standfirst: the morning paper on a
+  Kindle, Kobo, PocketBook or reMarkable, then the books you own finished like the
+  store's. "E-ink is paper" stays the wink in the paper section.
+- **Readers, named and honest.** A table right under the lead: Kindle (verified on a
+  Scribe 2024 and a Paperwhite), Kobo (KEPUB), PocketBook (EPUB), reMarkable (PDF over
+  its USB web interface), Boox and iPad (an export folder). The note that Kobo,
+  PocketBook and reMarkable are checked only against simulated devices stays on the
+  page until `docs/devices.md` records a real one. Never "works with every reader".
+- **Kindle Previewer is for Kindle books only.** Say so in the facts table and in
+  Install: the paper for a Kobo, PocketBook or reMarkable, and EPUB or PDF exports, need
+  nothing from Amazon.
+- **Version follows the release**: 0.6.0 (Markdown books, book styles, library search,
+  an optional Daily AI editor, off by default). "Being built right now" mirrors the
+  changelog's *Unreleased* list (many papers, large print, a schedule per paper, several
+  Kindles by name, DRM-free Kindle books, RTF, OpenDocument, FB2); delete items as they
+  ship. "Being considered" is the open `triage/decision` issues.
+
+### 16.2 Also touched
+
+- `work.ts`: `what` and `tagline` lead with the e-ink reader.
+- Case study: title, intro, a "Not only a Kindle" feature in place of "Covers that stay"
+  (the cover rule is still in engineering), record at 0.6.0.
+- OG cards re-rendered; `llms.txt` and `llms-full.txt` reworded.
+
+### 16.3 Verification
+
+- [x] `npm run build` clean; no em dashes in the Deckle pages, `work.ts` or `llms*.txt`
+- [x] 390 px: `scrollWidth === clientWidth` on `/`, `/deckle/`, `/work/deckle/`
+- [x] Visual pass of `/deckle/` and `/work/deckle/` against `npm run preview`
+- [x] JSON-LD parses; internal links resolve

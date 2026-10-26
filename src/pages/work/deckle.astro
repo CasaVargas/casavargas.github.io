@@ -30,16 +30,16 @@ const schema = {
 <CaseStudy
   slug="deckle"
   ogImage="/og/work-deckle.png"
-  title="Deckle, a morning paper and store-quality books for your Kindle | CasaVargas"
-  description="How Deckle prints a morning newspaper on your Kindle and gives sideloaded books what store books have: Enhanced Typesetting, covers, page numbers, X-Ray and Word Wise. Built with Rust, Tauri and React. A case study from CasaVargas."
-  intro="Deckle is a free, open-source desktop app for the Kindle. Every morning it sets a real newspaper on your own computer, from your town’s news and weather, your feeds and the articles you saved, and puts it on the Kindle. It also turns the EPUBs you own into Kindle books that read like ones from the store. It runs on macOS and Windows."
+  title="Deckle, the app for your e-ink reader | CasaVargas"
+  description="How Deckle prints a morning newspaper on a Kindle, Kobo, PocketBook or reMarkable and gives sideloaded Kindle books what store books have: Enhanced Typesetting, covers, page numbers, X-Ray and Word Wise. Built with Rust, Tauri and React. A case study from CasaVargas."
+  intro="Deckle is a free, open-source desktop app for your e-ink reader. Every morning it sets a real newspaper on your own computer, from your town’s news and weather, your feeds and the articles you saved, and puts it on your Kindle, Kobo, PocketBook or reMarkable. It also turns the EPUBs you own into Kindle books that read like ones from the store. It runs on macOS and Windows."
   problem="Books you load onto a Kindle yourself are second-class. They miss Enhanced Typesetting, lose their covers, and get no page numbers, X-Ray or Word Wise. Every fix exists somewhere as a calibre plugin or a forum recipe, each with its own install story, and they fight each other: the one that gives you X-Ray takes away your cover on a 2024 Kindle Scribe. Deckle is one tool that does all of it, and picks the trade-off for each Kindle instead of leaving it to you."
   features={[
-    { title: 'A morning paper', body: 'A front page that doubles as the cover, so the library tile is today’s paper; whole stories with grayscale photos; a horoscope Deckle writes itself. It builds at the hour you pick and waits on the Kindle.' },
-    { title: 'Enhanced Typesetting', body: 'Deckle drives Amazon’s free Kindle Previewer to produce the Enhanced Typesetting that store books get. It never bundles Previewer; you install it once, free.' },
-    { title: 'Covers that stay', body: 'It decides per Kindle whether a book can have both its cover and X-Ray, and writes its own cover thumbnail where the Kindle allows it.' },
+    { title: 'A morning paper', body: 'A front page that doubles as the cover, so the library tile is today’s paper; whole stories with grayscale photos; a horoscope Deckle writes itself. It builds at the hour you pick and waits on the reader.' },
+    { title: 'Not only a Kindle', body: 'A Kobo gets the paper as a KEPUB, a PocketBook as an EPUB, a reMarkable as a PDF laid out for its screen over its USB web interface, and a Boox or an iPad through an export folder. None of them need Kindle Previewer. Those paths are checked against simulated devices so far.' },
+    { title: 'Enhanced Typesetting, and a cover that stays', body: 'Deckle drives Amazon’s free Kindle Previewer to produce the Enhanced Typesetting that store books get, and decides per Kindle whether a book can have both its cover and X-Ray. It never bundles Previewer; you install it once, free.' },
     { title: 'X-Ray and Word Wise', body: 'People and terms are found in the text, with optional descriptions written by an AI model you choose. Word Wise hints point at the Kindle’s own dictionary.' },
-    { title: 'More than EPUB', body: 'Word documents, plain text, web articles and finished KFX files go through the same pipeline as EPUBs.' },
+    { title: 'More than EPUB', body: 'Word documents, Markdown and notes folders, text PDFs, web articles and finished KFX files go through the same pipeline as EPUBs, and several files can be bound into one book.' },
     { title: 'Private by default', body: 'No account, no telemetry. Deckle checks GitHub for a newer version when it starts and installs nothing without a click. Every online lookup is listed, and all but a one-time Word Wise download are off until you turn them on. The paper fetches only the sources you give it.' },
   ]}
   engineering={[
@@ -52,12 +52,12 @@ const schema = {
   ]}
   record={[
     ['License', 'GPL-3.0-or-later'],
-    ['First release', '0.1.0 on 19 October 2026, for macOS, Windows and Linux'],
-    ['Verified on', 'A Kindle Scribe (2024) over MTP: cover, X-Ray and Word Wise. Also a Kindle Paperwhite over USB mass storage. Other models pending.'],
+    ['First release', '0.1.0 on 19 October 2026; 0.6.0 on 24 October 2026, for macOS and Windows'],
+    ['Verified on', 'A Kindle Scribe (2024) over MTP: cover, X-Ray and Word Wise. Also a Kindle Paperwhite over USB mass storage. Other Kindles pending; Kobo, PocketBook and reMarkable simulated only.'],
     ['Codebase', 'About 36,000 lines of Rust in 11 crates, with a React front end'],
     ['Credits', 'Built on research by jhowell (KFX Input and kfxlib), xxyzz (WordDumb), jloutsch, seapy and calibre’s Kindle driver'],
   ]}
-  closing="Deckle is free and open source. It needs Amazon’s free Kindle Previewer 4 to convert books."
+  closing="Deckle is free and open source. Kindle books need Amazon’s free Kindle Previewer 4; the paper for other readers needs nothing else."
   schema={schema}
 >
   <Composition slot="lead" plate={item.plate!} eager />

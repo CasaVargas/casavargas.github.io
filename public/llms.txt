@@ -14,7 +14,7 @@ Expanded, one-paragraph-per-product version of this file: https://casavargas.app
 ## Open source
 
 - [DebridDownloader](https://casavargas.app/work/debrid-downloader/): A GPL-3.0 desktop client for Real-Debrid, TorBox and Premiumize, built with Tauri, Rust and React. Source: https://github.com/CasaVargas/DebridDownloader
-- [Deckle](https://casavargas.app/deckle/): Prints a real morning newspaper on your Kindle, iPad, reMarkable, Kobo or PocketBook (the Deckle Daily), built on your own computer from your town's news and weather, your feeds and saved articles; and turns EPUBs you own into Kindle books that read like the store's (Enhanced Typesetting, a cover that stays, page numbers, X-Ray, Word Wise). macOS and Windows; needs Amazon's free Kindle Previewer 4. GPL-3.0-or-later, pre-alpha. Not affiliated with Amazon. Case study: https://casavargas.app/work/deckle/ Source: https://github.com/CasaVargas/deckle
+- [Deckle](https://casavargas.app/deckle/): The app for your e-ink reader. Prints a real morning newspaper on your Kindle, Kobo, PocketBook, reMarkable or iPad (the Deckle Daily), built on your own computer from your town's news and weather, your feeds and saved articles; and turns EPUBs, Markdown, Word documents and PDFs you own into Kindle books that read like the store's (Enhanced Typesetting, a cover that stays, page numbers, X-Ray, Word Wise). macOS and Windows; Kindle books need Amazon's free Kindle Previewer 4, other readers need nothing else. GPL-3.0-or-later, pre-alpha 0.6.0; Kindles verified on hardware, other readers simulated so far. Not affiliated with Amazon or any reader's maker. Case study: https://casavargas.app/work/deckle/ Source: https://github.com/CasaVargas/deckle
 
 ## In development
 
