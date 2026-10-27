@@ -27,7 +27,7 @@ const cards = [
   { file: 'beltr', title: 'Beltr', sub: 'Karaoke from the music you already own.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/beltr.png', big: true },
   { file: 'onescribe', title: 'OneScribe', sub: 'A document scanner that reads what it scans.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/onescribe.png', big: true },
   { file: 'debrid-downloader', title: 'DebridDownloader', sub: 'An open-source desktop client for debrid services.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/debrid.png', big: true },
-  { file: 'deckle', title: 'Deckle', sub: 'The app for your e-ink reader. Open source.', kicker: 'casavargas.app/deckle', icon: 'src/assets/icons/deckle.png', big: true },
+  { file: 'deckle', title: 'Deckle', sub: 'A morning paper for your e-ink reader. Open source.', kicker: 'casavargas.app/deckle', icon: 'src/assets/icons/deckle.png', big: true },
   { file: 'work-deckle', title: 'Deckle', sub: 'A morning paper, and better books, for any e-ink reader.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/deckle.png', big: true },
   { file: 'cathode-tv', title: 'Cathode TV', sub: 'A native IPTV player for every Apple screen.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/cathode-tv.png', big: true },
   { file: 'nimbus', title: 'Nimbus', sub: 'Every cloud you use, in Finder.', kicker: 'A CasaVargas case study', big: true },
