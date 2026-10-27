@@ -3,7 +3,7 @@ import CaseStudy from '../../layouts/CaseStudy.astro';
 import Composition from '../../components/ui/Composition.astro';
 import Shot from '../../components/ui/Shot.astro';
 import { bySlug } from '../../data/work';
-import kindle from '../../assets/deckle/kindle.jpg';
+import kindle from '../../assets/deckle/app/kindle-shelf.jpg';
 
 // Facts checked 2026-10-21 (README rewrite and 0.2.1 changelog) against the Deckle README, docs/formats/ and
 // docs/devices.md. Pre-alpha: never "works with every Kindle". Kindle Previewer
@@ -52,9 +52,9 @@ const schema = {
   ]}
   record={[
     ['License', 'GPL-3.0-or-later'],
-    ['First release', '0.1.0 on 19 October 2026; 0.6.0 on 24 October 2026, for macOS and Windows'],
+    ['Releases', '0.1.0 on 19 October 2026; 0.7.0 in October 2026, for macOS and Windows'],
     ['Verified on', 'A Kindle Scribe (2024) over MTP: cover, X-Ray and Word Wise. Also a Kindle Paperwhite over USB mass storage. Other Kindles pending; Kobo, PocketBook and reMarkable simulated only.'],
-    ['Codebase', 'About 36,000 lines of Rust in 11 crates, with a React front end'],
+    ['Codebase', 'About 114,000 lines of Rust in 21 crates, with more than 1,500 tests and a React front end'],
     ['Credits', 'Built on research by jhowell (KFX Input and kfxlib), xxyzz (WordDumb), jloutsch, seapy and calibre’s Kindle driver'],
   ]}
   closing="Deckle is free and open source. Kindle books need Amazon’s free Kindle Previewer 4; the paper for other readers needs nothing else."
@@ -62,8 +62,8 @@ const schema = {
 >
   <Composition slot="lead" plate={item.plate!} eager />
   <div slot="figure" class="dk-figure">
-    <Shot shot={{ src: kindle, kind: 'window', alt: 'Deckle’s Kindle tab: the books on a connected Kindle with their covers, mode and X-Ray and Word Wise status, and the free space left' }} width={1100} sizes="(max-width: 900px) 100vw, 60vw" />
-    <p class="dk-figure__caption">The Kindle tab: what is on the device, and what Deckle can now build better.</p>
+    <Shot shot={{ src: kindle, kind: 'window', alt: 'Deckle’s Kindle tab, Shelf: every book on a Kindle Paperwhite with its cover, progress and when it was last opened' }} width={1100} sizes="(max-width: 900px) 100vw, 60vw" />
+    <p class="dk-figure__caption">The Kindle tab: what is on the device, how far you are in each book, and what Deckle can build better.</p>
   </div>
 </CaseStudy>
 

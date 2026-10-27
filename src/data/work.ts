@@ -16,7 +16,7 @@ import osWine from '../assets/onescribe/wine-bezel.webp';
 import debridTorrents from '../assets/debrid/torrents.jpg';
 
 import deckleFront from '../assets/deckle/paper/front.jpg';
-import deckleInside from '../assets/deckle/paper/inside.jpg';
+import deckleWeather from '../assets/deckle/paper/weather.jpg';
 import deckleStory from '../assets/deckle/paper/story.jpg';
 
 import ctvGuide from '../assets/cathode-tv/guide-bezel.webp';
@@ -187,9 +187,9 @@ export const work: Work[] = [
   {
     slug: 'deckle',
     name: 'Deckle',
-    what: 'The app for your e-ink reader: a paper, and better books',
+    what: 'A morning paper for your e-ink reader, and better books',
     tagline:
-      'Deckle is the app for your e-ink reader. It prints a real morning newspaper on your Kindle, Kobo, PocketBook or reMarkable, built on your own computer from your town’s news and weather and the reading you saved, and turns the books you own into Kindle books that read like the store’s.',
+      'Deckle prints a real morning newspaper on your Kindle, Kobo, PocketBook or reMarkable, built on your own computer from your town’s news and weather and the reading you saved, and turns the books you own into Kindle books that read like the store’s.',
     group: 'open-source',
     runsOn: ['macOS', 'Windows'],
     builtWith: ['Tauri', 'Rust', 'React'],
@@ -204,7 +204,7 @@ export const work: Work[] = [
     plate: {
       layout: 'readers',
       shots: [
-        { src: deckleInside, kind: 'reader', alt: 'Inside page of The Morning Deckle on an e-reader: the index of today’s sections' },
+        { src: deckleWeather, kind: 'reader', alt: 'The weather and almanac page of The Morning Deckle on an e-reader: five days ahead, sunrise, sunset and the moon' },
         { src: deckleFront, kind: 'reader', alt: 'The front page of The Morning Deckle on an e-reader: masthead, date, weather and the lead headlines' },
         { src: deckleStory, kind: 'reader', alt: 'A local story from The Morning Deckle on an e-reader, with a grayscale photo' },
       ],

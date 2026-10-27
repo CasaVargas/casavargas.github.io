@@ -608,3 +608,50 @@ still apply; §14's "paper first, books second" order stays.
 - [x] 390 px: `scrollWidth === clientWidth` on `/`, `/deckle/`, `/work/deckle/`
 - [x] Visual pass of `/deckle/` and `/work/deckle/` against `npm run preview`
 - [x] JSON-LD parses; internal links resolve
+
+---
+
+## 17. Deckle, rebuilt for its Hacker News launch (2026-10-26, revision of §16)
+
+The owner's call: a complete redo of `/deckle/` with new screenshots, for a Show HN
+post, plus a launch note on the blog. §13's content rules, §14.3's paper rules and §16's
+reader honesty still apply.
+
+### 17.1 What changed and why
+
+- **The headline says what it is.** "A morning paper for your e-ink reader." The §16 line
+  ("The app for your e-ink reader") made a reader ask what the app does. Standfirst: the
+  paper on your own computer, then books. Four facts in a row under the actions (price,
+  runs on, readers, version), not a side table.
+- **The hero is the product.** The app's Today room in a window, with the front page it
+  made standing in front of its corner on an e-reader. Then three inside pages (story,
+  weather, puzzle) under "A newspaper, not a feed".
+- **A real sequence gets numbers.** "From your sources to your nightstand" is three steps
+  beside the Sections room. Delivery sits beside the readers table.
+- **Books get a stronger turn.** A deeper ground and a bigger head mark act two; the
+  Books tab full width, then four store-book features in a row, the cover rule beside the
+  book drawer, formats in a grid, the Kindle shelf beside what the Kindle tab does.
+- **Under the hood, for the people HN brings.** KPF to KFX in Rust, the MTP client, Word
+  Wise holding no text, files not a database, a command-line block, and the README's own
+  "built with AI" disclosure, said plainly on the page.
+- **Network table beside Settings, Online and privacy.** Install as three columns. Status
+  and the bench together under "Where it stands".
+- **Version 0.7.0.** Every screenshot is the redesigned UI (Books, Kindle, Settings and Daily
+  redesigns, #190 to #211), which 0.6.0 does not have. **This PR merges only after 0.7.0 is
+  published.** "Being built" is now the open print-layout PR (#212); "being considered" is
+  the open `triage/decision` issues.
+
+### 17.2 Imagery
+
+- App shots: the real React UI with mocked Tauri IPC, dark mode, 1280x800 at 2x, in
+  `src/assets/deckle/app/`. Public-domain novels with covers made for the shot, a Kindle
+  Scribe with a plain name, the fictional Linden Falls paper. No real people, paths or
+  email addresses.
+- Paper pages: a fresh demo edition built by `deckle_digest::build` with a canned `Net`, in
+  the new default masthead face, in `src/assets/deckle/paper/`.
+
+### 17.3 Also touched
+
+- `work.ts` `what`; the case study's record (0.7.0, codebase size) and its Kindle shot;
+  `llms.txt` and `llms-full.txt` at 0.7.0.
+- New note: `src/content/blog/deckle-a-morning-paper-for-e-ink.md`, linked from the close.
