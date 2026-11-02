@@ -644,7 +644,8 @@ reader honesty still apply.
 ### 17.2 Imagery
 
 - App shots: the real React UI with mocked Tauri IPC, dark mode, 1280x800 at 2x, in
-  `src/assets/deckle/app/`. Public-domain novels with covers made for the shot, a Kindle
+  `src/assets/deckle/app/`. Public-domain novels with their Standard Ebooks covers
+  (public-domain paintings; the cover design is CC0), a Kindle
   Scribe with a plain name, the fictional Linden Falls paper. No real people, paths or
   email addresses.
 - Paper pages: a fresh demo edition built by `deckle_digest::build` with a canned `Net`, in
