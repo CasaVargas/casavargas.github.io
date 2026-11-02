@@ -120,10 +120,19 @@ is invisible to grep, diffing and CI. Rejected so far, and why:
   icon is the emerald chevron mark from the DebridDownloader repo
   (`assets/brand/`, 2026-09), not the stock Tauri logo it used to ship.
 - Deckle: the real React UI with mocked Tauri IPC, public-domain novels with
-  typographic covers made for the shot, and a plausibly named Kindle. Never the
+  Standard Ebooks' public-domain covers (CC0 compositions of public-domain
+  paintings; the 1905 Little Nemo page is from Wikimedia Commons), and a
+  plausibly named Kindle. Never the
   repo's `docs/screenshots/`: they show test fixtures and "(fake)"/"(sim)"
   devices. Deckle has no domain, so `/deckle/` is its product page (PLAN.md §13);
   never enable GitHub Pages on `CasaVargas/deckle`, or it claims that path.
+  The 0.11 app shots (2026-11-02: welcome, delivery, koreader, books-comic,
+  recaps) came from a throwaway Vite entry in the Deckle repo that stubs its
+  `api` object and renders the real `<App />` in dark mode at 1440×900, captured
+  by headless Chrome at 2×; the puzzle pages are PDF pages from
+  `deckle puzzles …` rendered with a PDFKit script. Runbook: Tolaria
+  `deckle-release-site-update-runbook`. `/deckle/whats-new/` is the release
+  notes page; rewrite it for each version, moving the old one into "Earlier".
 
 ## SEO
 
