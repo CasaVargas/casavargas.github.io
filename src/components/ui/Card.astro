@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * A feature card: one of the 1200 × 630 sheets from the marketing repo
+ * (CasaVargas/marketing, deckle/feature-cards), rendered at 2×. On the walnut
+ * ground a cream sheet reads as paper under the lamp, so it gets a paper edge,
+ * not a screen well: no chrome, no dark glass.
+ */
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  /** Rendered width budget, used to pick the emitted sizes. */
+  width?: number;
+  sizes?: string;
+  eager?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  width = 1100,
+  sizes = '(max-width: 900px) 100vw, 60vw',
+  eager = false,
+  class: className = '',
+} = Astro.props;
+
+const widths = [Math.round(width / 2), width, Math.min(width * 2, src.width)].filter(
+  (w, i, a) => w <= src.width && a.indexOf(w) === i,
+);
+---
+
+<figure class:list={['card', className]}>
+  <Image
+    src={src}
+    alt={alt}
+    widths={widths}
+    sizes={sizes}
+    format="webp"
+    quality={72}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+  />
+</figure>
+
+<style>
+  .card {
+    position: relative;
+    margin: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f6f2ea;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.35),
+      0 30px 80px -30px rgba(0, 0, 0, 0.85),
+      0 12px 28px -18px rgba(0, 0, 0, 0.7);
+  }
+  .card :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

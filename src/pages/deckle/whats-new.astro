@@ -3,21 +3,17 @@ import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import JsonLd from '../../components/JsonLd.astro';
-import Shot from '../../components/ui/Shot.astro';
-import delivery from '../../assets/deckle/delivery.png';
-import comic from '../../assets/deckle/books-comic.png';
-import koreader from '../../assets/deckle/koreader.png';
-import welcomeSave from '../../assets/deckle/welcome-save.png';
-import search from '../../assets/deckle/puzzles/search.png';
-import crossword from '../../assets/deckle/puzzles/crossword.png';
-import sudoku from '../../assets/deckle/puzzles/sudoku.png';
+import Card from '../../components/ui/Card.astro';
+import cardInterest from '../../assets/deckle/cards/05-a-crossword-about-anything.png';
+import cardAi from '../../assets/deckle/cards/06-ai-on-your-mac.png';
+import cardInk from '../../assets/deckle/cards/12-puzzle-books-in-ink.png';
 
 // What's new in Deckle, release by release, in plain words. The source is the
 // repo's CHANGELOG.md at the version named; nothing here is promised ahead of a
 // tag. Same rules as /deckle/: fictional demo data in every shot, no DRM talk,
 // Kindle Previewer is Amazon's, no em dashes.
 const repo = 'https://github.com/CasaVargas/deckle';
-const release = `${repo}/releases/tag/v0.11.0`;
+const release = `${repo}/releases/tag/v0.12.0`;
 const download = `${repo}/releases/latest`;
 
 interface Item { title: string; body: string }
@@ -25,115 +21,32 @@ interface Theme { id: string; title: string; why?: string; items: Item[] }
 
 const themes: Theme[] = [
   {
-    id: 'remarkable',
-    title: 'The reMarkable, wireless and with books',
-    why: 'Until now a reMarkable only got the daily paper, only over the USB cable.',
-    items: [
-      { title: 'Send books to it.', body: 'A comic arrives as a PDF with one picture per page, sized to the tablet’s screen. Any other book arrives as an EPUB, with its Who’s who page and recaps if you asked for them. Books wait in a queue until the tablet answers, then go over on the next push, whether or not the paper is set up for it. There is a Send to reMarkable button on the app’s Inbox.' },
-      { title: 'Delivery over SSH and Wi-Fi, into a Deckle folder.', body: 'Deckle can log in to the tablet directly instead of using its USB web page: Wi-Fi as well as cable, a Deckle folder so papers don’t clutter the home screen, and old papers cleaned up. You give Deckle the tablet’s password once, from its own Settings, Help, About; it is kept in your system keychain, and the tablet’s identity is remembered so nothing else can stand in for it. The tablet shows new files only after its reader restarts, which would interrupt you mid-note, so Deckle restarts it only after the tablet has sat idle for ten minutes, and tells you otherwise.' },
-      { title: 'Deckle never changes a tablet setting.', body: 'Turning on SSH over Wi-Fi, or Developer Mode on a Paper Pro (which wipes the tablet), are steps you take yourself, and the docs say so.' },
-      { title: 'Easier to reach.', body: 'An Address field points Deckle at a tablet on your Wi-Fi rather than only through the USB link, and the devices list shows the tablet when it answers. The docs explain how the tablet can pull the paper from Dropbox, Google Drive or OneDrive on its own, with no cloud account on Deckle’s side.' },
-      { title: 'The Paper Pro Move gets colour.', body: 'It had been treated as a grey screen, so photos and comic pages arrived without colour. It has the same colour panel as the Paper Pro.' },
-    ],
-  },
-  {
-    id: 'comics',
-    title: 'Comics, manga and scanned books on every reader',
-    why: 'Deckle only handled text books before. Now a page of pictures goes to each reader as pictures, fitted to its screen.',
-    items: [
-      { title: 'Bring in a comic any way you have it.', body: 'A CBZ, a CBR, a folder of page images, a fixed-layout EPUB, or a scanned PDF with or without an invisible text layer. Drop it in the app, keep it in the library, or queue it from the Inbox. Two-page spreads are split at import.' },
-      { title: 'Kindle.', body: 'Comics arrive as a fixed-layout AZW3, which the Kindle opens as it would a bought comic. Each Kindle model gets pages fitted to its own screen, nineteen models known by their serial number, the Colorsoft in colour. Checked on a Kindle Scribe.' },
-      { title: 'Kobo and PocketBook.', body: 'Comics go as a fixed-layout EPUB, without the markup Deckle normally adds for a Kobo, which would break picture pages. Thirty Kobo models are recognised and fitted.' },
-      { title: 'Reads right to left.', body: 'A checkbox on the comic’s row in the app, remembered per book, for manga. The command line has the same switch, and a comic that says so in its own metadata needs neither.' },
-      { title: 'Send a PDF as it is.', body: 'The send command used to treat every file as a Kindle book. A PDF or other Kindle document is now copied over untouched under its own name, which on a Scribe is a document you can write on.' },
-    ],
-  },
-  {
     id: 'puzzles',
-    title: 'Puzzle books you solve in ink on a Kindle Scribe',
-    why: 'A device test settled that only a PDF takes pen ink on the Scribe, so these are PDFs: a title page, one puzzle per page, answers at the back.',
+    title: 'A Puzzles tab, and books about what you love',
+    why: 'Puzzle books were a command. Now they are a tab, with four more kinds, and a crossword can be about your own interests.',
     items: [
-      { title: 'Word search books.', body: 'Pick the size and directions, or give your own words. Every puzzle is checked against a blocklist so nothing rude appears by accident.' },
-      { title: 'Crossword books.', body: 'Any size from 5×5 to 15×15, filled from a new 45,000-word clue list drawn from Wiktionary. A grid that won’t fill falls back to rarer words and says so.' },
-      { title: 'Themed crosswords from your own words.', body: 'Give a file of words and clues, and each puzzle seeds as many of them as will fit, marked as theme answers.' },
-      { title: 'Sudoku books.', body: 'Easy, medium and hard, each with exactly one solution. A hard puzzle is always solvable by logic, never guessing.' },
-      { title: 'Repeatable.', body: 'The same options, seed and date make the same book, byte for byte, and each run prints the command that makes it again. Books go to a folder, or straight to a plugged-in Kindle, and come sized for a Scribe, a reMarkable, an iPad or A5 paper.' },
+      { title: 'Type an interest, get a crossword about it.', body: 'A theme for a crossword or word search: your interest sections (pick which) or the whole week’s paper, with the week’s headline words as answers and the headline as the clue; the words you looked up on the Kindle, clued with the definition you tapped; your cookbook’s dishes and ingredients; your own list; or a subject the AI writes about, words and clues both.' },
+      { title: 'Clues in a style.', body: 'With the AI on, any crossword’s clues can be rewritten as trivia, cryptic, or for a kid, one request a puzzle, every clue checked so it never names its answer. A puzzle whose request fails keeps its plain clues.' },
+      { title: 'Seven kinds.', body: 'Crossword, word search and sudoku, and now word ladders (three a page, the rungs by difficulty), cryptograms (public domain quotes or your own, letters given by difficulty, a key to work in), nonograms (Deckle’s pictures and shapes, every one solvable by line logic, or your own photo as the first puzzle) and mazes (6 to 40 a side, the path drawn in the answers).' },
+      { title: 'The tab.', body: 'Pick a kind, size, difficulty, count, screen and title, and watch the first page as it will print. Every book is kept with the options that made it, so Make again gives the same book; Send copies it to the plugged-in Kindle and Save a copy puts it in a folder. The same on the command line: deckle puzzles crossword --theme interests --clues trivia.' },
     ],
   },
   {
-    id: 'recaps',
-    title: 'AI recaps for books, without spoilers',
-    why: 'Optional, using the model you already set up for X-Ray (Anthropic, OpenAI, or a local server). Nothing is bundled and nothing is sent unless you turn it on.',
+    id: 'ai',
+    title: 'An AI on your own Mac, with nothing to configure',
+    why: 'Running a local model used to mean a terminal, a model name and a context size you had to know about. Now it is a checklist.',
     items: [
-      { title: 'Chapter recaps.', body: 'A short labelled recap at the end of each chapter, written from that chapter alone so it can’t spoil what’s ahead. For Kindle, Kobo, PocketBook, a reMarkable and any EPUB reader. Results are cached, so a book is never summarised twice.' },
-      { title: 'A Summary page.', body: 'At the back of the book, the whole story including the ending, built from the chapter recaps rather than sending the book’s text again.' },
-      { title: 'A Previously page.', body: 'For a later book in a series, what happened in the earlier ones, placed before chapter one. It is written only from the earlier books’ recaps, so it can’t spoil the one you’re starting.' },
-      { title: 'In the app and on the command line.', body: 'Settings, Reading aids has the switch and each book a toggle. Asking for recaps without a model now stops up front rather than after the whole conversion.' },
+      { title: 'Settings, AI.', body: 'One page for where the AI runs, for X-Ray, chapter recaps, the paper’s editor and puzzle clues alike: Off, On this Mac, or A service online. On this Mac fills itself in: Ollama running (with a Get Ollama button and a check every few seconds until it answers), the model installed (Download, with a progress bar and a Stop), and Try it. Advanced lists every model Ollama has and takes an address for Ollama on another computer.' },
+      { title: 'Ollama, spoken natively.', body: 'Deckle talks to Ollama’s own API instead of its OpenAI-compatible shim, so it sets the context size itself (the paper’s editor used to overflow Ollama’s default silently), turns thinking off, holds the model to a schema, and needs no key. The model is qwen3:4b, or qwen3:8b on a machine with 16 GB or more. On the command line, deckle llm check says what is missing and deckle llm pull downloads the model.' },
+      { title: 'One setting for the paper too.', body: 'A paper’s editor now runs where Settings, AI says, so there is nothing to copy between Books and the Daily. A paper that names its own provider keeps it, under Advanced on its sheet.' },
+      { title: 'In Docker.', body: 'An Ollama service beside Deckle behind the ai profile, so the web app’s checklist works in the container with the address left blank.' },
     ],
   },
   {
-    id: 'koreader',
-    title: 'KOReader as a first-class reader',
-    why: 'KOReader runs on jailbroken Kindles, Kobos, PocketBooks, Boox tablets and reMarkables. Deckle now reads from it, serves it, and manages it.',
+    id: 'welcome',
+    title: 'The welcome shows the back pages',
     items: [
-      { title: 'Highlights and progress from any reader running it.', body: 'Deckle reads KOReader’s files beside each book, over USB or from a folder the reader syncs back, never writes them, and installs nothing on the reader for it.' },
-      { title: 'Today’s paper over Wi-Fi, no cable.', body: 'Deckle’s background watcher serves a catalog on your home network. KOReader on any e-reader browses it and downloads the paper and your books. One account, a password of your choosing, nothing leaves the house.' },
-      { title: 'Progress sync, served by Deckle.', body: 'Point KOReader’s own sync at Deckle and every reader reports how far you read, down to the section of the paper.' },
-      { title: 'A Deckle plugin for KOReader.', body: 'It fetches the morning paper on its own when the reader wakes or joins Wi-Fi, checks the download, and tidies its own old papers. One tap sets up progress sync.' },
-      { title: 'Plugin management.', body: 'List, install, update, remove and roll back KOReader plugins from a zip, a folder or a GitHub release, over USB. Switch them on and off. Plugins are included in backup and restore of KOReader’s settings and reading data.' },
-      { title: 'A plugin store.', body: 'A reviewed, pinned list of recommended plugins. Each install is checked byte for byte against the reviewed file.' },
-      { title: 'Settings, KOReader in the app.', body: 'The plugged-in reader, the Deckle plugin, your plugins with switches, and the store.' },
-      { title: 'Papers open as designed.', body: 'Each paper Deckle sends carries KOReader settings so it opens with the right margins and fonts, written once and never over your own.' },
-    ],
-  },
-  {
-    id: 'calibre',
-    title: 'Deckle as the bridge to your calibre library',
-    why: 'calibre stays the library of record. Deckle moves books out and reading data back, over Wi-Fi, and never edits calibre’s database.',
-    items: [
-      { title: 'KOReader’s calibre connection, answered by Deckle.', body: 'Tap Connect in KOReader and Deckle appears as calibre would. Books, calibre books and the paper go to the reader over Wi-Fi, with no plugin and no calibre running. The app shows every reader that has connected, its books and free space, and a queue.' },
-      { title: 'Reading data back into calibre.', body: 'Progress, finished, last read and rating go into calibre columns you choose, through calibre’s own tools. Off by default, with a preview, and a value you changed in calibre is left alone.' },
-      { title: 'Highlights into calibre.', body: 'Every highlight and note as Markdown in a column, and optionally into calibre’s own annotations.' },
-      { title: 'Shelves from calibre rules.', body: 'A tag, series, author, column or saved search becomes a shelf on a Kobo or a collection in KOReader, holding the books that are actually on the reader. Only shelves Deckle made are ever changed.' },
-    ],
-  },
-  {
-    id: 'kobo',
-    title: 'Kobo and PocketBook catch up with the Kindle',
-    items: [
-      { title: 'Who’s who.', body: 'The people, places and terms Deckle finds for a Kindle’s X-Ray now go inside the EPUB as a Who’s who page at the back. The first mention of each name in a chapter links to its entry, and back.' },
-      { title: 'The paper to a Kobo over Dropbox.', body: 'Point an export folder at Dropbox’s Rakuten Kobo folder as KEPUB and the Kobo fetches the paper each morning when you tap Sync. Deckle still signs in to nothing.' },
-    ],
-  },
-  {
-    id: 'paper',
-    title: 'The daily paper',
-    items: [
-      { title: 'A daily word search.', body: 'A 9×9 grid with eight to ten hidden words, beside the mini crossword, with yesterday’s answers, in every edition.' },
-      { title: 'No repeat crosswords.', body: 'The mini once printed the same grid two days running, with the answers printed above it. A grid from the last sixty days is never reused.' },
-      { title: 'Google News stories read in full again.', body: 'For a week, every story linked through Google News arrived as a stub. Dropped connections are retried and the reply is parsed properly.' },
-      { title: 'Teasers stop at a sentence.', body: 'One teaser was a whole 37,000-character article. Teasers now end at a whole sentence within about 300 characters, and spaces around italics are kept.' },
-      { title: 'No more “Full story unavailable offline.”', body: 'A story the paper couldn’t fetch whole still runs as a brief after the full stories, without that line.' },
-      { title: 'Kindle readership works again.', body: 'The print layout’s section folios had hidden every section from the readership report.' },
-    ],
-  },
-  {
-    id: 'app',
-    title: 'The app and the importers',
-    items: [
-      { title: 'A welcome on first launch.', body: 'Four short pages: your paper and its morning schedule, the bookmarklets, and where things live. Beside them sits tomorrow’s front page in miniature, in your paper’s name and masthead face; the first story you save lands on it as a clipping. Settings, About shows it again.' },
-      { title: 'Bookmarklets you drag, not paste.', body: 'An install page opens in your browser with Save to paper and Save recipe as buttons you drag to the bookmarks bar, with notes for each browser. Copying still works.' },
-      { title: 'Messy Word and PDF files get their structure back.', body: 'A document with no real headings gets chapters recognised from size, weight and “Chapter” lines, with no model and no network. Documents that already have structure convert as before.' },
-    ],
-  },
-  {
-    id: 'fixes',
-    title: 'Fixes you’d otherwise hit',
-    items: [
-      { title: 'The watcher restarts after an update.', body: 'It used to keep running the old build until the next login, so a new bookmarklet hit an old watcher and got Not found.' },
-      { title: 'Kindle Previewer runs one conversion at a time.', body: 'Two at once shared a scratch folder and both failed. Jobs now wait their turn.' },
-      { title: 'Found on real readers.', body: 'KOReader’s own SSH plugin no longer gets Update and Remove buttons; a reader’s free space shows correctly instead of 0 MB; the paper goes over the calibre connection once, not on every connect.' },
-      { title: 'Comics and scans.', body: 'A comic with a wide title banner no longer stretches every page to the banner’s shape on a Kindle, and a scan with an invisible OCR layer is treated as a scan, not as text to reflow.' },
+      { title: 'A fourth page in the first-launch tour.', body: 'The Mini with yesterday’s headlines as its answers, the word search, the word ladder, the almanac, the horoscope and On this day, how a Kindle’s notes mark the answers, the puzzle books to write on, From Your Shelf, and the AI model, with a link straight to Settings, AI.' },
     ],
   },
 ];
@@ -141,18 +54,18 @@ const themes: Theme[] = [
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
-  headline: 'What’s new in Deckle 0.11',
-  datePublished: '2026-11-02',
+  headline: 'What’s new in Deckle 0.12',
+  datePublished: '2026-11-03',
   url: 'https://casavargas.app/deckle/whats-new/',
-  about: { '@type': 'SoftwareApplication', name: 'Deckle', softwareVersion: '0.11.0', url: 'https://casavargas.app/deckle/' },
+  about: { '@type': 'SoftwareApplication', name: 'Deckle', softwareVersion: '0.12.0', url: 'https://casavargas.app/deckle/' },
   author: { '@type': 'Organization', name: 'Casa Vargas LLC', url: 'https://casavargas.app' },
 };
 ---
 
 <Layout
-  title="What’s new in Deckle 0.11 | Every reader, comics, puzzle books and KOReader"
-  description="Deckle 0.11 sends books and the paper to a reMarkable over Wi-Fi, fits comics and manga to every reader, makes puzzle books you solve in ink on a Kindle Scribe, writes AI recaps without spoilers, serves and manages KOReader, and bridges your calibre library. In plain words, with screenshots."
-  ogImage="/og/deckle.png"
+  title="What’s new in Deckle 0.12 | A crossword about anything, and an AI on your own Mac"
+  description="Deckle 0.12 adds a Puzzles tab with seven kinds of book to solve in ink, crosswords themed on your interests, the week’s paper, your looked-up words, your cookbook or a subject an AI writes, and a Settings, AI page that sets up a local model through Ollama by itself. In plain words."
+  ogImage="/og/deckle-hero.jpg"
 >
   <JsonLd data={schema} />
   <Nav />
@@ -160,14 +73,14 @@ const schema = {
   <main id="main" class="wn">
     <header class="wrap wn-head">
       <p class="wn-crumb"><a class="textlink" href="/deckle/">Deckle</a></p>
-      <h1 class="wn-title">What’s new in 0.11</h1>
+      <h1 class="wn-title">What’s new in 0.12</h1>
       <p class="wn-lede">
-        Released 2 November 2026, three days after 0.10. About sixty pull requests in ten
-        themes, from a reMarkable that takes books over Wi-Fi to puzzle books you solve with
-        a pen. Everything below is in the download; nothing is promised ahead of it.
+        Released 3 November 2026, the day after 0.11. A fifth tab makes puzzle books about what
+        you love, and the AI that clues them runs on your own Mac from a page that sets itself
+        up. Everything below is in the download; nothing is promised ahead of it.
       </p>
       <p class="wn-actions">
-        <a class="wn-button" href={download} rel="noopener">Download 0.11</a>
+        <a class="wn-button" href={download} rel="noopener">Download 0.12</a>
         <a class="textlink" href={release} rel="noopener">The release on GitHub</a>
         <a class="textlink" href="/deckle/#dk-readers">What each reader gets</a>
       </p>
@@ -193,31 +106,19 @@ const schema = {
           </dl>
         </section>
 
-        {t.id === 'remarkable' && (
-          <div class="wrap wn-figure">
-            <Shot shot={{ src: delivery, kind: 'window', alt: 'Deckle’s Daily tab, Delivery: a reMarkable Paper Pro reached by its address over Wi-Fi beside the Kindle, a Kobo, KOReader over Wi-Fi and the calibre connection. Shown with a fictional setup.' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
-          </div>
-        )}
-        {t.id === 'comics' && (
-          <div class="wrap wn-figure wn-figure--left">
-            <Shot shot={{ src: comic, kind: 'window', alt: 'Deckle’s Books tab with a public-domain comic beside the novels, its row open to the Reads right to left checkbox and the fixed-layout note' }} width={1000} sizes="(max-width: 900px) 100vw, 64vw" />
-          </div>
-        )}
         {t.id === 'puzzles' && (
-          <div class="wrap wn-trio">
-            <Shot shot={{ src: search, kind: 'reader', alt: 'A page of a Deckle word search book on an e-reader: a 12 by 12 grid of letters with the hidden words listed beneath' }} sizes="(max-width: 900px) 31vw, 20vw" />
-            <Shot shot={{ src: crossword, kind: 'reader', alt: 'A page of a Deckle crossword book on an e-reader: an 11 by 11 numbered grid with the across clues in two columns beneath' }} sizes="(max-width: 900px) 31vw, 20vw" />
-            <Shot shot={{ src: sudoku, kind: 'reader', alt: 'A page of a Deckle sudoku book on an e-reader: a nine by nine grid with the givens in a bold serif' }} sizes="(max-width: 900px) 31vw, 20vw" />
-          </div>
+          <>
+            <div class="wrap wn-figure">
+              <Card src={cardInterest} alt="Type an interest, get a crossword about it: the subject field reads Star Wars, theme chips for your interests, this week’s paper, words you looked up, your cookbook and your own list, clue styles plain, trivia, cryptic and for a kid, and a Kindle Scribe showing the crossword inked in" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+            </div>
+            <div class="wrap wn-figure wn-figure--left">
+              <Card src={cardInk} alt="Seven kinds of puzzle book, solved in ink: crossword, word search, sudoku, word ladder, cryptogram, nonogram from your own photo, and maze, with a Kindle Scribe showing a nonogram half shaded in pen" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+            </div>
+          </>
         )}
-        {t.id === 'koreader' && (
+        {t.id === 'ai' && (
           <div class="wrap wn-figure">
-            <Shot shot={{ src: koreader, kind: 'window', alt: 'Deckle’s Settings, KOReader page: a plugged-in Kobo running KOReader, the Deckle plugin installed, the reader’s plugins with switches, and the plugin store’s recommended list' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
-          </div>
-        )}
-        {t.id === 'app' && (
-          <div class="wrap wn-figure wn-figure--left">
-            <Shot shot={{ src: welcomeSave, kind: 'window', alt: 'Deckle’s welcome, on its Save to paper page: the first saved story has landed as a clipping on the miniature front page beside the bookmarklet buttons' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+            <Card src={cardAi} alt="AI on your own Mac: the Settings, AI page with Off, On this Mac and A service online, and the On this Mac checklist with Ollama running, the model downloaded and Try it" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
           </div>
         )}
       </>
@@ -226,6 +127,7 @@ const schema = {
     <section class="wrap wn-earlier" aria-labelledby="wn-earlier">
       <h2 id="wn-earlier" class="wn-h2">Earlier</h2>
       <dl class="wn-items wn-items--earlier">
+        <div><dt>0.11, 2 November</dt><dd>Books and the paper to a reMarkable over Wi-Fi, comics and manga fitted to every reader, the first puzzle books to solve in ink, AI recaps without spoilers, KOReader served and managed, the bridge to calibre, and a Who’s who page on a Kobo or PocketBook.</dd></div>
         <div><dt>0.10, 30 October</dt><dd>Deckle on Linux: a container that prints the paper headless and serves the app to a browser, email-only papers without Kindle Previewer, and a new icon.</dd></div>
         <div><dt>0.9, 28 October</dt><dd>No more console windows on Windows, Save recipe on sites that block apps, and a plain word when a site refuses Deckle.</dd></div>
         <div><dt>0.8, 28 October</dt><dd>The Kitchen Book cookbook, a Daily that looks printed, and newspaper columns in the PDF edition.</dd></div>
@@ -349,8 +251,10 @@ const schema = {
   .wn-items dt::after { content: ' '; }
 
   .wn-figure { padding-bottom: clamp(3rem, 7vw, 5rem); }
-  .wn-figure :global(.frame) { max-width: 56rem; margin-left: auto; }
-  .wn-figure--left :global(.frame) { margin-left: 0; margin-right: auto; }
+  .wn-figure :global(.frame),
+  .wn-figure :global(.card) { max-width: 56rem; margin-left: auto; }
+  .wn-figure--left :global(.frame),
+  .wn-figure--left :global(.card) { margin-left: 0; margin-right: auto; }
 
   .wn-trio {
     display: flex;

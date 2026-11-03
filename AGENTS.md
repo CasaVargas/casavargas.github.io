@@ -133,6 +133,12 @@ is invisible to grep, diffing and CI. Rejected so far, and why:
   `deckle puzzles …` rendered with a PDFKit script. Runbook: Tolaria
   `deckle-release-site-update-runbook`. `/deckle/whats-new/` is the release
   notes page; rewrite it for each version, moving the old one into "Earlier".
+  The feature cards in `src/assets/deckle/cards/` (and `/og/deckle-hero.jpg`)
+  are the marketing repo's `deckle/feature-cards/*.png`, rendered there from
+  their HTML sources; change them there and copy, never edit the PNGs. The
+  0.12 product page (2026-11-03) leads with them, fun first (a crossword about
+  anything, puzzle books in ink, the back pages, comics, the AI on your Mac),
+  then the paper, then the housekeeping; `Card.astro` is their frame.
 
 ## SEO
 
