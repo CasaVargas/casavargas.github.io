@@ -6,9 +6,9 @@ import Footer from '../components/Footer.astro';
 import JsonLd from '../components/JsonLd.astro';
 import Facts from '../components/ui/Facts.astro';
 import Shot from '../components/ui/Shot.astro';
+import Card from '../components/ui/Card.astro';
 import Composition from '../components/ui/Composition.astro';
 import { bySlug } from '../data/work';
-import recaps from '../assets/deckle/recaps.png';
 import daily from '../assets/deckle/app/daily-today.jpg';
 import kindleShelf from '../assets/deckle/app/kindle-shelf.jpg';
 import settingsOnline from '../assets/deckle/app/settings-online.jpg';
@@ -21,14 +21,37 @@ import puzzle from '../assets/deckle/paper/puzzle.jpg';
 import search from '../assets/deckle/puzzles/search.png';
 import crossword from '../assets/deckle/puzzles/crossword.png';
 import sudoku from '../assets/deckle/puzzles/sudoku.png';
+import cardReaders from '../assets/deckle/cards/02-any-eink-reader.png';
+import cardBooks from '../assets/deckle/cards/03-books-like-the-store.png';
+import cardBackPages from '../assets/deckle/cards/04-the-back-pages.png';
+import cardInterest from '../assets/deckle/cards/05-a-crossword-about-anything.png';
+import cardAi from '../assets/deckle/cards/06-ai-on-your-mac.png';
+import cardPrivate from '../assets/deckle/cards/07-no-deckle-cloud.png';
+import cardHouse from '../assets/deckle/cards/08-papers-for-the-whole-house.png';
+import cardManga from '../assets/deckle/cards/09-manga-right-to-left.png';
+import cardComics from '../assets/deckle/cards/10-comics-page-for-page.png';
+import cardPicture from '../assets/deckle/cards/11-picture-books.png';
+import cardInk from '../assets/deckle/cards/12-puzzle-books-in-ink.png';
+import cardRecaps from '../assets/deckle/cards/13-recaps-without-spoilers.png';
+import cardKoreader from '../assets/deckle/cards/14-koreader-hub.png';
+import cardKindle from '../assets/deckle/cards/15-your-kindle-from-your-desk.png';
+import cardSaved from '../assets/deckle/cards/16-save-it-read-it-tomorrow.png';
+import cardCalibre from '../assets/deckle/cards/17-calibre-stays-the-library.png';
+import cardKitchen from '../assets/deckle/cards/18-the-kitchen-book.png';
 
-// Deckle's product page: it has no domain of its own. The Daily leads, books
-// second (PLAN.md §13). Every claim comes from the Deckle README, docs/daily.md,
-// docs/devices.md and CHANGELOG.md at 0.11.0 (2026-11-02). The paper imagery is a
-// demo edition built by Deckle's own code, with a fictional town; never invented
-// news about a real place. App shots are the real UI with mocked IPC and fictional
-// data. Never "works with every Kindle": name only what docs/devices.md records.
-// Kindle Previewer is Amazon's and never bundled. No DRM talk. No em dashes.
+// Deckle's product page: it has no domain of its own. The fun comes first (a
+// crossword about anything, puzzle books in ink, the back pages, comics, the AI
+// on your own Mac), then the paper, then the housekeeping (books, the Kindle
+// tab, KOReader, calibre, the Kitchen Book, privacy). Every claim comes from the
+// Deckle README, docs/daily.md, docs/puzzle-books.md, docs/devices.md and
+// CHANGELOG.md at 0.12.0 (2026-11-03). The feature cards are the ones in the
+// marketing repo (deckle/feature-cards); their device drawings are code, their
+// book titles invented, and cards 9 to 11 carry public domain art credited in
+// small type. The paper imagery is a demo edition built by Deckle's own code,
+// with a fictional town; never invented news about a real place. App shots are
+// the real UI with mocked IPC and fictional data. Never "works with every
+// Kindle": name only what docs/devices.md records. Kindle Previewer is Amazon's
+// and never bundled. No DRM talk. No em dashes.
 const item = bySlug('deckle');
 
 const repo = 'https://github.com/CasaVargas/deckle';
@@ -39,24 +62,36 @@ const facts: [string, string][] = [
   ['Price', 'Free and open source, GPL-3.0-or-later'],
   ['Runs on', 'macOS 14 or later (Apple silicon and Intel), Windows 11, and Linux as a container that prints the paper and serves the app to a browser'],
   ['Readers', 'Kindle, Kindle Scribe, Kobo, PocketBook, reMarkable, anything running KOReader, and any folder for a Boox or an iPad'],
-  ['Needs', 'Kindle Previewer 4, free from Amazon, for Kindle books only'],
-  ['Status', 'Version 0.11.0. Verified on a Kindle Scribe (2024) and a Kindle Paperwhite; Kobo, PocketBook and reMarkable are checked against simulated devices so far.'],
+  ['Needs', 'Kindle Previewer 4, free from Amazon, for Kindle books only. Ollama, free, for the AI on your own computer'],
+  ['Status', 'Version 0.12.0. Verified on a Kindle Scribe (2024) and a Kindle Paperwhite; Kobo, PocketBook and reMarkable are checked against simulated devices so far.'],
+];
+
+const themes = [
+  { title: 'Your interests', body: 'The sections of your paper you follow, the week’s headline words as answers and the headline as the clue. Pick which interests, or take the whole week’s paper.' },
+  { title: 'The words you looked up', body: 'Every word you tapped on the Kindle, clued with the definition you read.' },
+  { title: 'Your cookbook, or your own list', body: 'The dishes and ingredients in your Kitchen Book, or a file of words and clues of your own: names, in-jokes, a birthday.' },
+  { title: 'A subject the AI writes', body: 'Star Wars, Christmas, the Panthers. The AI picks the words and writes the clues, every one checked to fit the grid and never to name its answer. With the AI on, any crossword’s clues can be rewritten as trivia, cryptic, or for a kid.' },
+];
+
+const kinds = [
+  { title: 'Crosswords and word searches', body: 'Crosswords from 5×5 to 15×15, filled from a 45,000-word clue list and seeded with the theme. Word searches at any size from 8 to 20 squares.' },
+  { title: 'Sudoku', body: 'Three difficulties, each puzzle with exactly one solution, the hard ones always solvable by logic and never a guess.' },
+  { title: 'Word ladders and cryptograms', body: 'Three ladders a page, the rungs by difficulty. Cryptograms from public domain quotes or your own, with letters given by difficulty and a key to work in.' },
+  { title: 'Nonograms and mazes', body: 'Nonograms from Deckle’s own pictures, every one proven to solve by line logic, or your own photo as the first puzzle. Mazes from 6 to 40 a side, the path drawn in the answers.' },
 ];
 
 const paper = [
   { title: 'The front page is the cover', body: 'Deckle sets a front page every morning, with the masthead, the date, the weather and the lead headlines, and makes it the cover. Your reader’s library tile is today’s paper. Ten masthead faces to choose from.' },
   { title: 'Whole stories, with photos', body: 'Every story comes in full, pulled from the publisher the way Reader View does, with its photos turned grayscale for e-ink and kept in colour for a Paper Pro or a tablet. Nothing sends you to a browser. A story behind a paywall runs as a brief.' },
   { title: 'Your town, your feeds, your interests', body: 'The weather from Open-Meteo, local news for your town and any other place you care about, each RSS or Atom feed as its own section, and interests: a topic searched every morning and kept only when a headline actually names it.' },
-  { title: 'The back pages', body: 'A five by five mini crossword whose theme answers are yesterday’s headlines, a word search, a word ladder, an almanac with sunrise, the moon and tonight’s meteor shower, a horoscope, and On this day.' },
   { title: 'Tomorrow’s paper, so far', body: 'The Daily tab opens on the next edition: a press bar with a countdown and a Stop the presses button, a live sketch of the front page that fills in as you save articles, a page plan you drag to reorder, and the week’s reads.' },
   { title: 'From Your Shelf', body: 'A page drawn from your own reader: the books you are in the middle of, a past highlight, and the words you looked up this week. It stays on your computer, and one button forgets it.' },
-  { title: 'Papers for the whole house', body: 'A paper per reader, each with its own sections, schedule, days and device, and a large-print layout for big type. Sign in to a paper you subscribe to and it prints in full as its own section.' },
   { title: 'Every edition kept', body: 'The Morgue keeps each edition in a folder you can see, with the stories’ text, for a year. Browse a month of front pages, search them, see how far you read, and send an old one back.' },
   { title: 'It learns, quietly', body: 'The paper notices which sections you actually reach, from the reading position your Kindle keeps or KOReader’s sync, and suggests changes and new interests. All on this machine.' },
-  { title: 'An editor, if you want one', body: 'Off by default. Turned on, a model you choose (including a local one) folds the same story from several feeds into one, writes short section briefs and scores interest stories. Its text is labelled; the stories are never rewritten.' },
+  { title: 'An editor, if you want one', body: 'Off by default. Turned on, the AI from Settings, AI folds the same story from several feeds into one, writes short section briefs and scores interest stories. Its text is labelled; the stories are never rewritten.' },
 ];
 
-// The per-reader matrix, from the README's "What each reader gets" (0.11.0).
+// The per-reader matrix, from the README's "What each reader gets" (0.12.0).
 const readers = ['Kindle, USB', 'Kindle, email', 'Kindle Scribe', 'Kobo', 'PocketBook', 'reMarkable', 'KOReader, Wi-Fi', 'A folder'];
 const matrix: [string, string[]][] = [
   ['The paper', ['KFX', 'EPUB, Amazon sets it', 'KFX over MTP', 'KEPUB', 'EPUB', 'PDF, colour on a Paper Pro', 'EPUB or KEPUB', 'EPUB, KEPUB, PDF or bundle']],
@@ -75,21 +110,15 @@ const matrix: [string, string[]][] = [
 const storeBook = [
   { title: 'Enhanced Typesetting', body: 'The typesetting store books get, produced by Amazon’s own converter, Kindle Previewer, which Deckle drives for you.' },
   { title: 'A cover that stays', body: 'Sideloaded covers tend to turn grey once a Kindle goes online. Deckle picks, per Kindle, how to keep yours.' },
-  { title: 'X-Ray and Word Wise', body: 'The people and terms in the book, with optional descriptions from an AI model you choose, and Word Wise hints pointing at the Kindle’s own dictionary. On a Kobo, a PocketBook or a reMarkable the same people and terms become a Who’s who page at the back, each name’s first mention linked to it.' },
-  { title: 'Recaps, without spoilers', body: 'Off by default. A short labelled recap at the end of each chapter, written from that chapter alone; a Summary page at the back; and for a later book in a series, a Previously page before chapter one, made only from the earlier books’ recaps. A book is never summarised twice.' },
+  { title: 'X-Ray and Word Wise', body: 'The people and terms in the book, with optional descriptions from the AI, and Word Wise hints pointing at the Kindle’s own dictionary. On a Kobo, a PocketBook or a reMarkable the same people and terms become a Who’s who page at the back, each name’s first mention linked to it.' },
+  { title: 'More than EPUB', body: 'Word, OpenDocument, RTF, FictionBook, Markdown and notes folders; text PDFs reflowed, with columns read in order and chapters recognised; several files bound into one book; a PDF copied untouched for a Scribe to write on.' },
 ];
 
-const moreBooks = [
-  { title: 'Word, OpenDocument, RTF, FictionBook, Markdown', body: 'Headings become the contents, and tables, pictures and footnotes come through. A flat folder of notes becomes one book, a chapter per file.' },
-  { title: 'PDFs, reflowed', body: 'A text PDF becomes a book that reflows: columns read in order, running heads dropped, broken words joined, tables and equations kept as pictures. A document with no real headings gets its chapters recognised from size and weight, with no model and no network.' },
-  { title: 'Bind several files into one book', body: 'EPUBs, Word documents, PDFs and web articles made into one book, in the order you choose, with a contents list that runs through every part.' },
-  { title: 'A PDF as it is', body: 'A PDF, text file or Kindle document copied to the Kindle untouched, under its own name. On a Scribe, that is a document you can write on.' },
-];
-
-const comics = [
-  { title: 'Any way you have it', body: 'A CBZ, a CBR, a folder of page images, a fixed-layout EPUB, or a scanned PDF with or without an invisible text layer. Two-page spreads are split at import, and the comic’s own metadata gives the title and series.' },
-  { title: 'Fitted to the reader', body: 'On a Kindle a comic arrives as a fixed-layout AZW3, the way a bought comic does, with its pages fitted to that Kindle’s screen: nineteen models known by their serial number, the Colorsoft in colour. Thirty Kobo models are recognised the same way, and a Kobo or PocketBook gets a fixed-layout EPUB. A reMarkable gets an image PDF, in colour on a Paper Pro.' },
-  { title: 'Reads right to left', body: 'A checkbox on the comic’s row, remembered per book, for manga. A comic that says so in its own metadata gets it without asking.' },
+const onKindle = [
+  { title: 'Upgrade what is already there', body: 'Deckle reads the AZW3 and MOBI books on your Kindle and, when it finds the original in your calibre library or a folder you name, rebuilds it with Enhanced Typesetting, page numbers, X-Ray and Word Wise. The Kindle’s own copy is kept with its highlights, and Put back undoes it. Store books and anything with DRM are never touched.' },
+  { title: 'A shelf you can read', body: 'Every book on the Kindle with its cover, a progress bar and when you last opened it, filtered by Reading, Finished, Sideloaded and more, and searchable.' },
+  { title: 'Make room, back up, restore', body: 'See the space split by kind, then clear finished books, second copies and old papers. Copy every DRM-free book and its highlights and reading position to your computer, and put a backup on any Kindle later.' },
+  { title: 'Highlights out, words to Anki', body: 'Highlights and notes as one Markdown file per book, in a notes vault or iCloud Drive, sideloaded books included. The words you looked up, as flashcards with the sentence and the book.' },
 ];
 
 const koreaderFeatures = [
@@ -107,19 +136,12 @@ const calibre = [
   { title: 'Shelves from calibre rules', body: 'A tag, series, author, column or saved search becomes a shelf on a Kobo or a collection in KOReader, holding the books that are actually on the reader. Only shelves Deckle made are ever changed.' },
 ];
 
-const onKindle = [
-  { title: 'Upgrade what is already there', body: 'Deckle reads the AZW3 and MOBI books on your Kindle and, when it finds the original in your calibre library or a folder you name, rebuilds it with Enhanced Typesetting, page numbers, X-Ray and Word Wise. The Kindle’s own copy is kept with its highlights, and Put back undoes it. Store books and anything with DRM are never touched.' },
-  { title: 'A shelf you can read', body: 'Every book on the Kindle with its cover, a progress bar and when you last opened it, filtered by Reading, Finished, Sideloaded and more, and searchable.' },
-  { title: 'Make room, back up, restore', body: 'See the space split by kind, then clear finished books, second copies and old papers. Copy every DRM-free book and its highlights and reading position to your computer, and put a backup on any Kindle later.' },
-  { title: 'Highlights out, words to Anki', body: 'Highlights and notes as one Markdown file per book, in a notes vault or iCloud Drive, sideloaded books included. The words you looked up, as flashcards with the sentence and the book.' },
-];
-
 const network: [string, string, string][] = [
   ['The paper’s sources: Open-Meteo, a Google News search, your feeds and saved links, Wikipedia’s On this day', 'Each edition you build', 'Off until set up'],
   ['The paper by email, through your own mail account', 'Each morning paper', 'Off'],
   ['A check for a newer Deckle, on GitHub; nothing installs without a click', 'When the app starts', 'On'],
   ['Word Wise dictionary, 12 MB, from Deckle’s own releases', 'Once, the first time a book gets Word Wise', 'On'],
-  ['Descriptions for X-Ray, recaps, or the paper’s editor, from Anthropic or any OpenAI-compatible endpoint, including a local Ollama', 'Each book or edition', 'Off'],
+  ['The AI for X-Ray, recaps, the editor and puzzle clues: Ollama on this computer, so nowhere online, or Anthropic or any OpenAI-compatible service', 'Each book, edition or puzzle book', 'Off'],
   ['Wikipedia summaries for X-Ray terms', 'Each book with features', 'Off'],
   ['Amazon edition lookup and missing book details, through Open Library', 'Books sent', 'Off'],
   ['The KOReader plugin store, on GitHub', 'When you open the store', 'Off'],
@@ -134,7 +156,7 @@ const schema = {
   url: 'https://casavargas.app/deckle/',
   downloadUrl: download,
   codeRepository: repo,
-  softwareVersion: '0.11.0',
+  softwareVersion: '0.12.0',
   operatingSystem: 'macOS, Windows, Linux',
   applicationCategory: 'UtilitiesApplication',
   license: 'https://www.gnu.org/licenses/gpl-3.0.html',
@@ -145,8 +167,8 @@ const schema = {
 
 <Layout
   title="Deckle | Your morning paper, printed on e-ink"
-  description="Deckle is a free, open-source app that builds a real morning newspaper on your own computer, from your town's news and weather, your feeds and your saved reading, and puts it on your Kindle, Kobo, PocketBook, reMarkable or any reader running KOReader. It also finishes the books you own like the store's: Enhanced Typesetting, covers, X-Ray, Word Wise, comics fitted to the screen, and AI recaps without spoilers."
-  ogImage="/og/deckle.png"
+  description="Deckle is a free, open-source app that builds a real morning newspaper on your own computer and puts it on your Kindle, Kobo, PocketBook, reMarkable or any reader running KOReader. Type an interest and get a book of crosswords about it, clued by an AI on your own Mac. Puzzle books you solve in ink, comics and manga fitted to the screen, books finished like the store's, recaps without spoilers, and no cloud."
+  ogImage="/og/deckle-hero.jpg"
 >
   <JsonLd data={schema} />
   <Nav />
@@ -167,15 +189,15 @@ const schema = {
 
         <div class="dk-open__body">
           <p class="standfirst">
-            Every morning Deckle sets a real newspaper on your own computer, from your
-            town’s news and weather, your feeds and the articles you saved, and has it
-            waiting on your Kindle, Kobo, PocketBook or reMarkable before you’re up. It
-            also finishes the books you own the way the store does, fits comics to the
-            screen, and makes puzzle books you solve in ink.
+            Every morning Deckle sets a real newspaper on your own computer and has it
+            waiting on your Kindle, Kobo, PocketBook or reMarkable before you’re up. Type an
+            interest and it makes a book of crosswords about it, to solve in ink. It fits
+            comics to the screen, finishes the books you own the way the store does, and
+            runs its AI on your own Mac, with no account and no cloud.
           </p>
           <p class="dk-actions">
             <a class="dk-button" href={download} rel="noopener">Download Deckle</a>
-            <a class="textlink" href="/deckle/whats-new/">What’s new in 0.11</a>
+            <a class="textlink" href="/deckle/whats-new/">What’s new in 0.12</a>
             <a class="textlink" href={repo} rel="noopener">Source on GitHub</a>
           </p>
         </div>
@@ -188,7 +210,152 @@ const schema = {
       <Composition plate={item.plate!} eager />
     </div>
 
-    <section class="wrap dk-grid dk-section" aria-labelledby="dk-paper">
+    <!-- Act one: the fun part. -->
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-interest">
+      <div>
+        <h2 id="dk-interest" class="dk-h2">Type an interest. Get a crossword about it.</h2>
+        <p class="dk-side">Star Wars. Christmas. The Panthers. Your kid’s dinosaurs. A whole book of them, themed on what you love, and sent to the Scribe to solve with a pen.</p>
+      </div>
+      <dl class="dk-features">
+        {themes.map((f) => (
+          <div>
+            <dt>{f.title}</dt>
+            <dd>{f.body}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <div class="wrap dk-card">
+      <Card src={cardInterest} alt="Type an interest, get a crossword about it: the subject field reads Star Wars, the theme chips offer your interests, this week’s paper, words you looked up, your cookbook and your own list, the clue styles plain, trivia, cryptic and for a kid, and a Kindle Scribe shows a Star Wars crossword with Jedi and Yoda inked in" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-ink">
+      <div>
+        <h2 id="dk-ink" class="dk-h2">Seven kinds of puzzle book, solved in ink</h2>
+        <p class="dk-side">A PDF that takes pen on a Kindle Scribe or a reMarkable, sized for the screen, or for an iPad or A5 paper: a title page, one puzzle a page, the answers at the back.</p>
+      </div>
+      <div class="dk-prose">
+        <dl class="dk-features dk-features--tight">
+          {kinds.map((f) => (
+            <div>
+              <dt>{f.title}</dt>
+              <dd>{f.body}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="dk-note dk-note--after">
+          The Puzzles tab previews the first page as it will print while you change the size,
+          difficulty, count and title. The same options make the same book again, so the whole
+          family can race on one seed. Every book is kept with the options that made it; Send
+          copies it to the plugged-in Kindle, or save a copy to a folder.
+        </p>
+      </div>
+    </section>
+
+    <div class="wrap dk-card dk-card--left">
+      <Card src={cardInk} alt="Seven kinds of puzzle book, solved in ink: crossword, word search, sudoku, word ladder, cryptogram, nonogram from your own photo, and maze, with a Kindle Scribe showing a nonogram half shaded in pen" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <div class="wrap dk-trio">
+      <Shot shot={{ src: search, kind: 'reader', alt: 'A page of a Deckle word search book on an e-reader: a 12 by 12 grid of letters with the sixteen hidden words listed beneath' }} sizes="(max-width: 900px) 31vw, 20vw" />
+      <Shot shot={{ src: crossword, kind: 'reader', alt: 'A page of a Deckle crossword book on an e-reader: an 11 by 11 numbered grid with the across clues in two columns beneath' }} sizes="(max-width: 900px) 31vw, 20vw" />
+      <Shot shot={{ src: sudoku, kind: 'reader', alt: 'A page of a Deckle sudoku book on an e-reader: a nine by nine grid with the givens in a bold serif' }} sizes="(max-width: 900px) 31vw, 20vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-back">
+      <div>
+        <h2 id="dk-back" class="dk-h2">The paper ends like a paper</h2>
+        <p class="dk-side">Every morning’s edition has back pages, and they are about yesterday.</p>
+      </div>
+      <div class="dk-prose">
+        <p>
+          A five by five <strong>mini crossword</strong> whose theme answers are yesterday’s
+          headlines, a <strong>word search</strong> and a <strong>word ladder</strong> beside
+          it, and yesterday’s answers printed small. An <strong>almanac</strong> with sunrise,
+          the moon, the usual first frost and tonight’s meteor shower. A horoscope Deckle
+          writes itself, a lottery if you want one, and <strong>On this day</strong>. On a
+          Kindle, the notes you make on the puzzle page come back as a score.
+        </p>
+      </div>
+    </section>
+
+    <div class="wrap dk-card">
+      <Card src={cardBackPages} alt="The back pages: the Mini crossword from yesterday’s headlines, the word search, the word ladder, the almanac, the horoscope and On this day, with a Kindle showing the puzzle page" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <div class="wrap dk-pages">
+      <Shot shot={{ src: weather, kind: 'reader', alt: 'The weather page of The Morning Deckle on an e-reader: today, the days ahead and the moon' }} sizes="(max-width: 900px) 46vw, 24vw" />
+      <Shot shot={{ src: puzzle, kind: 'reader', alt: 'The puzzle page of The Morning Deckle on an e-reader: a five by five mini crossword built from yesterday’s headlines, and a word ladder' }} sizes="(max-width: 900px) 46vw, 24vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-comics">
+      <div>
+        <h2 id="dk-comics" class="dk-h2">Comics, manga and picture books, page for page</h2>
+        <p class="dk-side">A CBZ, a CBR, a folder of pages, a fixed-layout EPUB or a scan goes to each reader as pictures, fitted to its screen. No reflow, no OCR, nothing re-cut.</p>
+      </div>
+      <div class="dk-prose">
+        <p>
+          On a Kindle a comic arrives as a fixed-layout AZW3, the way a bought comic does, with
+          its pages fitted to that Kindle’s screen: nineteen models known by their serial
+          number, the Colorsoft in colour. Thirty Kobo models are recognised the same way, and
+          a Kobo or PocketBook gets a fixed-layout EPUB. A reMarkable gets an image PDF, in
+          colour on a Paper Pro. Two-page spreads are split at import, and the comic’s own
+          metadata gives the title and series.
+        </p>
+        <p>
+          Manga marked right to left turns its pages the right way. For one that doesn’t say,
+          there is a <strong>Reads right to left</strong> checkbox on the book’s row, remembered
+          per book. A scanned picture book goes over the same way, every page as the artist
+          laid it out.
+        </p>
+      </div>
+    </section>
+
+    <div class="wrap dk-pair">
+      <Card src={cardManga} alt="Manga, the right way round: a page of Hokusai Manga on a Kindle Scribe, the Reads right to left checkbox on the book’s row, and the formats for each reader" width={800} sizes="(max-width: 900px) 100vw, 48vw" />
+      <Card src={cardPicture} alt="Picture books for the smallest reader: Peter Rabbit pages on a Kindle and a Kobo, beside the kid’s own Saturday paper" width={800} sizes="(max-width: 900px) 100vw, 48vw" />
+    </div>
+
+    <div class="wrap dk-card dk-card--left">
+      <Card src={cardComics} alt="Comics, page for page, even the Sunday ones: Winsor McCay’s Little Nemo in grey on a Kobo and in colour on a reMarkable Paper Pro, with the two shell commands that send it" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <div class="wrap dk-figure">
+      <Shot shot={{ src: comic, kind: 'window', alt: 'Deckle’s Books tab: a library of public-domain novels with Little Nemo in Slumberland among them, the comic in the To send queue with its fixed-layout note, and its menu open on the Reads right to left checkbox, for a Kindle Scribe' }} width={1000} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-ai">
+      <div>
+        <h2 id="dk-ai" class="dk-h2">AI on your own Mac, for free</h2>
+        <p class="dk-side">Off by default. One setting, Settings, AI, for everything the AI does: X-Ray, the paper’s editor, chapter recaps and puzzle clues.</p>
+      </div>
+      <div class="dk-prose">
+        <p>
+          <strong>On this Mac</strong> is a checklist that fills itself in: is Ollama running,
+          with a Get Ollama button and a check every few seconds until it answers; is the model
+          installed, with a Download button, a progress bar and a Stop; and Try it. Deckle picks
+          the model for your machine’s memory, speaks Ollama’s own API so it can set the context
+          the paper needs, and nothing you read leaves your computer. <strong>A service
+          online</strong> takes Anthropic or any OpenAI-compatible endpoint and a key, with a
+          price table beside it.
+        </p>
+        <p>
+          With the AI on, a book can get <strong>recaps that can’t spoil</strong>: a labelled
+          recap at the end of each chapter written from that chapter alone, a Summary page at
+          the back, and for a later book in a series a Previously page before chapter one, made
+          only from the earlier books’ recaps. A book is never summarised twice.
+        </p>
+      </div>
+    </section>
+
+    <div class="wrap dk-pair">
+      <Card src={cardAi} alt="AI on your own Mac: the Settings, AI page with Off, On this Mac and A service online, and the On this Mac checklist with Ollama running, the model downloaded and Try it" width={800} sizes="(max-width: 900px) 100vw, 48vw" />
+      <Card src={cardRecaps} alt="Recaps that can’t spoil, by construction: a recap box at the end of chapter 12 on a Kindle, and a Previously page before chapter 1 of a later book in a series on a Kobo" width={800} sizes="(max-width: 900px) 100vw, 48vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section dk-act" aria-labelledby="dk-paper">
       <div>
         <h2 id="dk-paper" class="dk-h2">A newspaper, not a feed</h2>
         <p class="dk-side">A feed reader is a pile of links. A paper has an order, a front page and a last page you can finish.</p>
@@ -203,9 +370,9 @@ const schema = {
       </dl>
     </section>
 
-    <div class="wrap dk-pages">
-      <Shot shot={{ src: weather, kind: 'reader', alt: 'The weather page of The Morning Deckle on an e-reader: today, the days ahead and the moon' }} sizes="(max-width: 900px) 46vw, 24vw" />
-      <Shot shot={{ src: puzzle, kind: 'reader', alt: 'The puzzle page of The Morning Deckle on an e-reader: a five by five mini crossword built from yesterday’s headlines, and a word ladder' }} sizes="(max-width: 900px) 46vw, 24vw" />
+    <div class="wrap dk-pair">
+      <Card src={cardReaders} alt="Any e-ink reader, the one you already own: the same morning edition on a Kindle, a Kobo, a PocketBook, a reMarkable, a KOReader device and a tablet, each in its own format" width={800} sizes="(max-width: 900px) 100vw, 48vw" />
+      <Card src={cardHouse} alt="One paper per reader, each with its own morning: four mastheads, yours on weekdays at 5:30, Dad’s on Sundays in large print, the kid’s on Saturdays, and a weekend edition for the reMarkable" width={800} sizes="(max-width: 900px) 100vw, 48vw" />
     </div>
 
     <section class="wrap dk-grid dk-section" aria-labelledby="dk-doorstep">
@@ -226,9 +393,11 @@ const schema = {
           Boox. Only the newest three papers stay on a reader.
         </p>
         <p>
-          A Mac asleep at 5:30 builds the paper when it wakes. Stop the presses skips a
-          morning. A source that fails prints “unavailable today” and the paper still comes
-          out. The <a class="textlink" href={docs('docs/daily.md')} rel="noopener">Daily reference</a>
+          A paper per reader, each with its own sections, schedule, days and device, and a
+          large-print layout for big type. Sign in to a paper you subscribe to and it prints in
+          full as its own section. A Mac asleep at 5:30 builds the paper when it wakes. Stop the
+          presses skips a morning. A source that fails prints “unavailable today” and the paper
+          still comes out. The <a class="textlink" href={docs('docs/daily.md')} rel="noopener">Daily reference</a>
           has every setting.
         </p>
       </div>
@@ -268,21 +437,30 @@ const schema = {
     </section>
 
     <section class="wrap dk-grid dk-section" aria-labelledby="dk-save">
-      <h2 id="dk-save" class="dk-h2">Save it for tomorrow</h2>
+      <div>
+        <h2 id="dk-save" class="dk-h2">Save it tonight. It’s in tomorrow’s paper.</h2>
+        <p class="dk-side">A read-it-later with no account, no app and no list that only grows.</p>
+      </div>
       <div class="dk-prose">
         <p>
           Find something worth reading during the day and save it: with the bookmarklet in
           your browser, by dropping the link into Deckle’s Inbox folder, or from your iPhone
           with a Shortcut that saves to iCloud Drive. It prints in tomorrow’s paper as
           <strong>Your Reading</strong>, whole and with its photos. A long piece becomes its
-          own book and rides along with the paper.
+          own book and rides along with the paper, and the Morgue keeps it for a year.
         </p>
       </div>
     </section>
 
+    <div class="wrap dk-card dk-card--left">
+      <Card src={cardSaved} alt="Save it tonight, it’s in tomorrow’s paper: a bookmarks bar with the Save to paper button, a saved article, and the next morning’s Your Reading section on a Kindle" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
     <div class="wrap dk-figure">
       <Shot shot={{ src: daily, kind: 'window', alt: 'Deckle’s Daily tab, Today: tomorrow’s paper so far, with the press bar and its countdown, a live sketch of the front page, the page plan and the week’s reads. Shown with a fictional town.' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
     </div>
+
+    <!-- Act two: the housekeeping. -->
 
     <section class="wrap dk-grid dk-section dk-act" aria-labelledby="dk-books">
       <div>
@@ -306,111 +484,14 @@ const schema = {
       </div>
     </section>
 
-    <div class="wrap dk-figure dk-figure--left">
-      <Shot shot={{ src: recaps, kind: 'window', alt: 'Deckle’s Settings, Reading aids: Word Wise with its hint slider and example, X-Ray with an AI model chosen, and Chapter recaps switched on with a book summary' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    <div class="wrap dk-card">
+      <Card src={cardBooks} alt="Your own EPUBs, store-finished: Send to Kindle’s shortfalls beside Deckle’s Enhanced Typesetting, a cover that stays, page numbers, X-Ray, Word Wise and recaps" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
     </div>
-
-    <section class="wrap dk-grid dk-section" aria-labelledby="dk-more">
-      <div>
-        <h2 id="dk-more" class="dk-h2">More than EPUB</h2>
-        <p class="dk-side">If you can read it, you can send it.</p>
-      </div>
-      <dl class="dk-features dk-features--tight">
-        {moreBooks.map((f) => (
-          <div>
-            <dt>{f.title}</dt>
-            <dd>{f.body}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-
-    <section class="wrap dk-grid dk-section" aria-labelledby="dk-comics">
-      <div>
-        <h2 id="dk-comics" class="dk-h2">Comics, manga and scanned books</h2>
-        <p class="dk-side">A page of pictures goes to each reader as pictures, fitted to its screen.</p>
-      </div>
-      <dl class="dk-features dk-features--tight">
-        {comics.map((f) => (
-          <div>
-            <dt>{f.title}</dt>
-            <dd>{f.body}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-
-    <div class="wrap dk-figure">
-      <Shot shot={{ src: comic, kind: 'window', alt: 'Deckle’s Books tab: a library of public-domain novels with Little Nemo in Slumberland among them, the comic in the To send queue with its fixed-layout note, and its menu open on the Reads right to left checkbox, for a Kindle Scribe' }} width={1000} sizes="(max-width: 900px) 100vw, 64vw" />
-    </div>
-
-    <section class="wrap dk-grid dk-section" aria-labelledby="dk-puzzles">
-      <div>
-        <h2 id="dk-puzzles" class="dk-h2">Puzzle books you solve in ink</h2>
-        <p class="dk-side">For a Kindle Scribe, a reMarkable, an iPad, or A5 paper.</p>
-      </div>
-      <div class="dk-prose">
-        <p>
-          A device test settled that only a PDF takes pen ink on a Kindle Scribe, so these are
-          PDFs: a title page, one puzzle per page, the answers at the back. <strong>Word
-          searches</strong> at any size from 8 to 20 squares, with your own words if you like.
-          <strong>Crosswords</strong> from 5×5 to 15×15, filled from a 45,000-word clue list
-          drawn from Wiktionary, and seeded with your own words and clues for a themed book.
-          <strong>Sudoku</strong> in three difficulties, each with exactly one solution, the
-          hard ones always solvable by logic and never a guess.
-        </p>
-        <p>
-          The same options, seed and date make the same book, byte for byte, and every run
-          prints the command that makes it again. Books go to a folder or straight to a
-          plugged-in Kindle.
-        </p>
-      </div>
-    </section>
-
-    <div class="wrap dk-trio">
-      <Shot shot={{ src: search, kind: 'reader', alt: 'A page of a Deckle word search book on an e-reader: a 12 by 12 grid of letters with the sixteen hidden words listed beneath' }} sizes="(max-width: 900px) 31vw, 20vw" />
-      <Shot shot={{ src: crossword, kind: 'reader', alt: 'A page of a Deckle crossword book on an e-reader: an 11 by 11 numbered grid with the across clues in two columns beneath' }} sizes="(max-width: 900px) 31vw, 20vw" />
-      <Shot shot={{ src: sudoku, kind: 'reader', alt: 'A page of a Deckle sudoku book on an e-reader: a nine by nine grid with the givens in a bold serif' }} sizes="(max-width: 900px) 31vw, 20vw" />
-    </div>
-
-    <section class="wrap dk-grid dk-section" aria-labelledby="dk-koreader">
-      <div>
-        <h2 id="dk-koreader" class="dk-h2">KOReader, served and managed</h2>
-        <p class="dk-side">KOReader runs on jailbroken Kindles, Kobos, PocketBooks, Boox tablets and reMarkables. Deckle reads from it, serves it and manages it.</p>
-      </div>
-      <dl class="dk-features dk-features--tight">
-        {koreaderFeatures.map((f) => (
-          <div>
-            <dt>{f.title}</dt>
-            <dd>{f.body}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-
-    <div class="wrap dk-figure dk-figure--left">
-      <Shot shot={{ src: koreader, kind: 'window', alt: 'Deckle’s Settings, KOReader page: a plugged-in Kobo running KOReader, the Deckle plugin installed, the reader’s plugins with switches, and the plugin store’s recommended list' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
-    </div>
-
-    <section class="wrap dk-grid dk-section" aria-labelledby="dk-calibre">
-      <div>
-        <h2 id="dk-calibre" class="dk-h2">The bridge to your calibre library</h2>
-        <p class="dk-side">calibre stays the library of record. Deckle moves books out and reading data back, over Wi-Fi.</p>
-      </div>
-      <dl class="dk-features dk-features--tight">
-        {calibre.map((f) => (
-          <div>
-            <dt>{f.title}</dt>
-            <dd>{f.body}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
 
     <section class="wrap dk-grid dk-section" aria-labelledby="dk-kindle">
       <div>
-        <h2 id="dk-kindle" class="dk-h2">And the books already on your Kindle</h2>
-        <p class="dk-side">Deckle looks at what is there before it sends anything.</p>
+        <h2 id="dk-kindle" class="dk-h2">Your Kindle, managed from your desk</h2>
+        <p class="dk-side">Plug it in and see every book with its cover, progress and when you last opened it. Then do the things Amazon’s own tools won’t.</p>
       </div>
       <dl class="dk-features dk-features--tight">
         {onKindle.map((f) => (
@@ -422,14 +503,80 @@ const schema = {
       </dl>
     </section>
 
+    <div class="wrap dk-card dk-card--left">
+      <Card src={cardKindle} alt="Your Kindle, managed from your desk: the Kindle tab’s shelf with Upgrade, Back up, Make room and Highlights beside each book, and a book waiting in the outbox for Mom’s Kindle" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
     <div class="wrap dk-figure">
       <Shot shot={{ src: kindleShelf, kind: 'window', alt: 'Deckle’s Kindle tab, Shelf: every book on a Kindle Paperwhite with its cover, progress and when it was last opened' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
     </div>
 
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-koreader">
+      <div>
+        <h2 id="dk-koreader" class="dk-h2">The hub for every KOReader in the house</h2>
+        <p class="dk-side">KOReader runs on jailbroken Kindles, Kobos, PocketBooks, Boox tablets and reMarkables. Deckle speaks its open protocols from the computer it already runs on: no cable, no vendor account, no cloud.</p>
+      </div>
+      <dl class="dk-features dk-features--tight">
+        {koreaderFeatures.map((f) => (
+          <div>
+            <dt>{f.title}</dt>
+            <dd>{f.body}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <div class="wrap dk-card">
+      <Card src={cardKoreader} alt="The hub for every KOReader in the house: Deckle in the middle, with a Kobo, a PocketBook, a Boox, a reMarkable, a jailbroken Kindle and calibre around it, and the catalog, sync and plugin features listed" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <div class="wrap dk-figure dk-figure--left">
+      <Shot shot={{ src: koreader, kind: 'window', alt: 'Deckle’s Settings, KOReader page: a plugged-in Kobo running KOReader, the Deckle plugin installed, the reader’s plugins with switches, and the plugin store’s recommended list' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-calibre">
+      <div>
+        <h2 id="dk-calibre" class="dk-h2">calibre stays the library. Deckle is the bridge.</h2>
+        <p class="dk-side">Nothing to migrate and no plugin to install. Deckle reads your calibre library read-only, moves books out, and brings the reading back through calibre’s own tools.</p>
+      </div>
+      <dl class="dk-features dk-features--tight">
+        {calibre.map((f) => (
+          <div>
+            <dt>{f.title}</dt>
+            <dd>{f.body}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <div class="wrap dk-card dk-card--left">
+      <Card src={cardCalibre} alt="calibre stays the library, Deckle is the bridge: calibre on one side, Deckle in the middle, and a Kindle, a Kobo and KOReader on the other, with the wireless connection, reading data back and shelves from tags explained" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <section class="wrap dk-grid dk-section" aria-labelledby="dk-kitchen">
+      <div>
+        <h2 id="dk-kitchen" class="dk-h2">The recipes you keep, as one book</h2>
+        <p class="dk-side">A Kindle in the kitchen doesn’t ring, doesn’t dim, and doesn’t mind flour.</p>
+      </div>
+      <div class="dk-prose">
+        <p>
+          <strong>Save recipe</strong> from the bookmarks bar carries the recipe from the page
+          you’re on, even from sites that refuse apps, and Deckle files it into a chapter of
+          your own cookbook with the note you’d write in the margin and the site’s photo, or an
+          engraving drawn for it. Five new recipes cost one build, and every Kindle gets the new
+          book on its next plug-in. And from the Puzzles tab, a crossword of your own dishes.
+        </p>
+      </div>
+    </section>
+
+    <div class="wrap dk-card">
+      <Card src={cardKitchen} alt="The recipes you keep, as one book: a pollo guisado page on a Kindle, with the ingredients, the first steps and your own margin note" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
     <section class="wrap dk-grid dk-section" aria-labelledby="dk-network">
       <div>
-        <h2 id="dk-network" class="dk-h2">What goes over the network</h2>
-        <p class="dk-side">Nothing about you, ever. No account, no subscription, no telemetry.</p>
+        <h2 id="dk-network" class="dk-h2">No Deckle cloud. The only server is yours.</h2>
+        <p class="dk-side">Nothing about you, ever. No account, no subscription, no telemetry. The paper is fetched, set and kept on your own Mac or PC, or on a home server you run in Docker with the web app.</p>
       </div>
       <div class="dk-prose">
         <div class="dk-table-wrap">
@@ -453,7 +600,11 @@ const schema = {
       </div>
     </section>
 
-    <div class="wrap dk-figure dk-figure--left">
+    <div class="wrap dk-card dk-card--left">
+      <Card src={cardPrivate} alt="No Deckle cloud, the only server is yours: the Online and privacy list, with what each call sends and to whom, and the AI set to Ollama on this Mac, so nowhere online" width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
+    </div>
+
+    <div class="wrap dk-figure">
       <Shot shot={{ src: settingsOnline, kind: 'window', alt: 'Deckle’s Settings, Online and privacy: everything that goes online, in one place, each with its switch' }} width={1100} sizes="(max-width: 900px) 100vw, 64vw" />
     </div>
 
@@ -469,7 +620,7 @@ const schema = {
               and notarized by Apple. On Windows, run the code-signed <code>-setup.exe</code>,
               which installs for your user with no admin. On Linux, the paper runs in a
               <a class="textlink" href={docs('docs/docker.md')} rel="noopener">container</a>
-              that also serves the app to your browser.
+              that also serves the app to your browser, with Ollama beside it if you like.
             </p>
           </li>
           <li>
@@ -484,8 +635,9 @@ const schema = {
             <h3>Say hello to the welcome</h3>
             <p>
               On first launch Deckle asks for your paper’s name and town, the morning time,
-              and shows you the bookmarklet to drag to your browser. Then plug a reader in, or
-              let KOReader find the catalog on your network.
+              shows you the bookmarklet to drag to your browser, and walks you through the back
+              pages, the puzzle books and the AI, with a link straight to Settings, AI. Then
+              plug a reader in, or let KOReader find the catalog on your network.
             </p>
           </li>
         </ol>
@@ -496,7 +648,8 @@ deckle digest run --to device
 deckle digest schedule --at 05:30
 deckle run book.epub --to device
 deckle run manga.cbz --to remarkable
-deckle puzzles crossword --to device</code></pre>
+deckle puzzles crossword --theme interests --clues trivia
+deckle llm check</code></pre>
         <p class="dk-note">
           Deckle updates itself: the footer says when a new version is out, and Settings, About,
           Update installs it. Quit calibre and Android File Transfer first; only one program at a
@@ -541,10 +694,13 @@ deckle puzzles crossword --to device</code></pre>
         <p class="dk-note">
           The demo paper on this page is fictional: Linden Falls and its stories were made up
           for it. Its photos are public domain, and the books shown are public-domain novels
-          with Standard Ebooks’ public-domain covers; the comic is Winsor McCay’s Little Nemo, 1905.
-          Kindle Previewer is Amazon’s and is never bundled. Kindle is a trademark of Amazon.com,
-          Inc.; Kobo, PocketBook, reMarkable and Boox belong to their makers, and KOReader and
-          calibre to their projects. Deckle is not affiliated with any of them.
+          with Standard Ebooks’ public-domain covers. The comics are Winsor McCay’s Little Nemo
+          (1905 and 1908), the manga is a page of Hokusai Manga, volume 6 (about 1817), and the
+          picture book is Beatrix Potter’s The Tale of Peter Rabbit (1902), all public domain.
+          The book titles and recipe on the feature cards are invented. Kindle Previewer is
+          Amazon’s and is never bundled. Kindle is a trademark of Amazon.com, Inc.; Kobo,
+          PocketBook, reMarkable and Boox belong to their makers, and KOReader, calibre and
+          Ollama to their projects. Deckle is not affiliated with any of them.
         </p>
       </div>
     </section>
@@ -677,6 +833,20 @@ deckle puzzles crossword --to device</code></pre>
 
   .dk-lead { padding-bottom: clamp(3.5rem, 8vw, 6rem); }
 
+  /* A feature card under its section: a cream sheet, set to one side like the
+     screenshots, so the page keeps its alternation. */
+  .dk-card { padding-bottom: clamp(3rem, 7vw, 5rem); }
+  .dk-card :global(.card) { max-width: 56rem; margin-left: auto; }
+  .dk-card--left :global(.card) { margin-left: 0; margin-right: auto; }
+
+  /* Two cards side by side, each at the same 1200 × 630 proportion. */
+  .dk-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2.5vw, 2rem);
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+  }
+
   /* Two inside pages, set side by side under the features. */
   .dk-pages {
     display: flex;
@@ -699,8 +869,11 @@ deckle puzzles crossword --to device</code></pre>
   .dk-trio :global(.reader:nth-child(2)) { width: min(32%, 400px); transform: translateY(-1.5rem); }
 
   .dk-features--tight { margin-top: 2rem; }
+  .dk-prose .dk-features--tight { margin-top: 0; }
+  .dk-note--after { margin-top: 2rem !important; }
 
-  /* The second act: a stronger rule marks the turn from the paper to books. */
+  /* The acts: a stronger pause marks the turn from the puzzles to the paper,
+     and from the paper to the housekeeping. */
   .dk-act { padding-top: clamp(3.5rem, 8vw, 6rem); }
 
   .dk-grid {
@@ -933,6 +1106,7 @@ deckle puzzles crossword --to device</code></pre>
     .dk-grid,
     .dk-close__grid { grid-template-columns: minmax(0, 1fr); }
     .dk-features { grid-template-columns: 1fr; }
+    .dk-pair { grid-template-columns: minmax(0, 1fr); }
     .dk-close__actions { justify-self: start; }
     .dk-trio { gap: 0.6rem; }
     .dk-trio :global(.reader) { width: 31%; }

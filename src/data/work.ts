@@ -189,7 +189,7 @@ export const work: Work[] = [
     name: 'Deckle',
     what: 'A morning paper for your e-reader, and better books',
     tagline:
-      'Deckle prints a real morning newspaper on your Kindle, Kobo, PocketBook or reMarkable, built on your own computer from your town’s news and weather and the reading you saved, and finishes the books you own like the store’s: typesetting, covers, X-Ray, comics fitted to the screen, recaps without spoilers.',
+      'Deckle prints a real morning newspaper on your Kindle, Kobo, PocketBook or reMarkable, built on your own computer from your town’s news and weather and the reading you saved; makes puzzle books about what you love, clued by an AI on your own Mac, to solve in ink; and finishes the books you own like the store’s: typesetting, covers, X-Ray, comics fitted to the screen, recaps without spoilers.',
     group: 'open-source',
     runsOn: ['macOS', 'Windows', 'Linux'],
     builtWith: ['Tauri', 'Rust', 'React'],
