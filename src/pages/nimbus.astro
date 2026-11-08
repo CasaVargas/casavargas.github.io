@@ -107,7 +107,7 @@ const network: [string, string, string][] = [
 ];
 
 const compare: string[][] = [
-  ['Price model', 'One-time purchase for binaries; source is free', 'One-time license per major version', 'One-time license per major version*', 'Free, paid on the Mac App Store', 'Free'],
+  ['Price model', 'Free, source and signed builds alike', 'One-time license per major version', 'One-time license per major version*', 'Free, paid on the Mac App Store', 'Free'],
   ['Open source', 'Yes, GPL-3.0', 'No', 'No', 'Yes, GPL-3.0', 'Yes, MIT'],
   ['UI', 'Native SwiftUI and AppKit', 'Cocoa over a Java core', 'Electron*', 'Cocoa over a Java core', 'None'],
   ['Finder / mount', 'File Provider and NFS', 'File Provider and FUSE-style', 'Mounts*', 'No mounting', 'FUSE or NFS'],
@@ -121,12 +121,13 @@ const beltr = bySlug('beltr');
 const onescribe = bySlug('onescribe');
 const beltrBuy = 'https://beltr.app/?utm_source=casavargas.app&utm_medium=referral&utm_campaign=nimbus';
 const onescribeBuy = onescribe.links[0].url;
+const beltrHero = 'https://beltr.app/?utm_source=casavargas.app&utm_medium=referral&utm_campaign=nimbus-hero';
 
 const reqs: [string, string][] = [
   ['Requires', 'macOS 15 Sequoia or later, Apple silicon or Intel'],
   ['Engine', 'rclone on your PATH: brew install rclone'],
   ['Verify', 'A .sha256 sits beside every DMG'],
-  ['License', 'GPL-3.0-or-later. Source is free; signed builds will be sold once, never rented'],
+  ['License', 'GPL-3.0-or-later. Free, source and signed builds alike'],
 ];
 
 const schema = {
@@ -175,6 +176,7 @@ const schema = {
           <a class="textlink" href={repo} rel="noopener">View the source</a>
         </div>
         <p class="nb-fine ui">Version {version}. macOS 15 or later, Apple silicon and Intel. GPL-3.0. Signed and notarized.</p>
+        <p class="nb-fine nb-studio">Free, from the studio behind <a class="textlink" href={beltrHero} rel="noopener">Beltr</a> and <a class="textlink" href={onescribeBuy} rel="noopener">OneScribe</a>.</p>
       </div>
       <div class="wrap nb-hero">
         <Shot
@@ -472,9 +474,9 @@ const schema = {
           <p class="nb-kicker">From the same studio</p>
           <h2 id="nb-fund" class="nb-h2">Nimbus is free.<br><em>These two pay for it.</em></h2>
           <p class="nb-lede">
-            Nimbus is open source and will stay that way. The studio that makes it sells two
-            apps, each bought once and kept. If Nimbus is useful to you, this is the way to
-            say thanks.
+            Nimbus costs nothing. Not the source, not the signed app, and that will not
+            change. The studio that makes it sells two apps, each bought once and kept, and
+            they pay for the time. If Nimbus is useful to you, this is the way to say thanks.
           </p>
         </header>
 
@@ -527,8 +529,8 @@ const schema = {
         <Image src={item.icon!} alt="" widths={[96, 192]} sizes="80px" format="webp" quality={86} loading="lazy" class="nb-close__icon" />
         <h2 id="nb-download" class="nb-h2 nb-h2--act">Nimbus {version}</h2>
         <p class="nb-lede nb-lede--center">
-          Signed with a Developer ID certificate and notarized. Gatekeeper opens it without a
-          warning. Before 1.0, used daily by its author, and still growing.
+          Free. Signed with a Developer ID certificate and notarized, so Gatekeeper opens it
+          without a warning. Before 1.0, used daily by its author, and still growing.
         </p>
         <div class="nb-actions nb-actions--center">
           <a class="nb-button" href={dmg} rel="noopener">Download the DMG</a>
@@ -626,6 +628,7 @@ const schema = {
   .nb-actions--center { justify-content: center; }
 
   .nb-fine { margin: 1.2rem 0 0; color: var(--color-ink-3); }
+  .nb-studio { margin-top: 0.5rem; font-family: var(--font-serif); font-size: 1.0625rem; color: var(--color-ink-2); animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.5s both; }
 
   .nb-button {
     display: inline-block;
@@ -842,6 +845,6 @@ const schema = {
     .nb-features--2, .nb-reqs { grid-template-columns: minmax(0, 1fr); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .lamp, .statement__line, .standfirst, .nb-actions, :global(.nb-open__icon) { animation: none; }
+    .lamp, .statement__line, .standfirst, .nb-actions, .nb-studio, :global(.nb-open__icon) { animation: none; }
   }
 </style>
