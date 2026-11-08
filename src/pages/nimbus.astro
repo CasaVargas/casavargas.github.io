@@ -20,6 +20,9 @@ import companionSignIn from '../assets/nimbus/companion-sign-in.png';
 import addCloud from '../assets/nimbus/add-cloud.png';
 import settingsGeneral from '../assets/nimbus/settings-general-dark.png';
 import settingsTransfers from '../assets/nimbus/settings-transfers.png';
+import beltrTv from '../assets/beltr/tv-scoring.jpg';
+import beltrJoin from '../assets/beltr/phone-join-bezel.webp';
+import osBoarding from '../assets/onescribe/boarding-bezel.webp';
 
 // Nimbus's product page, rebuilt 2026-11-08 in the shape of an Apple product
 // page (one idea per band, a statement in two lines, screens set large, a
@@ -111,6 +114,13 @@ const compare: string[][] = [
   ['Providers', 'Everything rclone supports, 50+', 'Its own, about 20*', 'Its own*', 'Its own, about 20*', '50+'],
   ['Reuses your rclone config', 'Yes', 'No', 'No', 'No', 'n/a'],
 ];
+
+// The two paid apps. Nimbus is free; these fund it. Prices and links match
+// work.ts, which matches each product's own site or store listing.
+const beltr = bySlug('beltr');
+const onescribe = bySlug('onescribe');
+const beltrBuy = 'https://beltr.app/?utm_source=casavargas.app&utm_medium=referral&utm_campaign=nimbus';
+const onescribeBuy = onescribe.links[0].url;
 
 const reqs: [string, string][] = [
   ['Requires', 'macOS 15 Sequoia or later, Apple silicon or Intel'],
@@ -455,6 +465,62 @@ const schema = {
       </div>
     </section>
 
+    <!-- The apps that pay for it -->
+    <section class="nb-band nb-band--deep nb-fund" aria-labelledby="nb-fund">
+      <div class="wrap">
+        <header class="nb-head nb-head--center">
+          <p class="nb-kicker">From the same studio</p>
+          <h2 id="nb-fund" class="nb-h2">Nimbus is free.<br><em>These two pay for it.</em></h2>
+          <p class="nb-lede">
+            Nimbus is open source and will stay that way. The studio that makes it sells two
+            apps, each bought once and kept. If Nimbus is useful to you, this is the way to
+            say thanks.
+          </p>
+        </header>
+
+        <div class="nb-fund__grid">
+          <article class="nb-fund__card">
+            <div class="nb-fund__art nb-fund__art--tv">
+              <Shot shot={beltr.plate!.shots[0]} width={900} sizes="(max-width: 900px) 92vw, 44vw" />
+              <Shot shot={beltr.plate!.shots[1]} sizes="140px" class="nb-fund__phone" />
+            </div>
+            <div class="nb-fund__body">
+              <div class="nb-fund__name">
+                <Image src={beltr.icon!} alt="" widths={[56, 112]} sizes="56px" format="webp" quality={84} loading="lazy" class="nb-fund__icon" />
+                <h3>Beltr</h3>
+              </div>
+              <p class="nb-fund__what">{beltr.what}</p>
+              <p class="nb-fund__copy">{beltr.tagline} Mac, Windows and Linux, with free phone and TV companions.</p>
+              <p class="nb-fund__price ui">{beltr.price}</p>
+              <div class="nb-actions nb-actions--tight">
+                <a class="nb-button" href={beltrBuy} rel="noopener">Get Beltr</a>
+                <a class="textlink" href="/work/beltr/">Read the case study</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="nb-fund__card">
+            <div class="nb-fund__art nb-fund__art--phone">
+              <Shot shot={onescribe.plate!.shots[0]} sizes="(max-width: 900px) 60vw, 240px" class="nb-fund__hero-phone" />
+            </div>
+            <div class="nb-fund__body">
+              <div class="nb-fund__name">
+                <Image src={onescribe.icon!} alt="" widths={[56, 112]} sizes="56px" format="webp" quality={84} loading="lazy" class="nb-fund__icon" />
+                <h3>OneScribe</h3>
+              </div>
+              <p class="nb-fund__what">{onescribe.what}</p>
+              <p class="nb-fund__copy">{onescribe.tagline} Nothing you scan leaves the device.</p>
+              <p class="nb-fund__price ui">{onescribe.price}</p>
+              <div class="nb-actions nb-actions--tight">
+                <a class="nb-button" href={onescribeBuy} rel="noopener">Get OneScribe on the App Store</a>
+                <a class="textlink" href="/work/onescribe/">Read the case study</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- Download -->
     <section class="nb-close" aria-labelledby="nb-download">
       <div class="wrap wrap--narrow nb-close__inner">
@@ -720,6 +786,37 @@ const schema = {
   .nb-reqs > div { border-top: 1px solid var(--color-line); padding-top: 0.75rem; }
   .nb-reqs dt { color: var(--color-ink-3); }
   .nb-reqs dd { margin: 0.25rem 0 0; font-size: 1rem; color: var(--color-ink); line-height: 1.45; }
+
+  /* ── The apps that pay for it ────────────────────────────── */
+  .nb-fund__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 1.25rem;
+  }
+  .nb-fund__card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 18px;
+    background: var(--color-surface);
+    box-shadow: 0 0 0 1px var(--color-line);
+    overflow: hidden;
+  }
+  .nb-fund__art { position: relative; padding: 1.75rem 1.75rem 0; }
+  .nb-fund__art--tv { padding-right: 4.5rem; }
+  :global(.nb-fund__phone) { position: absolute; right: 1.25rem; bottom: -1.25rem; width: 140px; }
+  .nb-fund__art--phone { display: flex; justify-content: center; }
+  :global(.nb-fund__hero-phone) { width: 240px; margin-bottom: -2.5rem; }
+  .nb-fund__body { padding: 2.25rem 1.75rem 1.75rem; display: flex; flex-direction: column; flex: 1; }
+  .nb-fund__name { display: flex; align-items: center; gap: 0.8rem; }
+  :global(.nb-fund__icon) { width: 44px; height: 44px; border-radius: 22.5%; box-shadow: 0 0 0 1px var(--well-ring); }
+  .nb-fund__name h3 { margin: 0; font-size: 1.75rem; font-weight: 400; letter-spacing: -0.016em; line-height: 1.1; }
+  .nb-fund__what { margin: 0.9rem 0 0; font-size: 1.25rem; line-height: 1.3; color: var(--color-ink); }
+  .nb-fund__copy { margin: 0.6rem 0 0; color: var(--color-ink-2); font-size: 1.0625rem; line-height: 1.55; max-width: 36em; }
+  .nb-fund__price { margin: 1rem 0 0; color: var(--color-amber); font-weight: 500; }
+  .nb-fund .nb-actions--tight { margin-top: 1.25rem; animation: none; }
+  @media (max-width: 900px) {
+    .nb-fund__grid { grid-template-columns: minmax(0, 1fr); }
+  }
 
   @keyframes lamp-on { from { opacity: 0; transform: translateX(-50%) scale(0.94); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
   @keyframes settle { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
