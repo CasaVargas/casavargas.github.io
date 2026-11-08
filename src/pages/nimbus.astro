@@ -7,11 +7,12 @@ import JsonLd from '../components/JsonLd.astro';
 import Shot from '../components/ui/Shot.astro';
 import NimbusStack from '../components/figures/NimbusStack.astro';
 import { bySlug } from '../data/work';
-import homeDark from '../assets/nimbus/home-dark.png';
+import windowHome from '../assets/nimbus/window-home.png';
+import windowFiles from '../assets/nimbus/window-files.png';
+import windowFinder from '../assets/nimbus/window-finder.png';
+import homeLight from '../assets/nimbus/home-light.png';
 import volumeFiles from '../assets/nimbus/volume-files.png';
-import volumeInspector from '../assets/nimbus/volume-inspector.png';
 import volumeFinder from '../assets/nimbus/volume-finder.png';
-import browserList from '../assets/nimbus/browser-list.png';
 import browserGrid from '../assets/nimbus/browser-grid-tiles.png';
 import finderThumbnails from '../assets/nimbus/finder-thumbnails.png';
 import keepOnMac from '../assets/nimbus/keep-on-this-mac.png';
@@ -180,7 +181,7 @@ const schema = {
       </div>
       <div class="wrap nb-hero">
         <Shot
-          shot={{ src: homeDark, kind: 'window', alt: 'Nimbus Home: one storage bar across every cloud, a row per cloud with a plain-language status, and a sign-in banner with the button that fixes it. Shown with made-up clouds.' }}
+          shot={{ src: windowHome, kind: 'window', alt: 'The Nimbus window on Home: a sidebar with Home, five clouds with capacity bars and status dots, and Copy Between Clouds; the Home pane with one storage bar across every cloud, a sign-in banner with its button, a row per cloud in plain words, suggestions and recent activity. Demo data.' }}
           width={1280}
           sizes="(max-width: 900px) 100vw, 82vw"
           eager
@@ -209,6 +210,7 @@ const schema = {
             button that fixes it is right there.
           </p>
         </header>
+        <Shot shot={{ src: homeLight, kind: 'window', alt: 'Nimbus Home in light mode: the same storage bar, cloud rows and suggestions following the system appearance. Demo data.' }} width={1280} sizes="(max-width: 900px) 100vw, 82vw" class="nb-wide nb-home-light" />
         <dl class="nb-features nb-features--3">
           {home.map((f) => (
             <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
@@ -231,7 +233,7 @@ const schema = {
         </header>
 
         <Shot
-          shot={{ src: volumeFinder, kind: 'window', alt: 'A volume’s Finder tab in Nimbus: Personal Drive on Google Drive, 1.28 TB of 2 TB used, with the Finder switch on and the network-volume switch off. Demo data.' }}
+          shot={{ src: windowFinder, kind: 'window', alt: 'The Nimbus window on a cloud’s Finder tab: the Finder switch on and the network-volume switch off, with the sidebar of clouds beside it. Demo data.' }}
           width={1280}
           sizes="(max-width: 900px) 100vw, 82vw"
           class="nb-wide"
@@ -282,7 +284,7 @@ const schema = {
         </header>
 
         <div class="nb-split">
-          <Shot shot={{ src: browserList, kind: 'screen', alt: 'The Nimbus file browser in list view with system file icons, column headers and Finder-style cloud status glyphs.' }} width={1280} sizes="(max-width: 900px) 100vw, 58vw" />
+          <Shot shot={{ src: windowFiles, kind: 'window', alt: 'The Nimbus window on a cloud’s Files tab: the sidebar of clouds, the volume header with its Google Drive quota, the four tabs, and a Finder-style file list with system icons, cloud glyphs and a selected row. Demo data.' }} width={1280} sizes="(max-width: 900px) 100vw, 58vw" />
           <dl class="nb-features nb-features--stack">
             {browse.map((f) => (
               <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
@@ -296,7 +298,7 @@ const schema = {
         </figure>
 
         <div class="nb-split nb-split--reverse">
-          <Shot shot={{ src: volumeInspector, kind: 'screen', alt: 'A volume in Nimbus with the inspector open on the right, showing a file’s cloud status and details.' }} width={1280} sizes="(max-width: 900px) 100vw, 58vw" />
+          <Shot shot={{ src: volumeFinder, kind: 'window', alt: 'A volume pane in Nimbus: provider badge, quota gauge and the Files, Transfers, Finder and Settings tabs. Demo data.' }} width={1280} sizes="(max-width: 900px) 100vw, 58vw" />
           <dl class="nb-features nb-features--stack">
             {volume.map((f) => (
               <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
@@ -700,6 +702,7 @@ const schema = {
 
   :global(.nb-wide) { margin-inline: auto; }
   .nb-grid-shot { margin: clamp(3rem, 6vw, 4.5rem) 0; }
+  :global(.nb-home-light) { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
 
   /* ── Feature lists ───────────────────────────────────────── */
   .nb-features { display: grid; gap: 2rem clamp(1.5rem, 3vw, 2.5rem); margin: 0; }
