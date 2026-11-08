@@ -5,6 +5,7 @@ import cathodeTvIcon from '../assets/icons/cathode-tv.png';
 import onescribeIcon from '../assets/icons/onescribe.png';
 import debridIcon from '../assets/icons/debrid.png';
 import deckleIcon from '../assets/icons/deckle.png';
+import nimbusIcon from '../assets/icons/nimbus.png';
 
 import beltrTv from '../assets/beltr/tv-scoring.jpg';
 import beltrJoin from '../assets/beltr/phone-join-bezel.webp';
@@ -18,6 +19,8 @@ import debridTorrents from '../assets/debrid/torrents.jpg';
 import deckleFront from '../assets/deckle/paper/front.jpg';
 import deckleWeather from '../assets/deckle/paper/weather.jpg';
 import deckleStory from '../assets/deckle/paper/story.jpg';
+
+import nimbusVolume from '../assets/nimbus/volume-files.png';
 
 import ctvGuide from '../assets/cathode-tv/guide-bezel.webp';
 import ctvHome from '../assets/cathode-tv/home-bezel.webp';
@@ -240,15 +243,27 @@ export const work: Work[] = [
   {
     slug: 'nimbus',
     name: 'Nimbus',
-    what: 'Every cloud you use, in Finder',
+    what: 'Every cloud you use, as a volume on your Mac',
     tagline:
-      'Nimbus puts S3, Google Drive, OneDrive, SFTP and dozens of other storage services into Finder and one native Mac app, driven by rclone.',
-    group: 'workshop',
+      'Nimbus turns S3, Google Drive, OneDrive, SFTP and fifty more storage services into volumes on your Mac: browse them like Finder, show them in Finder, copy and sync between them, with rclone as the engine.',
+    group: 'open-source',
     runsOn: ['macOS'],
     builtWith: ['Swift 6', 'SwiftUI', 'File Provider', 'rclone'],
-    links: [],
-    highlight:
-      'The app and its Finder extension share one local rclone engine, and the rclone contract is tested against the real thing, not a mock.',
+    // The model, not a price: no price is set before the first signed build (PLAN.md §8).
+    price: 'Free to build, GPL-3.0; signed builds will be sold once',
+    links: [
+      { label: 'Visit the Nimbus page', url: '/nimbus/' },
+      { label: 'Source on GitHub', url: 'https://github.com/CasaVargas/Nimbus' },
+    ],
+    icon: nimbusIcon,
+    // A real window against a throwaway rclone config: two local folders stand in
+    // for clouds and every file in the listing was made up for the shot.
+    plate: {
+      layout: 'feature',
+      shots: [
+        { src: nimbusVolume, kind: 'screen', alt: 'Nimbus with a volume selected: capacity bars in the sidebar, a storage gauge, Open in Finder, Sync and Edit, and a Finder-style file list with system icons. Shown with made-up files.' },
+      ],
+    },
   },
   {
     slug: 'apppulse',

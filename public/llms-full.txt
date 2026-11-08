@@ -107,21 +107,13 @@ What it does:
 How it's built: channel changes run on a time budget. The player swaps items rather than rebuilding the video layer, a small pool of warm players pre-buffers the channels you are likely to switch to next in the direction you have been switching, the stream format that worked last time is remembered per channel so the fallback sequence isn't repeated, and a signpost measures every change from tap to first frame. The guide parser streams a gzipped XMLTV file: it is decompressed to disk and read with a streaming parser that first checks the opening bytes to catch an HTML error page posing as a guide; programmes are sorted per channel, so "what's on now" is a binary search, and a compressed disk cache lets the app open without a network. On Apple TV, the player's on-screen controls run on a five-state machine that replaced four separate flags and their sixteen combinations, so only one element can hold focus at a time and the focus engine never has to choose; the guide grid never recycles the focused cell, and when it rebuilds it keeps you at the same time of day, not the same scroll offset. Channels live in SQLite with a full-text index for search, lists load in pages, and the Apple TV work was tested against a synthetic catalog of about 80,000 channels.
 
 ### Nimbus
+Product page: https://casavargas.app/nimbus/
 Case study: https://casavargas.app/work/nimbus/
+Source: https://github.com/CasaVargas/Nimbus (GPL-3.0-or-later)
 
-Nimbus is a Mac app for cloud storage. It lets you browse, copy, sync and mount remotes from S3, Google Drive, OneDrive, SFTP and the rest of rclone's long list. It doesn't reimplement any provider: it drives rclone and puts a native interface on top, including a Finder extension so your remotes show up where your files already are. Nimbus is in development. There is no release date yet.
+Nimbus is an open-source Mac app for cloud storage. Each remote from S3, Google Drive, OneDrive, SFTP and the rest of rclone's long list becomes a volume: a pane with its capacity, its Finder presence, its files and its transfers. It doesn't reimplement any provider: it drives rclone and puts a native interface on top, including a Finder extension so your remotes show up where your files already are. Nimbus is before 1.0. Signed builds will follow as a one-time purchase; no price is set.
 
 Why it exists: rclone is the most capable cloud-storage engine there is, but using it means a terminal and a config file. The usual alternative is one vendor app per cloud, each with its own sync folder and its own idea of how a Mac should behave. Nimbus keeps rclone's reach and its open config format, and drops the command line.
-
-What it does:
-- Your remotes, in Finder. A File Provider extension lists your remotes in Finder. Files download when you open them, and edits go back up.
-- Mount a remote as a volume. Mount any remote as a Finder volume. Mounts marked to open at launch, or left open when you quit, come back on the next launch.
-- Add a remote without the config file. A guided sheet asks only the questions rclone needs for that provider, and providers that use OAuth sign in through your browser. Existing rclone configs import as they are.
-- Browse, copy and sync. List and grid views with Quick Look and type-to-select; drag between clouds to copy; copy or sync any two remotes or folders, with progress in a Transfers view and the menu bar.
-
-How it's built: the app and its Finder extension talk to the same local rclone process through RcloneKit, a typed Swift client for rclone's remote-control API. The engine's port is shared through the app group, and no provider is ever reimplemented in Swift. The rclone contract is tested, not assumed: four behaviors were checked against the real rclone and fixed, among them that listings return paths relative to the remote's root and that the API has no download call, so file contents come through rclone's own file server, with the lesson that a mock proves the client's shape, not the server's contract. Adding a remote walks rclone's own configuration flow instead of a hand-built form per provider, 13 questions for S3 instead of 78 options and 8 for Google Drive instead of 52, and a test pins those counts so an rclone upgrade that changes the flow fails loudly rather than silently. Deciding what to restore and which stale mounts to clean up are pure, unit-tested functions; leftover NFS servers from a crashed session are stopped before a new mount starts, and automatic remounting happens at most once per session. The build fails on hard-coded font sizes, which protects Dynamic Type, and on any remote Swift package dependency.
-
-On the record: more than 50 providers, through rclone. About 200 test functions across the app and RcloneKit.
 
 ### AppPulse (working title)
 Case study: https://casavargas.app/work/apppulse/
