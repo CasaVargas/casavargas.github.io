@@ -25,12 +25,17 @@ const item = bySlug('nimbus');
 
 const repo = 'https://github.com/CasaVargas/Nimbus';
 const releases = `${repo}/releases`;
+const download = `${repo}/releases/latest`;
+
+// The release this page describes. The DMG is signed with a Developer ID
+// certificate and notarized; Gatekeeper opens it without a warning.
+const version = '0.9.0';
 
 const specs: [string, string][] = [
   ['Source', 'Free, GPL-3.0. Signed builds will be sold once, never rented'],
   ['Runs on', 'macOS 15 and later, Apple silicon and Intel'],
   ['Providers', 'Everything rclone supports, more than fifty'],
-  ['Status', 'Open source, before 1.0'],
+  ['Version', `${version}, before 1.0`],
 ];
 
 const volume = [
@@ -82,7 +87,6 @@ const works = [
 ];
 
 const notYet = [
-  'A signed, notarized release to download',
   'Scheduled syncs and per-folder storage breakdown',
   'Spotlight, Shortcuts, Services menu and Share Sheet',
   'An encryption setup wizard and public-link management',
@@ -95,6 +99,8 @@ const schema = {
   description: item.tagline,
   url: 'https://casavargas.app/nimbus/',
   codeRepository: repo,
+  downloadUrl: download,
+  softwareVersion: version,
   operatingSystem: 'macOS',
   applicationCategory: 'UtilitiesApplication',
   license: 'https://www.gnu.org/licenses/gpl-3.0.html',
@@ -132,8 +138,8 @@ const schema = {
             the Mac on top. Open source, no account, nothing phoning home.
           </p>
           <div class="nb-actions">
-            <a class="nb-button" href={repo} rel="noopener">Source on GitHub</a>
-            <a class="textlink" href={`${repo}#build-from-source`} rel="noopener">Build from source</a>
+            <a class="nb-button" href={download} rel="noopener">Download for Mac</a>
+            <a class="textlink" href={repo} rel="noopener">Source on GitHub</a>
           </div>
         </div>
 
@@ -297,12 +303,12 @@ const schema = {
           </p>
         </li>
         <li>
-          <h3>Get Nimbus</h3>
+          <h3>Download Nimbus</h3>
           <p>
-            A signed, notarized build will appear on the
-            <a class="textlink" href={releases} rel="noopener">Releases</a> page. Until then,
-            clone the repository and build it with Xcode; the README walks through it in five
-            commands.
+            From the <a class="textlink" href={download} rel="noopener">latest release</a>: open
+            the <code>.dmg</code> and drag Nimbus to Applications. It is signed with a Developer
+            ID certificate and notarized by Apple, so it opens without a warning. Or build it
+            from source; the README walks through it.
           </p>
         </li>
         <li>
@@ -322,8 +328,8 @@ const schema = {
           <div class="nb-prose">
             <p>
               Nimbus is before 1.0 and used daily by its author. Expect rough edges and some
-              breaking changes before the first signed release. Bug reports that name the
-              provider and the rclone version are the most useful thing you can send.
+              breaking changes before 1.0. Bug reports that name the provider and the rclone
+              version are the most useful thing you can send.
             </p>
           </div>
         </div>
@@ -368,8 +374,9 @@ const schema = {
       <div class="wrap nb-close__grid">
         <p class="nb-close__line">Open source, and made to be kept. Your clouds, as volumes, this evening.</p>
         <div class="nb-close__actions">
-          <a class="nb-button" href={repo} rel="noopener">Source on GitHub</a>
+          <a class="nb-button" href={download} rel="noopener">Download Nimbus</a>
           <p class="nb-close__links">
+            <a class="textlink" href={repo} rel="noopener">Source</a>
             <a class="textlink" href={`${repo}/issues`} rel="noopener">Issues</a>
             <a class="textlink" href="/work/nimbus/">The case study</a>
           </p>
