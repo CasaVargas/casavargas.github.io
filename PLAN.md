@@ -246,7 +246,9 @@ layout.
   - GPL-3.0; Real-Debrid, TorBox, Premiumize.
   - Stated factually; no piracy framing.
   - Search sources are user-configured, and the app ships none.
-- **Nimbus:** no licence stated (unresolved in its repo).
+- **Nimbus:** GPL-3.0-or-later as of 2026-11-08 (CasaVargas/Nimbus#7). The model is
+  stated, never a price: source free, signed builds sold once. Before 1.0; no release
+  to download yet, so "Download" never appears.
 - **AppPulse:** a working title; don't name competitor products.
 - **Screenshots carry claims.** Open every image before shipping it.
   - Banned: `cinematic-bigscreen.webp` and `phone-native-sing.webp` (both have a stale

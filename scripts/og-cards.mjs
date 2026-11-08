@@ -30,7 +30,8 @@ const cards = [
   { file: 'deckle', title: 'Deckle', sub: 'Your morning paper, printed on e-ink. Open source.', kicker: 'casavargas.app/deckle', icon: 'src/assets/icons/deckle.png', big: true },
   { file: 'work-deckle', title: 'Deckle', sub: 'A morning paper, and better books, for every e-ink reader.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/deckle.png', big: true },
   { file: 'cathode-tv', title: 'Cathode TV', sub: 'A native IPTV player for every Apple screen.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/cathode-tv.png', big: true },
-  { file: 'nimbus', title: 'Nimbus', sub: 'Every cloud you use, in Finder.', kicker: 'A CasaVargas case study', big: true },
+  { file: 'nimbus', title: 'Nimbus', sub: 'Every cloud you use, as a volume on your Mac. Open source.', kicker: 'casavargas.app/nimbus', icon: 'src/assets/icons/nimbus.png', big: true },
+  { file: 'work-nimbus', title: 'Nimbus', sub: 'Cloud storage as Mac volumes, built on rclone.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/nimbus.png', big: true },
   { file: 'apppulse', title: 'AppPulse', sub: 'A Mac app updater that checks who made the update.', kicker: 'A CasaVargas case study', big: true },
 ];
 

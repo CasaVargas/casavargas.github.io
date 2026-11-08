@@ -43,6 +43,7 @@ const { plate, eager = false, class: className } = Astro.props;
 
   /* feature: a large display, a phone standing in front of its corner. */
   .comp--feature { padding-right: 9%; padding-bottom: 5%; }
+  .comp--feature:not(:has(.comp__aside)) { padding: 0; }
   .comp--feature :global(.comp__aside) {
     position: absolute;
     right: 0;
