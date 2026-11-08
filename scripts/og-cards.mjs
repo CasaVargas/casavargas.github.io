@@ -1,6 +1,9 @@
 // Renders the Open Graph cards in public/og/ with headless Chrome, typeset in the
 // site's own fonts and colours. Run after changing a name or tagline in
-// src/data/work.ts:  node scripts/og-cards.mjs
+// src/data/work.ts:  node scripts/og-cards.mjs            (all cards)
+//                     node scripts/og-cards.mjs nimbus     (just those files)
+// A card with `shot` sets a screenshot in a window well on the right, bleeding
+// off the card, with the type in a column on the left.
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -30,7 +33,7 @@ const cards = [
   { file: 'deckle', title: 'Deckle', sub: 'Your morning paper, printed on e-ink. Open source.', kicker: 'casavargas.app/deckle', icon: 'src/assets/icons/deckle.png', big: true },
   { file: 'work-deckle', title: 'Deckle', sub: 'A morning paper, and better books, for every e-ink reader.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/deckle.png', big: true },
   { file: 'cathode-tv', title: 'Cathode TV', sub: 'A native IPTV player for every Apple screen.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/cathode-tv.png', big: true },
-  { file: 'nimbus', title: 'Nimbus', sub: 'Every cloud you use, as a volume on your Mac. Open source.', kicker: 'casavargas.app/nimbus', icon: 'src/assets/icons/nimbus.png', big: true },
+  { file: 'nimbus', title: 'Nimbus', sub: 'Every cloud you use. One Mac app. Free and open source.', kicker: 'casavargas.app/nimbus', icon: 'src/assets/icons/nimbus.png', big: true, shot: 'src/assets/nimbus/window-home.png' },
   { file: 'work-nimbus', title: 'Nimbus', sub: 'Cloud storage as Mac volumes, built on rclone.', kicker: 'A CasaVargas case study', icon: 'src/assets/icons/nimbus.png', big: true },
   { file: 'apppulse', title: 'AppPulse', sub: 'A Mac app updater that checks who made the update.', kicker: 'A CasaVargas case study', big: true },
 ];
@@ -50,8 +53,14 @@ body{background:#231c16;color:#f4ede3;font-family:S;font-optical-sizing:auto;pos
 h1{margin:0;font-weight:300;letter-spacing:-.03em;line-height:.95;font-size:${c.big ? 128 : 76}px;${c.big ? '' : 'max-width:900px;line-height:1.02;letter-spacing:-.022em;'}}
 p{margin:26px 0 0;font-size:${c.big ? 38 : 32}px;line-height:1.3;color:#c9bdae;max-width:960px;font-weight:330}
 .k{position:absolute;right:72px;top:74px;font-family:H;font-size:22px;color:#a39686}
+.shot{position:absolute;left:560px;top:150px;width:900px;border-radius:14px;overflow:hidden;background:#0b0a09;box-shadow:0 0 0 1px rgba(244,237,227,.14),0 40px 90px -30px rgba(0,0,0,.9)}
+.shot .bar{height:28px;background:#1b1714;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:7px;padding:0 13px}
+.shot .bar i{display:block;width:10px;height:10px;border-radius:50%;background:rgba(244,237,227,.2)}
+.shot img{display:block;width:100%}
+${c.shot ? `.body{right:auto;width:450px;bottom:72px}.row{gap:20px}.icon{width:84px;height:84px;border-radius:19px}h1{font-size:92px}p{font-size:30px;margin-top:20px}.k{color:#a39686}` : ''}
 </style></head><body><div class="lamp"></div>
 <div class="top">${mark}<span>CasaVargas</span></div><div class="k">${c.kicker}</div>
+${c.shot ? `<div class="shot"><div class="bar"><i></i><i></i><i></i></div><img src="${icon(c.shot)}"></div>` : ''}
 <div class="body"><div class="row">${c.icon ? `<img class="icon" src="${icon(c.icon)}">` : ''}<h1>${c.title}</h1></div><p>${c.sub}</p></div>
 </body></html>`;
 
@@ -59,7 +68,9 @@ const out = join(root, 'public/og');
 mkdirSync(out, { recursive: true });
 const tmp = mkdtempSync(join(tmpdir(), 'og-'));
 
+const only = process.argv.slice(2);
 for (const c of cards) {
+  if (only.length && !only.includes(c.file)) continue;
   const page = join(tmp, `${c.file}.html`);
   writeFileSync(page, html(c));
   execFileSync(chrome, [
