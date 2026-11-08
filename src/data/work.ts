@@ -253,6 +253,7 @@ export const work: Work[] = [
     price: 'Free to build, GPL-3.0; signed builds will be sold once',
     links: [
       { label: 'Visit the Nimbus page', url: '/nimbus/' },
+      { label: 'Download for Mac', url: 'https://github.com/CasaVargas/Nimbus/releases/latest' },
       { label: 'Source on GitHub', url: 'https://github.com/CasaVargas/Nimbus' },
     ],
     icon: nimbusIcon,
