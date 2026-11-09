@@ -7,89 +7,128 @@ import JsonLd from '../components/JsonLd.astro';
 import Shot from '../components/ui/Shot.astro';
 import NimbusStack from '../components/figures/NimbusStack.astro';
 import { bySlug } from '../data/work';
-
+import windowHome from '../assets/nimbus/window-home.png';
+import windowFiles from '../assets/nimbus/window-files.png';
+import windowFinder from '../assets/nimbus/window-finder.png';
+import homeLight from '../assets/nimbus/home-light.png';
 import volumeFiles from '../assets/nimbus/volume-files.png';
-import volumeInspector from '../assets/nimbus/volume-inspector.png';
 import volumeFinder from '../assets/nimbus/volume-finder.png';
-import onboarding from '../assets/nimbus/onboarding.png';
+import browserGrid from '../assets/nimbus/browser-grid-tiles.png';
+import finderThumbnails from '../assets/nimbus/finder-thumbnails.png';
+import keepOnMac from '../assets/nimbus/keep-on-this-mac.png';
+import companionBusy from '../assets/nimbus/companion-busy.png';
+import companionSignIn from '../assets/nimbus/companion-sign-in.png';
+import addCloud from '../assets/nimbus/add-cloud.png';
+import settingsGeneral from '../assets/nimbus/settings-general-dark.png';
+import settingsTransfers from '../assets/nimbus/settings-transfers.png';
+import beltrTv from '../assets/beltr/tv-scoring.jpg';
+import beltrJoin from '../assets/beltr/phone-join-bezel.webp';
+import osBoarding from '../assets/onescribe/boarding-bezel.webp';
 
-// Nimbus's product page. It has no domain of its own; this is the page the
-// open-source announcement links to. Every claim comes from the Nimbus README,
-// the specs under docs/superpowers/specs and the code on the branches listed
-// below, at the state of 2026-11-08. The screenshots are real windows against
-// a throwaway rclone config with two local alias remotes and made-up files:
-// no account data. Rules (PLAN.md §8): no price (only the model), no
-// "sandboxed", no "bundles rclone", no performance numbers, no Mac App Store,
-// no roadmap item as if it exists, no em dashes.
+// Nimbus's product page, rebuilt 2026-11-08 in the shape of an Apple product
+// page (one idea per band, a statement in two lines, screens set large, a
+// bento of Finder features) in this site's own type and grounds. Every claim
+// comes from the Nimbus README and the specs under docs/superpowers/specs at
+// the state of 2026-11-08. The screenshots are real windows against a
+// throwaway rclone config with made-up files: no account data.
+// Rules (PLAN.md §8): no price (only the model), no "sandboxed", no "bundles
+// rclone", no performance numbers, no Mac App Store, no roadmap item as if it
+// exists, no em dashes.
 const item = bySlug('nimbus');
-
 const repo = 'https://github.com/CasaVargas/Nimbus';
 const releases = `${repo}/releases`;
 const download = `${repo}/releases/latest`;
-
 // The release this page describes. The DMG is signed with a Developer ID
 // certificate and notarized; Gatekeeper opens it without a warning.
 const version = '0.9.1';
+const dmg = `${repo}/releases/latest/download/Nimbus-${version}.dmg`;
 
-const specs: [string, string][] = [
-  ['Source', 'Free, GPL-3.0. Signed builds will be sold once, never rented'],
-  ['Runs on', 'macOS 15 and later, Apple silicon and Intel'],
-  ['Providers', 'Everything rclone supports, more than fifty'],
-  ['Version', `${version}, before 1.0`],
+const glance: [string, string][] = [
+  ['50+', 'cloud providers, through rclone'],
+  ['0', 'accounts, sign-ups or telemetry'],
+  ['100%', 'native Swift 6 and SwiftUI'],
+  ['1', 'engine: the rclone you already trust'],
 ];
 
-const volume = [
-  { title: 'How full it is', body: 'A capacity bar under each volume in the sidebar, and a used-and-free gauge in the pane, from the provider’s own quota. Providers that report none simply show none.' },
-  { title: 'The three verbs that matter', body: 'Open it in Finder, or show it there if it isn’t yet. Start a copy or sync with the volume already chosen as the source. Edit its configuration.' },
-  { title: 'Four faces', body: 'Files, Transfers, Finder and Settings tabs, each scoped to that one volume. Switching tabs never drops your place in the file list.' },
-  { title: 'Transfers you can see', body: 'A drawer along the bottom while anything is moving, and a progress capsule in the toolbar, like a Finder copy. Both open the Transfers tab.' },
+const home = [
+  { title: 'Plain language', body: '“Ready.” “Needs sign-in.” “Can’t reach this server right now.” No rclone vocabulary anywhere outside Settings › Advanced.' },
+  { title: 'One banner at a time', body: 'When a cloud ends your session, Home says so and offers the sign-in button. Files already on your Mac stay safe; new changes wait until you’re back.' },
+  { title: 'Worth a look', body: 'Gentle suggestions, like showing a cloud in Finder, with a one-click action and an × to dismiss. Never a nag.' },
 ];
 
 const browse = [
-  { title: 'The icons macOS uses', body: 'Files draw with the system’s own document icons, and folders with Finder’s folder, so a listing reads like one of Finder’s.' },
-  { title: 'Finder’s selection rules', body: 'Click, shift-click, command-click. Type a name to jump to it. Quick Look with the space bar. Column headers that sort.' },
-  { title: 'Cloud status, quietly', body: 'A small cloud beside files that are not downloaded yet, a ring while one downloads, nothing at all for files already on disk. The inspector carries the detail.' },
-  { title: 'Drag between clouds', body: 'Drag files from one volume onto another and Nimbus asks how to handle conflicts, then runs the copy through rclone and shows its progress.' },
+  { title: 'The icons macOS uses', body: 'Files draw with the system’s own document icons and Finder’s folder, so a listing reads like one of Finder’s.' },
+  { title: 'Finder’s selection rules', body: 'Click, shift-click, ⌘-click. Type a name to jump to it. Space for Quick Look. Column headers that sort.' },
+  { title: 'Cloud status, quietly', body: 'A small cloud beside files not yet downloaded, a ring while one downloads, nothing at all for files already on disk.' },
+  { title: 'Drag between clouds', body: 'Drop files from one volume onto another and Nimbus runs the copy through rclone and shows its progress.' },
 ];
 
-const finder: [string, string][] = [
-  ['In Finder’s sidebar', 'A File Provider extension lists each volume beside iCloud Drive. Files download when opened and edits go back up; macOS manages the local copies.'],
-  ['As a network volume', 'Or mount a remote the classic way: rclone serves it over NFS and the system’s own NFS client mounts it. Mounts come back after a restart.'],
-  ['Your choice per volume', 'Each volume’s Finder tab holds its switches. A volume can be in Finder, a network volume, both, or neither.'],
+const volume = [
+  { title: 'A remote is a volume', body: 'Disk Utility shows you a drive: how full it is, what you can do to it, what is happening on it. Nimbus does that for a cloud, in one pane.' },
+  { title: 'Capacity you can see', body: 'A bar under each volume in the sidebar and a used-and-free gauge in the pane, straight from the provider’s own quota.' },
+  { title: 'Four tabs, one place', body: 'Files, Transfers, Finder and Settings, each scoped to that volume. Switching tabs never loses your place.' },
+  { title: 'The inspector', body: 'Cloud status, size, dates, Keep on this Mac and the share link, for whatever you have selected.' },
 ];
 
 const setup = [
-  { title: 'rclone’s own questions', body: 'Adding a volume walks rclone’s configuration flow instead of a hand-built form per provider: the basic questions, with “show all options” for the rest. Providers that use OAuth sign in through your browser.' },
-  { title: 'Your existing config, as it is', body: 'Nimbus reads and writes the standard rclone config file, so the rclone command line keeps working next to it. An existing file imports with a preview.' },
-  { title: 'A real app icon in Finder', body: 'Each volume in Finder’s sidebar carries Nimbus’s icon and the name you gave the remote.' },
+  { title: 'rclone’s own questions', body: 'The flow is driven by rclone’s configuration state machine, so a new backend in rclone works in Nimbus with no app update.' },
+  { title: 'Show all options when you want them', body: 'Power users get every advanced field. Everyone else never sees them.' },
+  { title: 'Your existing config, as it is', body: 'Nimbus reads and writes the standard rclone config file. The rclone command line keeps working next to it, and an existing file imports with a preview.' },
+  { title: 'Nothing half-finished', body: 'Cancel midway and no partial or unauthenticated remote is left behind.' },
+];
+
+const companion = [
+  { title: 'Same truth everywhere', body: 'Home and the menu bar compute status from one shared, unit-tested model, so the two never disagree.' },
+  { title: 'Open at login', body: 'Turn it on and Nimbus starts quietly in the menu bar, keeps your Finder volumes live and restores your network mounts.' },
+  { title: 'Notifications, when they matter', body: 'A finished transfer, a failed one, a cloud that signed you out. Not a feed.' },
+];
+
+const transfers = [
+  { title: 'Conflicts, asked once', body: 'Drag onto another cloud and Nimbus asks how to handle duplicates before anything moves.' },
+  { title: 'Speed you control', body: 'A plain-language speed menu limits bandwidth so a big sync never takes over your connection.' },
+  { title: 'History and notifications', body: 'What moved, where, when, and whether it worked. A notification when a long job ends.' },
+];
+
+const settings = [
+  { title: 'Diagnostics in one click', body: 'Copy a sanitized system report or open the app’s logs in Console.' },
+  { title: 'Light and dark', body: 'Every screen follows the system appearance, with no custom themes to fight it.' },
 ];
 
 const hood = [
-  { title: 'One engine, two clients', body: 'The app and its Finder extension talk to the same local rclone through RcloneKit, a typed Swift client for rclone’s remote-control API. The port is shared through the app group. No provider is reimplemented in Swift.' },
+  { title: 'One engine, two clients', body: 'The app and its Finder extension talk to the same local rclone through RcloneKit, a typed Swift client for rclone’s remote-control API, over loopback. No provider is reimplemented in Swift.' },
   { title: 'Swift 6, strict concurrency, no packages', body: 'SwiftUI with AppKit where it draws better: the file table is a virtualized NSTableView hosting SwiftUI rows. There are no third-party Swift packages; a pre-build check fails the build if one appears.' },
-  { title: 'The rclone contract is tested against rclone', body: 'The configuration flow and the listing semantics are pinned by tests that run the real binary, so an rclone upgrade that changes behavior fails loudly instead of silently.' },
-  { title: 'Finder presence has one owner', body: 'Showing or hiding a volume in Finder flips the user’s intent first, then reconciles the File Provider domain in the background, and rolls back if registration fails. The sidebar switch, the header verb and the launch-time sync all go through it.' },
+  { title: 'Tested against the real rclone', body: 'The configuration flow and the listing semantics are pinned by tests that run the actual binary, so an rclone upgrade that changes behaviour fails loudly instead of silently.' },
+  { title: 'Finder presence has one owner', body: 'Showing or hiding a volume in Finder records your intent first, reconciles the File Provider domain in the background, and rolls back if registration fails.' },
 ];
 
 const network: [string, string, string][] = [
   ['rclone, to the providers you configured', 'When you browse, copy, sync or open a file', 'Your remotes only'],
-  ['rclone, to the provider’s sign-in page during setup', 'Once per OAuth provider', 'Through your browser'],
-  ['Anything else', 'Never', 'No account, no telemetry, no update check'],
+  ['rclone, to the provider’s sign-in page', 'Once per OAuth provider, during setup', 'Through your browser'],
+  ['Anything else', 'Never', 'There is nothing else'],
 ];
 
-const works = [
-  'Browser with list and icon views, Finder-style selection, column sorting, type-to-select, Quick Look, drag and drop within and across volumes',
-  'Volume pane with capacity gauge, Finder, Transfers and Settings tabs, transfer drawer and inspector',
-  'Guided Add Volume driven by rclone’s own configuration flow; import of an existing rclone config',
-  'Finder integration through the File Provider extension (needs a signed build) and NFS mounts that restore on launch',
-  'Copy and sync between any two remotes or local folders, with history, a bandwidth limit and notifications',
-  'Menu bar item, launch at login, a Settings window modeled on System Settings, a sanitized diagnostics report',
+const compare: string[][] = [
+  ['Price model', 'Free, source and signed builds alike', 'One-time license per major version', 'One-time license per major version*', 'Free, paid on the Mac App Store', 'Free'],
+  ['Open source', 'Yes, GPL-3.0', 'No', 'No', 'Yes, GPL-3.0', 'Yes, MIT'],
+  ['UI', 'Native SwiftUI and AppKit', 'Cocoa over a Java core', 'Electron*', 'Cocoa over a Java core', 'None'],
+  ['Finder / mount', 'File Provider and NFS', 'File Provider and FUSE-style', 'Mounts*', 'No mounting', 'FUSE or NFS'],
+  ['Providers', 'Everything rclone supports, 50+', 'Its own, about 20*', 'Its own*', 'Its own, about 20*', '50+'],
+  ['Reuses your rclone config', 'Yes', 'No', 'No', 'No', 'n/a'],
 ];
 
-const notYet = [
-  'Scheduled syncs and per-folder storage breakdown',
-  'Spotlight, Shortcuts, Services menu and Share Sheet',
-  'An encryption setup wizard and public-link management',
+// The two paid apps. Nimbus is free; these fund it. Prices and links match
+// work.ts, which matches each product's own site or store listing.
+const beltr = bySlug('beltr');
+const onescribe = bySlug('onescribe');
+const beltrBuy = 'https://beltr.app/?utm_source=casavargas.app&utm_medium=referral&utm_campaign=nimbus';
+const onescribeBuy = onescribe.links[0].url;
+const beltrHero = 'https://beltr.app/?utm_source=casavargas.app&utm_medium=referral&utm_campaign=nimbus-hero';
+
+const reqs: [string, string][] = [
+  ['Requires', 'macOS 15 Sequoia or later, Apple silicon or Intel'],
+  ['Engine', 'rclone on your PATH: brew install rclone'],
+  ['Verify', 'A .sha256 sits beside every DMG'],
+  ['License', 'GPL-3.0-or-later. Free, source and signed builds alike'],
 ];
 
 const schema = {
@@ -109,157 +148,301 @@ const schema = {
 ---
 
 <Layout
-  title="Nimbus | Every cloud you use, as a volume on your Mac"
-  description="Nimbus is an open-source, native Mac app for cloud storage. It turns S3, Google Drive, OneDrive, SFTP and fifty more services into volumes you browse, mount in Finder and sync, with rclone as the engine. Swift 6, GPL-3.0, no account."
+  title="Nimbus | Every cloud you use. One Mac app."
+  description="Nimbus is an open-source, native Mac app for cloud storage. It turns S3, Google Drive, OneDrive, SFTP and fifty more services into volumes you browse, show in Finder and sync, with rclone as the engine. Swift 6, GPL-3.0, no account."
   ogImage="/og/nimbus.png"
 >
   <JsonLd data={schema} />
   <Nav />
 
   <main id="main" class="nb">
+
+    <!-- Opening: the one bold moment. -->
     <section class="nb-open" aria-labelledby="nb-title">
       <div class="lamp" aria-hidden="true"></div>
-      <div class="wrap">
-        <p class="nb-mark">
-          <Image src={item.icon!} alt="" widths={[64, 128]} sizes="48px" format="webp" quality={84} loading="eager" fetchpriority="high" class="nb-mark__icon" />
-          <span class="nb-mark__name">Nimbus</span>
-        </p>
-
+      <div class="wrap nb-open__inner">
+        <Image src={item.icon!} alt="" widths={[128, 256]} sizes="112px" format="webp" quality={86} loading="eager" fetchpriority="high" class="nb-open__icon" />
+        <p class="nb-kicker">Nimbus for Mac</p>
         <h1 id="nb-title" class="statement">
-          <span class="statement__line">Every cloud you use,</span>
-          <span class="statement__line">as a volume on your Mac.</span>
+          <span class="statement__line">Every cloud you use.</span>
+          <span class="statement__line">One Mac app.</span>
         </h1>
-
-        <div class="nb-open__body">
-          <p class="standfirst">
-            Nimbus is a native Mac app for cloud storage. S3, Google Drive, OneDrive, Dropbox,
-            SFTP and fifty more services become volumes: browse them like Finder, show them in
-            Finder, copy and sync between them. rclone does the talking to the clouds; Nimbus is
-            the Mac on top. Open source, no account, nothing phoning home.
-          </p>
-          <div class="nb-actions">
-            <a class="nb-button" href={download} rel="noopener">Download for Mac</a>
-            <a class="textlink" href={repo} rel="noopener">Source on GitHub</a>
-          </div>
+        <p class="standfirst">
+          S3, Google Drive, OneDrive, Dropbox, SFTP and fifty more services become volumes on
+          your Mac. Browse them like Finder. Show them in Finder. Copy and sync between them.
+          No account. Nothing phoning home.
+        </p>
+        <div class="nb-actions">
+          <a class="nb-button" href={download} rel="noopener">Download for Mac</a>
+          <a class="textlink" href={repo} rel="noopener">View the source</a>
         </div>
+        <p class="nb-fine ui">Version {version}. macOS 15 or later, Apple silicon and Intel. GPL-3.0. Signed and notarized.</p>
+        <p class="nb-fine nb-studio">Free, from the studio behind <a class="textlink" href={beltrHero} rel="noopener">Beltr</a> and <a class="textlink" href={onescribeBuy} rel="noopener">OneScribe</a>.</p>
+      </div>
+      <div class="wrap nb-hero">
+        <Shot
+          shot={{ src: windowHome, kind: 'window', alt: 'The Nimbus window on Home: a sidebar with Home, five clouds with capacity bars and status dots, and Copy Between Clouds; the Home pane with one storage bar across every cloud, a sign-in banner with its button, a row per cloud in plain words, suggestions and recent activity. Demo data.' }}
+          width={1280}
+          sizes="(max-width: 900px) 100vw, 82vw"
+          eager
+        />
+      </div>
+    </section>
 
-        <dl class="nb-specs ui">
-          {specs.map(([k, v]) => (
-            <div><dt>{k}</dt><dd>{v}</dd></div>
+    <!-- At a glance -->
+    <section class="nb-glance" aria-label="At a glance">
+      <dl class="wrap nb-glance__grid">
+        {glance.map(([n, label]) => (
+          <div><dt>{n}</dt><dd>{label}</dd></div>
+        ))}
+      </dl>
+    </section>
+
+    <!-- Home -->
+    <section class="nb-band" aria-labelledby="nb-home">
+      <div class="wrap">
+        <header class="nb-head nb-head--center">
+          <p class="nb-kicker">Home</p>
+          <h2 id="nb-home" class="nb-h2">Is everything working?<br><em>One glance answers it.</em></h2>
+          <p class="nb-lede">
+            Nimbus opens on Home. One storage bar covers all your clouds. Every cloud gets a row
+            with its capacity and a status in plain words, and when something needs you, the
+            button that fixes it is right there.
+          </p>
+        </header>
+        <Shot shot={{ src: homeLight, kind: 'window', alt: 'Nimbus Home in light mode: the same storage bar, cloud rows and suggestions following the system appearance. Demo data.' }} width={1280} sizes="(max-width: 900px) 100vw, 82vw" class="nb-wide nb-home-light" />
+        <dl class="nb-features nb-features--3">
+          {home.map((f) => (
+            <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
           ))}
         </dl>
       </div>
     </section>
 
-    <div class="wrap nb-hero">
-      <Shot
-        shot={{ src: volumeFiles, kind: 'screen', alt: 'Nimbus with a volume selected: the sidebar lists two volumes with capacity bars; the pane shows the volume’s name, a storage gauge, Open in Finder, Sync and Edit buttons, and a Finder-style file list with system icons. Shown with made-up files.' }}
-        width={1280}
-        sizes="(max-width: 900px) 100vw, 82vw"
-        eager
-      />
-    </div>
+    <!-- Finder: the act -->
+    <section class="nb-band nb-band--deep" aria-labelledby="nb-finder">
+      <div class="wrap">
+        <header class="nb-head nb-head--center">
+          <p class="nb-kicker">Finder</p>
+          <h2 id="nb-finder" class="nb-h2 nb-h2--act">It lives in Finder.<br><em>Right beside iCloud Drive.</em></h2>
+          <p class="nb-lede">
+            A File Provider extension lists each cloud in Finder’s sidebar. Files download when
+            you open them, edits go back up, and macOS manages the local copies. Or mount a cloud
+            the classic way as a network volume. Your choice, per volume.
+          </p>
+        </header>
 
-    <section class="wrap nb-section" aria-labelledby="nb-volume">
-      <div class="nb-head">
-        <h2 id="nb-volume" class="nb-h2">A remote is a volume</h2>
-        <p class="nb-lede">
-          Disk Utility shows you a drive: how full it is, what you can do to it, what is
-          happening on it. Nimbus does that for a cloud. Pick a volume in the sidebar and
-          everything about it is in one pane.
-        </p>
+        <Shot
+          shot={{ src: windowFinder, kind: 'window', alt: 'The Nimbus window on a cloud’s Finder tab: the Finder switch on and the network-volume switch off, with the sidebar of clouds beside it. Demo data.' }}
+          width={1280}
+          sizes="(max-width: 900px) 100vw, 82vw"
+          class="nb-wide"
+        />
+
+        <div class="nb-bento">
+          <article class="nb-tile nb-tile--2">
+            <Shot shot={{ src: finderThumbnails, kind: 'screen', alt: 'A Finder window showing cloud photos and PDFs with real thumbnails before any file is downloaded.' }} width={900} sizes="(max-width: 900px) 92vw, 54vw" class="nb-tile__fig" />
+            <h3>Thumbnails before download</h3>
+            <p>Photos and PDFs in the cloud show real previews in Finder, rendered on demand and cached, so you can find the right file without pulling it down first.</p>
+          </article>
+          <article class="nb-tile">
+            <Shot shot={{ src: keepOnMac, kind: 'screen', alt: 'The Keep on this Mac switch in the inspector.' }} width={240} sizes="240px" class="nb-tile__fig nb-tile__fig--small" />
+            <h3>Keep on this Mac</h3>
+            <p>Pin a file or folder and it stays downloaded. Finder’s own “Keep Downloaded” and “Remove Download” commands work too, and the pin glyph shows in the list.</p>
+          </article>
+          <article class="nb-tile">
+            <h3>Copy Share Link</h3>
+            <p>Right-click a file in Finder, or use the inspector, and Nimbus asks the cloud for a public link and puts it on your clipboard. Only for clouds that can.</p>
+          </article>
+          <article class="nb-tile nb-tile--2">
+            <h3>Server-side changes just appear</h3>
+            <p>Add, rename or delete something from another device or the web, and Finder picks it up. Every refresh in Nimbus (and ⌘R) signals the working set, and the extension diffs each known folder against its last listing. No re-import, no relaunch.</p>
+          </article>
+          <article class="nb-tile">
+            <h3>Network volumes, restored</h3>
+            <p>Prefer a mount? rclone serves the cloud over NFS and the system’s own client mounts it. Mounts come back after a restart and unmount cleanly on quit.</p>
+          </article>
+          <article class="nb-tile nb-tile--2">
+            <h3>Edits go back up</h3>
+            <p>Save a document in any app, make a folder, rename, move or trash, all from Finder. The extension carries each change to the cloud, and each volume in Finder’s sidebar carries Nimbus’s icon and the name you gave it.</p>
+          </article>
+        </div>
       </div>
-
-      <dl class="nb-features nb-features--4">
-        {volume.map((f) => (
-          <div>
-            <dt>{f.title}</dt>
-            <dd>{f.body}</dd>
-          </div>
-        ))}
-      </dl>
     </section>
 
-    <section class="wrap nb-section" aria-labelledby="nb-browse">
-      <div class="nb-split">
-        <div>
-          <h2 id="nb-browse" class="nb-h2">Browse the way you already do</h2>
-          <p class="nb-lede">Finder is the floor. Nimbus is allowed to exceed it, never to fall short of it.</p>
+    <!-- Browser -->
+    <section class="nb-band" aria-labelledby="nb-browse">
+      <div class="wrap">
+        <header class="nb-head nb-head--center">
+          <p class="nb-kicker">Browser</p>
+          <h2 id="nb-browse" class="nb-h2">Indistinguishable from Finder.<br><em>That was the whole point.</em></h2>
+          <p class="nb-lede">
+            Nimbus is SwiftUI and AppKit, not a web view in a frame. Selection, drag and drop,
+            Quick Look, keyboard shortcuts and column sorting behave the way they do in Finder,
+            because Finder was the bar.
+          </p>
+        </header>
+
+        <div class="nb-split">
+          <Shot shot={{ src: windowFiles, kind: 'window', alt: 'The Nimbus window on a cloud’s Files tab: the sidebar of clouds, the volume header with its Google Drive quota, the four tabs, and a Finder-style file list with system icons, cloud glyphs and a selected row. Demo data.' }} width={1280} sizes="(max-width: 900px) 100vw, 58vw" />
           <dl class="nb-features nb-features--stack">
             {browse.map((f) => (
-              <div>
-                <dt>{f.title}</dt>
-                <dd>{f.body}</dd>
-              </div>
+              <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
             ))}
           </dl>
         </div>
-        <Shot shot={{ src: volumeInspector, kind: 'screen', alt: 'The Files tab with the inspector open on the right: a folder icon, the item count, the size of the files and the location, with a hint to select a file for its details' }} width={1280} sizes="(max-width: 900px) 92vw, 56vw" />
-      </div>
-    </section>
 
-    <section class="nb-act" aria-labelledby="nb-finder">
-      <div class="wrap">
-        <div class="nb-split">
-          <div>
-            <h2 id="nb-finder" class="nb-h2 nb-h2--act">In Finder, where your files already are</h2>
-            <p class="nb-lede">
-              The point of a cloud app on a Mac is to disappear into Finder. Nimbus gives you
-              two ways in, and a switch for each.
-            </p>
-            <dl class="nb-rule">
-              {finder.map(([k, v]) => (
-                <div><dt>{k}</dt><dd>{v}</dd></div>
-              ))}
-            </dl>
-          </div>
-          <Shot shot={{ src: volumeFinder, kind: 'screen', alt: 'The Finder tab of a volume: one row, Personal Drive, Available in Finder, with its switch on' }} width={1280} sizes="(max-width: 900px) 92vw, 56vw" />
+        <figure class="nb-wide nb-grid-shot">
+          <Shot shot={{ src: browserGrid, kind: 'screen', alt: 'The Nimbus browser in icon view.' }} width={1280} sizes="(max-width: 900px) 100vw, 82vw" />
+          <figcaption class="nb-caption">Icon view, with the same selection and Quick Look behaviour as the list.</figcaption>
+        </figure>
+
+        <div class="nb-split nb-split--reverse">
+          <Shot shot={{ src: volumeFinder, kind: 'window', alt: 'A volume pane in Nimbus: provider badge, quota gauge and the Files, Transfers, Finder and Settings tabs. Demo data.' }} width={1280} sizes="(max-width: 900px) 100vw, 58vw" />
+          <dl class="nb-features nb-features--stack">
+            {volume.map((f) => (
+              <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
+            ))}
+          </dl>
         </div>
       </div>
     </section>
 
-    <section class="wrap nb-section" aria-labelledby="nb-setup">
-      <div class="nb-split nb-split--reverse">
-        <Shot shot={{ src: onboarding, kind: 'screen', alt: 'Nimbus’s first-run window: the app icon, “Welcome to Nimbus”, and three cards: the rclone engine is ready, a volume is connected, and Add It to Finder' }} width={1280} sizes="(max-width: 900px) 92vw, 50vw" class="nb-onboarding" />
+    <!-- Add Cloud -->
+    <section class="nb-band nb-band--deep" aria-labelledby="nb-setup">
+      <div class="wrap nb-split nb-split--text-first">
         <div>
-          <h2 id="nb-setup" class="nb-h2">Set up in three cards</h2>
+          <p class="nb-kicker">Add Cloud</p>
+          <h2 id="nb-setup" class="nb-h2">Sign in.<br><em>That’s the setup.</em></h2>
           <p class="nb-lede">
-            Start rclone, add a volume, show it in Finder. The first run is those three steps and
-            nothing else; everything after that is a volume.
+            Pick a service from the tiles. For Google Drive, OneDrive, Dropbox and friends,
+            Nimbus opens the provider’s own sign-in page in your browser. Nimbus never sees your
+            password. For servers like S3, SFTP and WebDAV, it asks exactly the questions that
+            backend needs and nothing more.
           </p>
           <dl class="nb-features nb-features--stack">
             {setup.map((f) => (
-              <div>
-                <dt>{f.title}</dt>
-                <dd>{f.body}</dd>
-              </div>
+              <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
+            ))}
+          </dl>
+        </div>
+        <Shot shot={{ src: addCloud, kind: 'screen', alt: 'The Add Cloud sheet with service tiles for Google Drive, OneDrive, Dropbox and more, each with a one-line hint about how sign-in works.' }} width={600} sizes="(max-width: 900px) 92vw, 36vw" class="nb-sheet" />
+      </div>
+    </section>
+
+    <!-- Menu bar -->
+    <section class="nb-band" aria-labelledby="nb-menubar">
+      <div class="wrap">
+        <header class="nb-head nb-head--center">
+          <p class="nb-kicker">Menu bar</p>
+          <h2 id="nb-menubar" class="nb-h2">Close the window.<br><em>Nimbus keeps watch.</em></h2>
+          <p class="nb-lede">
+            Most of the time you’ll be in Finder, not in Nimbus. The menu bar glyph shows
+            aggregate state, and one click opens a companion window with live transfers, every
+            cloud, recent activity and quick actions.
+          </p>
+        </header>
+        <div class="nb-companions">
+          <figure class="nb-companion">
+            <Shot shot={{ src: companionBusy, kind: 'screen', alt: 'The menu bar companion while copying three items to Dropbox, with a progress bar and the list of clouds.' }} width={340} sizes="340px" />
+            <figcaption class="nb-caption">While something is moving</figcaption>
+          </figure>
+          <figure class="nb-companion">
+            <Shot shot={{ src: companionSignIn, kind: 'screen', alt: 'The menu bar companion asking you to sign in to a cloud again, with the button to do it.' }} width={340} sizes="340px" />
+            <figcaption class="nb-caption">When a cloud needs you</figcaption>
+          </figure>
+          <dl class="nb-features nb-features--stack nb-companions__copy">
+            {companion.map((f) => (
+              <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
             ))}
           </dl>
         </div>
       </div>
     </section>
 
-    <section class="nb-deep" aria-labelledby="nb-hood">
+    <!-- Copy & Sync -->
+    <section class="nb-band nb-band--deep" aria-labelledby="nb-transfers">
+      <div class="wrap nb-split nb-split--text-first">
+        <div>
+          <p class="nb-kicker">Copy and sync</p>
+          <h2 id="nb-transfers" class="nb-h2">Any cloud to any cloud.<br><em>Or to this Mac.</em></h2>
+          <p class="nb-lede">
+            Copy or sync between any two volumes or local folders. Transfers show up in a drawer
+            along the bottom while they run and as a progress capsule in the toolbar, like a
+            Finder copy. Every volume keeps its own history.
+          </p>
+          <dl class="nb-features nb-features--stack">
+            {transfers.map((f) => (
+              <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
+            ))}
+          </dl>
+        </div>
+        <Shot shot={{ src: settingsTransfers, kind: 'screen', alt: 'The Transfers settings pane with the speed menu and notification options.' }} width={680} sizes="(max-width: 900px) 92vw, 40vw" class="nb-sheet" />
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section class="nb-band" aria-labelledby="nb-settings">
+      <div class="wrap nb-split">
+        <Shot shot={{ src: settingsGeneral, kind: 'window', alt: 'The Nimbus Settings window in dark mode, laid out like System Settings, with the About section linking to Beltr and OneScribe.' }} width={1360} sizes="(max-width: 900px) 100vw, 58vw" />
+        <div>
+          <p class="nb-kicker">Settings</p>
+          <h2 id="nb-settings" class="nb-h2">Modeled on<br><em>System Settings.</em></h2>
+          <p class="nb-lede">
+            Dense, sectioned, familiar. Engine status at a glance, Open at Login, the speed menu,
+            and an Advanced pane for the rclone path and the people who want to see the wiring.
+          </p>
+          <dl class="nb-features nb-features--stack">
+            {settings.map((f) => (
+              <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy -->
+    <section class="nb-band nb-band--deep" aria-labelledby="nb-network">
+      <div class="wrap wrap--narrow">
+        <header class="nb-head nb-head--center">
+          <p class="nb-kicker">Privacy</p>
+          <h2 id="nb-network" class="nb-h2">The only process that<br>touches the network is rclone.</h2>
+          <p class="nb-lede">No account. No sign-in with Nimbus. No telemetry. No update pinging. Here is the complete list of what talks to what.</p>
+        </header>
+        <div class="nb-table-wrap">
+          <table class="nb-table">
+            <thead class="ui">
+              <tr><th scope="col">Who</th><th scope="col">When</th><th scope="col">Where</th></tr>
+            </thead>
+            <tbody>
+              {network.map(([what, when, where]) => (
+                <tr><td>{what}</td><td>{when}</td><td>{where}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="nb-note nb-note--center">Nimbus is GPL-3.0-or-later. You can read every line that runs on your Mac.</p>
+      </div>
+    </section>
+
+    <!-- Under the hood -->
+    <section class="nb-band" aria-labelledby="nb-hood">
       <div class="wrap">
-        <div class="nb-head">
-          <h2 id="nb-hood" class="nb-h2">Under the hood</h2>
+        <header class="nb-head nb-head--center">
+          <p class="nb-kicker">Under the hood</p>
+          <h2 id="nb-hood" class="nb-h2">Built the way a Mac app<br>should be built.</h2>
           <p class="nb-lede">
             One engine, two clients. The
             <a class="textlink" href={`${repo}#how-it-works`} rel="noopener">README</a> and the
             <a class="textlink" href={`${repo}/tree/main/docs/superpowers/specs`} rel="noopener">design specs</a> go further.
           </p>
-        </div>
+        </header>
 
-        <div class="nb-stack">
-          <NimbusStack />
-        </div>
+        <div class="nb-stack"><NimbusStack /></div>
 
         <dl class="nb-features nb-features--2">
           {hood.map((f) => (
-            <div>
-              <dt>{f.title}</dt>
-              <dd>{f.body}</dd>
-            </div>
+            <div><dt>{f.title}</dt><dd>{f.body}</dd></div>
           ))}
         </dl>
 
@@ -268,119 +451,105 @@ const schema = {
           as a written spec and plan in the repository, and what the AI writes is built, run and
           tested before it merges. The specs are public.
         </p>
-      </div>
-    </section>
 
-    <section class="wrap nb-section" aria-labelledby="nb-network">
-      <div class="nb-head">
-        <h2 id="nb-network" class="nb-h2">What goes over the network</h2>
-        <p class="nb-lede">Only rclone talks to the internet, and only to the clouds you told it about.</p>
-      </div>
-      <div class="nb-table-wrap">
-        <table class="nb-table">
-          <thead class="ui">
-            <tr><th scope="col">What</th><th scope="col">When</th><th scope="col">Where</th></tr>
-          </thead>
-          <tbody>
-            {network.map(([what, when, where]) => (
-              <tr><td>{what}</td><td>{when}</td><td>{where}</td></tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="wrap nb-section" aria-labelledby="nb-install">
-      <div class="nb-head">
-        <h2 id="nb-install" class="nb-h2">Install</h2>
-      </div>
-      <ol class="nb-install">
-        <li>
-          <h3>Install rclone</h3>
-          <p>
-            <code>brew install rclone</code>. Nimbus uses your rclone, so it is always current and
-            the command line keeps working beside the app.
-          </p>
-        </li>
-        <li>
-          <h3>Download Nimbus</h3>
-          <p>
-            From the <a class="textlink" href={download} rel="noopener">latest release</a>: open
-            the <code>.dmg</code> and drag Nimbus to Applications. It is signed with a Developer
-            ID certificate and notarized by Apple, so it opens without a warning. Or build it
-            from source; the README walks through it.
-          </p>
-        </li>
-        <li>
-          <h3>Add a volume</h3>
-          <p>
-            Pick a provider, answer rclone’s questions, and the volume appears in the sidebar
-            and, if you want, in Finder. An existing rclone config shows up on its own.
-          </p>
-        </li>
-      </ol>
-    </section>
-
-    <section class="wrap nb-section" aria-labelledby="nb-status">
-      <div class="nb-split">
-        <div>
-          <h2 id="nb-status" class="nb-h2">Where it stands</h2>
-          <div class="nb-prose">
-            <p>
-              Nimbus is before 1.0 and used daily by its author. Expect rough edges and some
-              breaking changes before 1.0. Bug reports that name the provider and the rclone
-              version are the most useful thing you can send.
-            </p>
-          </div>
+        <h3 class="nb-h3 nb-h3--center">How it compares</h3>
+        <div class="nb-table-wrap">
+          <table class="nb-table nb-compare">
+            <thead class="ui">
+              <tr><th scope="col"><span class="visually-hidden">Feature</span></th><th scope="col">Nimbus</th><th scope="col">Mountain Duck</th><th scope="col">ExpanDrive</th><th scope="col">Cyberduck</th><th scope="col">rclone CLI</th></tr>
+            </thead>
+            <tbody>
+              {compare.map(([label, ...cells]) => (
+                <tr><th scope="row">{label}</th>{cells.map((c) => <td>{c}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <div class="nb-bench">
-          <div>
-            <h3 class="nb-bench__head ui">Works today</h3>
-            <ul>{works.map((w) => <li>{w}</li>)}</ul>
-          </div>
-          <div>
-            <h3 class="nb-bench__head ui">Not yet</h3>
-            <ul>{notYet.map((n) => <li>{n}</li>)}</ul>
-            <p class="nb-note">
-              No dates promised.
-              <a class="textlink" href={`${repo}/issues`} rel="noopener">Open issues</a> and the
-              <a class="textlink" href={`${repo}/blob/main/docs/superpowers/specs/2026-05-14-nimbus-north-star-design.md`} rel="noopener">north-star document</a>.
-            </p>
-          </div>
+        <p class="nb-note">* Not verified against a current release. Corrections welcome.</p>
+      </div>
+    </section>
+
+    <!-- The apps that pay for it -->
+    <section class="nb-band nb-band--deep nb-fund" aria-labelledby="nb-fund">
+      <div class="wrap">
+        <header class="nb-head nb-head--center">
+          <p class="nb-kicker">From the same studio</p>
+          <h2 id="nb-fund" class="nb-h2">Nimbus is free.<br><em>These two pay for it.</em></h2>
+          <p class="nb-lede">
+            Nimbus costs nothing. Not the source, not the signed app, and that will not
+            change. The studio that makes it sells two apps, each bought once and kept, and
+            they pay for the time. If Nimbus is useful to you, this is the way to say thanks.
+          </p>
+        </header>
+
+        <div class="nb-fund__grid">
+          <article class="nb-fund__card">
+            <div class="nb-fund__art nb-fund__art--tv">
+              <Shot shot={beltr.plate!.shots[0]} width={900} sizes="(max-width: 900px) 92vw, 44vw" />
+              <Shot shot={beltr.plate!.shots[1]} sizes="140px" class="nb-fund__phone" />
+            </div>
+            <div class="nb-fund__body">
+              <div class="nb-fund__name">
+                <Image src={beltr.icon!} alt="" widths={[56, 112]} sizes="56px" format="webp" quality={84} loading="lazy" class="nb-fund__icon" />
+                <h3>Beltr</h3>
+              </div>
+              <p class="nb-fund__what">{beltr.what}</p>
+              <p class="nb-fund__copy">{beltr.tagline} Mac, Windows and Linux, with free phone and TV companions.</p>
+              <p class="nb-fund__price ui">{beltr.price}</p>
+              <div class="nb-actions nb-actions--tight">
+                <a class="nb-button" href={beltrBuy} rel="noopener">Get Beltr</a>
+                <a class="textlink" href="/work/beltr/">Read the case study</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="nb-fund__card">
+            <div class="nb-fund__art nb-fund__art--phone">
+              <Shot shot={onescribe.plate!.shots[0]} sizes="(max-width: 900px) 60vw, 240px" class="nb-fund__hero-phone" />
+            </div>
+            <div class="nb-fund__body">
+              <div class="nb-fund__name">
+                <Image src={onescribe.icon!} alt="" widths={[56, 112]} sizes="56px" format="webp" quality={84} loading="lazy" class="nb-fund__icon" />
+                <h3>OneScribe</h3>
+              </div>
+              <p class="nb-fund__what">{onescribe.what}</p>
+              <p class="nb-fund__copy">{onescribe.tagline} Nothing you scan leaves the device.</p>
+              <p class="nb-fund__price ui">{onescribe.price}</p>
+              <div class="nb-actions nb-actions--tight">
+                <a class="nb-button" href={onescribeBuy} rel="noopener">Get OneScribe on the App Store</a>
+                <a class="textlink" href="/work/onescribe/">Read the case study</a>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="wrap nb-section" aria-labelledby="nb-credits">
-      <div class="nb-split">
-        <h2 id="nb-credits" class="nb-h2">Credits</h2>
-        <div class="nb-prose">
-          <p>
-            Nimbus exists because <a class="textlink" href="https://rclone.org" rel="noopener">rclone</a>
-            exists. Every provider, every transfer and every mount is rclone’s work; Nimbus
-            never bundles or patches it. Provider marks on this page and in the app belong to
-            their companies, and Nimbus is not affiliated with any of them.
-          </p>
-          <p class="nb-note">
-            The screenshots show real windows against a throwaway rclone configuration with two
-            local folders standing in for clouds. The files and folders in them were made up for
-            the pictures.
-          </p>
+    <!-- Download -->
+    <section class="nb-close" aria-labelledby="nb-download">
+      <div class="wrap wrap--narrow nb-close__inner">
+        <Image src={item.icon!} alt="" widths={[96, 192]} sizes="80px" format="webp" quality={86} loading="lazy" class="nb-close__icon" />
+        <h2 id="nb-download" class="nb-h2 nb-h2--act">Nimbus {version}</h2>
+        <p class="nb-lede nb-lede--center">
+          Free. Signed with a Developer ID certificate and notarized, so Gatekeeper opens it
+          without a warning. Before 1.0, used daily by its author, and still growing.
+        </p>
+        <div class="nb-actions nb-actions--center">
+          <a class="nb-button" href={dmg} rel="noopener">Download the DMG</a>
+          <a class="textlink" href={releases} rel="noopener">All releases</a>
+          <a class="textlink" href="/work/nimbus/">The case study</a>
         </div>
-      </div>
-    </section>
-
-    <section class="nb-close" aria-label="Get Nimbus">
-      <div class="wrap nb-close__grid">
-        <p class="nb-close__line">Open source, and made to be kept. Your clouds, as volumes, this evening.</p>
-        <div class="nb-close__actions">
-          <a class="nb-button" href={download} rel="noopener">Download Nimbus</a>
-          <p class="nb-close__links">
-            <a class="textlink" href={repo} rel="noopener">Source</a>
-            <a class="textlink" href={`${repo}/issues`} rel="noopener">Issues</a>
-            <a class="textlink" href="/work/nimbus/">The case study</a>
-          </p>
-        </div>
+        <dl class="nb-reqs">
+          {reqs.map(([k, v]) => (
+            <div><dt class="ui">{k}</dt><dd>{v}</dd></div>
+          ))}
+        </dl>
+        <p class="nb-note nb-note--center">
+          Nimbus exists because <a class="textlink" href="https://rclone.org" rel="noopener">rclone</a> exists.
+          Every provider, every transfer and every mount is rclone’s work; Nimbus never bundles or
+          patches it. Provider marks belong to their companies. The screenshots show real windows
+          against a throwaway rclone configuration with made-up files.
+        </p>
       </div>
     </section>
   </main>
@@ -389,203 +558,296 @@ const schema = {
 </Layout>
 
 <style>
-  .nb-open { position: relative; isolation: isolate; overflow-x: clip; }
+  /* ── Opening ─────────────────────────────────────────────── */
+  .nb-open { position: relative; isolation: isolate; overflow-x: clip; text-align: center; }
 
   .lamp {
     position: absolute;
     z-index: -1;
-    top: -40%;
-    left: -14%;
+    top: -30%;
+    left: 50%;
     width: min(1250px, 115vw);
     aspect-ratio: 1.3;
+    transform: translateX(-50%);
     background: radial-gradient(closest-side, rgba(239, 159, 39, 0.17), rgba(239, 159, 39, 0.06) 55%, transparent);
     pointer-events: none;
     animation: lamp-on 2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
 
-  .nb-open .wrap { padding-block: clamp(2.25rem, 7vh, 5rem) clamp(2.5rem, 5vw, 3.5rem); }
+  .nb-open__inner {
+    max-width: 64rem;
+    padding-block: clamp(2.5rem, 8vh, 5.5rem) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  :global(.nb-open__icon) {
+    width: 112px;
+    height: 112px;
+    border-radius: 22.5%;
+    box-shadow: 0 0 0 1px var(--well-ring), 0 24px 48px -16px rgba(0, 0, 0, 0.7);
+    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
 
-  .nb-mark { display: flex; align-items: center; gap: 0.8rem; margin: 0 0 clamp(1.5rem, 3.5vh, 2.25rem); }
-  :global(.nb-mark__icon) { width: 48px; height: 48px; border-radius: 22.5%; box-shadow: 0 0 0 1px var(--well-ring); }
-  .nb-mark__name { font-size: 1.375rem; font-weight: 450; letter-spacing: -0.01em; }
+  .nb-kicker {
+    margin: 1.6rem 0 0.6rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-amber);
+  }
 
   .statement {
     margin: 0;
     font-weight: 290;
-    font-size: clamp(2.75rem, 7vw, 7rem);
-    line-height: 0.94;
+    font-size: clamp(3rem, 7.4vw, 6.6rem);
+    line-height: 0.96;
     letter-spacing: -0.034em;
     text-wrap: balance;
   }
   .statement__line { display: block; animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-  .statement__line + .statement__line { padding-left: 0.62em; font-style: italic; animation-delay: 0.12s; }
+  .statement__line + .statement__line { font-style: italic; animation-delay: 0.12s; }
 
-  .nb-open__body {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: 1.5rem clamp(2rem, 5vw, 4.5rem);
-    align-items: end;
-    margin-top: clamp(2rem, 5vh, 3.25rem);
-    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both;
-  }
   .standfirst {
-    margin: 0;
-    max-width: 31em;
-    font-size: clamp(1.15rem, 1.5vw, 1.375rem);
-    line-height: 1.55;
+    margin: clamp(1.5rem, 3.5vh, 2.25rem) 0 0;
+    max-width: 34em;
+    font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+    line-height: 1.5;
     color: var(--color-ink-2);
     text-wrap: pretty;
+    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both;
   }
-  .nb-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; font-size: 1.0625rem; }
 
-  .nb-specs {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1rem clamp(1rem, 2.5vw, 2rem);
-    margin: clamp(2.25rem, 5vh, 3rem) 0 0;
-    padding-top: 1.1rem;
-    border-top: 1px solid var(--color-line);
+  .nb-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.6rem;
+    margin-top: 2rem;
+    font-size: 1.0625rem;
     animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.45s both;
   }
-  .nb-specs dt { color: var(--color-ink-3); font-size: 0.8125rem; }
-  .nb-specs dd { margin: 0.25rem 0 0; color: var(--color-ink); font-size: 0.9375rem; line-height: 1.4; }
+  .nb-actions--center { justify-content: center; }
+
+  .nb-fine { margin: 1.2rem 0 0; color: var(--color-ink-3); }
+  .nb-studio { margin-top: 0.5rem; font-family: var(--font-serif); font-size: 1.0625rem; color: var(--color-ink-2); animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.5s both; }
 
   .nb-button {
     display: inline-block;
-    padding: 0.85rem 1.4rem;
+    padding: 0.9rem 1.5rem;
     border-radius: 8px;
     background: var(--color-ink);
     color: var(--color-ground);
     font-family: var(--font-sans);
-    font-size: 0.975rem;
+    font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
     transition: background-color 0.18s ease;
   }
   .nb-button:hover { background: var(--color-amber); }
 
-  .nb-hero { padding-bottom: clamp(3rem, 7vw, 5.5rem); }
+  .nb-hero { padding-block: clamp(3rem, 6vw, 4.5rem) clamp(3rem, 7vw, 5.5rem); }
 
-  .nb-section {
-    padding-block: clamp(3rem, 7vw, 5.5rem);
+  /* ── At a glance ─────────────────────────────────────────── */
+  .nb-glance { background: var(--color-ground-deep); border-block: 1px solid var(--color-line); }
+  .nb-glance__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
+    margin: 0;
+    padding-block: clamp(2.5rem, 5vw, 3.75rem);
+    text-align: center;
+  }
+  .nb-glance dt {
+    font-size: clamp(2.6rem, 4.5vw, 3.75rem);
+    font-weight: 260;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+  }
+  .nb-glance dd { margin: 0.5rem 0 0; font-size: 1rem; color: var(--color-ink-2); }
+
+  /* ── Bands ───────────────────────────────────────────────── */
+  .nb-band { padding-block: clamp(4rem, 9vw, 7.5rem); }
+  .nb-band--deep { background: var(--color-ground-deep); border-block: 1px solid var(--color-line); }
+  .nb-band + .nb-band:not(.nb-band--deep) {
     background: linear-gradient(var(--color-line), var(--color-line)) center top / calc(100% - 2 * var(--gutter)) 1px no-repeat;
   }
-  .nb-head { max-width: 44rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .wrap--narrow { max-width: 56rem; }
+
+  .nb-head { max-width: 46rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .nb-head--center { margin-inline: auto; text-align: center; }
+  .nb-head--center .nb-lede { margin-inline: auto; }
+  .nb-head .nb-kicker { margin-top: 0; }
 
   .nb-h2 {
     margin: 0;
-    font-weight: 340;
-    font-size: clamp(1.85rem, 3vw, 2.75rem);
-    line-height: 1.08;
-    letter-spacing: -0.016em;
+    font-weight: 300;
+    font-size: clamp(2.25rem, 4.6vw, 3.9rem);
+    line-height: 1.04;
+    letter-spacing: -0.026em;
     text-wrap: balance;
   }
-  .nb-h2--act { font-size: clamp(2.25rem, 4.2vw, 3.6rem); font-weight: 300; letter-spacing: -0.026em; }
+  .nb-h2 em { font-style: italic; color: var(--color-ink-3); }
+  .nb-h2--act { font-size: clamp(2.6rem, 5.4vw, 4.6rem); font-weight: 280; letter-spacing: -0.03em; }
+  .nb-h3 { margin: clamp(3rem, 6vw, 4.5rem) 0 1.4rem; font-weight: 340; font-size: clamp(1.6rem, 2.6vw, 2.25rem); line-height: 1.1; letter-spacing: -0.016em; }
+  .nb-h3--center { text-align: center; }
 
-  .nb-lede { margin: 1rem 0 0; max-width: 36em; color: var(--color-ink-2); font-size: 1.1875rem; line-height: 1.6; text-wrap: pretty; }
-  .nb-prose { max-width: 38em; }
-  .nb-prose > p { margin: 1.1rem 0 0; font-size: 1.125rem; line-height: 1.65; color: var(--color-ink-2); }
-  .nb-note { margin: 1.2rem 0 0; font-size: 1rem !important; line-height: 1.55; color: var(--color-ink-3) !important; }
-  .nb-ai { max-width: 44em; margin-top: clamp(2rem, 4vw, 3rem); }
+  .nb-lede { margin: 1.25rem 0 0; max-width: 36em; color: var(--color-ink-2); font-size: 1.1875rem; line-height: 1.55; text-wrap: pretty; }
+  .nb-lede--center { margin-inline: auto; text-align: center; }
+  .nb-note { margin: 1.4rem 0 0; font-size: 1rem; line-height: 1.55; color: var(--color-ink-3); max-width: 44em; }
+  .nb-note--center { margin-inline: auto; text-align: center; }
+  .nb-ai { margin-top: clamp(2rem, 4vw, 3rem); }
+  .nb-caption { margin-top: 1rem; font-size: 0.975rem; font-style: italic; color: var(--color-ink-3); text-align: center; }
 
-  .nb-split {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 2rem clamp(2rem, 5vw, 4.5rem);
-    align-items: start;
-  }
-  .nb-split--reverse { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); }
-  .nb-split > :global(.frame) { margin-top: 0.4rem; }
+  :global(.nb-wide) { margin-inline: auto; }
+  .nb-grid-shot { margin: clamp(3rem, 6vw, 4.5rem) 0; }
+  :global(.nb-home-light) { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
 
+  /* ── Feature lists ───────────────────────────────────────── */
   .nb-features { display: grid; gap: 2rem clamp(1.5rem, 3vw, 2.5rem); margin: 0; }
   .nb-features--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: clamp(2.5rem, 5vw, 3.5rem); }
-  .nb-features--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .nb-features--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .nb-features--stack { grid-template-columns: minmax(0, 1fr); gap: 1.4rem; margin-top: 1.75rem; }
   .nb-features > div { border-top: 1px solid var(--color-line); padding-top: 1rem; }
   .nb-features dt { font-size: 1.1875rem; font-weight: 500; line-height: 1.3; }
   .nb-features dd { margin: 0.45rem 0 0; color: var(--color-ink-2); font-size: 1.0625rem; line-height: 1.6; }
 
-  /* The Finder section: a deeper ground, a bigger head. */
-  .nb-act {
-    padding-block: clamp(4rem, 9vw, 7rem) clamp(3rem, 7vw, 5.5rem);
-    background: var(--color-ground-deep);
-    border-block: 1px solid var(--color-line);
+  /* ── Splits ──────────────────────────────────────────────── */
+  .nb-split {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 2rem clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
   }
-  .nb-rule { margin: 1.75rem 0 0; border-top: 1px solid var(--color-line); }
-  .nb-rule > div { padding-block: 0.9rem; border-bottom: 1px solid var(--color-line); }
-  .nb-rule dt { font-size: 1.0625rem; font-weight: 500; }
-  .nb-rule dd { margin: 0.3rem 0 0; color: var(--color-ink-2); font-size: 1.0625rem; line-height: 1.55; }
+  .nb-split + .nb-split { margin-top: clamp(3rem, 6vw, 4.5rem); }
+  .nb-split--reverse { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .nb-split--reverse > :global(.frame) { order: 2; }
+  .nb-split--text-first { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: center; }
+  .nb-split--text-first .nb-features--stack { margin-top: 2rem; }
+  :global(.nb-sheet) { max-width: 30rem; justify-self: center; width: 100%; }
 
-  .nb-deep {
-    padding-block: clamp(3.5rem, 8vw, 6rem);
-    background: var(--color-ground-deep);
-    border-block: 1px solid var(--color-line);
-  }
-  .nb-stack { max-width: 60rem; }
-
-  .nb-table-wrap { overflow-x: auto; max-width: 60rem; }
-  .nb-table { width: 100%; border-collapse: collapse; font-size: 1rem; line-height: 1.45; }
-  .nb-table th { text-align: left; font-weight: 500; color: var(--color-ink-3); padding: 0 1rem 0.7rem 0; border-bottom: 1px solid var(--color-line-strong); }
-  .nb-table td { padding: 0.75rem 1rem 0.75rem 0; border-bottom: 1px solid var(--color-line); vertical-align: top; color: var(--color-ink-2); }
-  .nb-table td:first-child { color: var(--color-ink); }
-  .nb-table td:last-child, .nb-table th:last-child { padding-right: 0; }
-
-  code { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.88em; color: var(--color-ink); }
-
-  .nb-install {
-    list-style: none;
-    counter-reset: step;
-    margin: 0;
-    padding: 0;
+  /* ── Bento ───────────────────────────────────────────────── */
+  .nb-bento {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2rem clamp(1.5rem, 3vw, 2.5rem);
+    gap: 1.25rem;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
   }
-  .nb-install li { counter-increment: step; display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); align-content: start; }
-  .nb-install li > * { grid-column: 2; }
-  .nb-install li::before {
-    content: counter(step);
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    font-size: 1.6rem;
-    font-weight: 300;
-    line-height: 1.15;
-    color: var(--color-amber);
+  .nb-tile {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+    border-radius: 18px;
+    background: var(--color-surface);
+    box-shadow: 0 0 0 1px var(--color-line);
   }
-  .nb-install h3 { margin: 0; font-size: 1.3rem; font-weight: 450; line-height: 1.3; }
-  .nb-install p { margin: 0.45rem 0 0; color: var(--color-ink-2); font-size: 1.0625rem; line-height: 1.6; }
+  .nb-tile--2 { grid-column: span 2; }
+  .nb-tile h3 { margin: 0 0 0.5rem; font-size: 1.4rem; font-weight: 450; line-height: 1.25; letter-spacing: -0.012em; }
+  .nb-tile p { margin: 0; color: var(--color-ink-2); font-size: 1.0625rem; line-height: 1.55; }
+  .nb-tile :global(.frame) { margin-bottom: 1.4rem; }
+  :global(.nb-tile__fig--small) { max-width: 240px; }
+  .nb-tile--2:has(.nb-tile__fig) { justify-content: flex-end; }
+  .nb-tile:not(:has(:global(.frame))) { justify-content: center; }
 
-  .nb-bench { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem clamp(1.5rem, 3vw, 2.5rem); }
-  .nb-bench__head { margin: 0 0 0.9rem; font-weight: 500; color: var(--color-ink-3); }
-  .nb-bench ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; font-size: 1.0625rem; line-height: 1.45; color: var(--color-ink-2); }
+  /* ── Companions ──────────────────────────────────────────── */
+  .nb-companions {
+    display: grid;
+    grid-template-columns: 340px 340px minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: start;
+    justify-content: center;
+  }
+  .nb-companion { margin: 0; }
+  .nb-companions__copy { margin-top: 0.4rem; }
 
-  .nb-close { background: var(--color-ground-deep); border-top: 1px solid var(--color-line); padding-block: clamp(3.5rem, 8vw, 6rem); }
-  .nb-close__grid { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 2rem; align-items: center; }
-  .nb-close__line { margin: 0; max-width: 20em; font-size: clamp(1.5rem, 2.8vw, 2.25rem); font-weight: 330; line-height: 1.25; letter-spacing: -0.012em; }
-  .nb-close__actions { justify-self: end; }
-  .nb-close__links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; margin: 1.1rem 0 0; font-size: 1.0625rem; }
+  /* ── Tables ──────────────────────────────────────────────── */
+  .nb-table-wrap { overflow-x: auto; margin-inline: auto; }
+  .nb-table { width: 100%; border-collapse: collapse; font-size: 1rem; line-height: 1.45; }
+  .nb-table th { text-align: left; font-weight: 500; color: var(--color-ink-3); padding: 0 1rem 0.7rem 0; border-bottom: 1px solid var(--color-line-strong); }
+  .nb-table td { padding: 0.8rem 1rem 0.8rem 0; border-bottom: 1px solid var(--color-line); vertical-align: top; color: var(--color-ink-2); }
+  .nb-table td:first-child { color: var(--color-ink); }
+  .nb-table td:last-child, .nb-table th:last-child { padding-right: 0; }
+  .nb-compare { margin-top: 0.5rem; }
+  .nb-compare tbody th { padding: 0.8rem 1rem 0.8rem 0; border-bottom: 1px solid var(--color-line); color: var(--color-ink); white-space: nowrap; vertical-align: top; }
+  .nb-compare tbody td:first-of-type { color: var(--color-amber); }
+  .nb-compare th, .nb-compare td { font-size: 0.95rem; min-width: 8rem; }
 
-  @keyframes lamp-on { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+  .nb-stack { max-width: 60rem; margin-inline: auto; }
+
+  /* ── Close ───────────────────────────────────────────────── */
+  .nb-close { background: var(--color-ground-deep); border-top: 1px solid var(--color-line); padding-block: clamp(4rem, 9vw, 7.5rem); text-align: center; }
+  .nb-close__inner { display: flex; flex-direction: column; align-items: center; }
+  :global(.nb-close__icon) { width: 80px; height: 80px; border-radius: 22.5%; box-shadow: 0 0 0 1px var(--well-ring), 0 20px 40px -16px rgba(0, 0, 0, 0.7); margin-bottom: 1.5rem; }
+  .nb-close .nb-actions { margin-top: 1.75rem; }
+  .nb-reqs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2.5rem;
+    width: 100%;
+    max-width: 46rem;
+    margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+    text-align: left;
+  }
+  .nb-reqs > div { border-top: 1px solid var(--color-line); padding-top: 0.75rem; }
+  .nb-reqs dt { color: var(--color-ink-3); }
+  .nb-reqs dd { margin: 0.25rem 0 0; font-size: 1rem; color: var(--color-ink); line-height: 1.45; }
+
+  /* ── The apps that pay for it ────────────────────────────── */
+  .nb-fund__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 1.25rem;
+  }
+  .nb-fund__card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 18px;
+    background: var(--color-surface);
+    box-shadow: 0 0 0 1px var(--color-line);
+    overflow: hidden;
+  }
+  .nb-fund__art { position: relative; padding: 1.75rem 1.75rem 0; }
+  .nb-fund__art--tv { padding-right: 4.5rem; }
+  :global(.nb-fund__phone) { position: absolute; right: 1.25rem; bottom: -1.25rem; width: 140px; }
+  .nb-fund__art--phone { display: flex; justify-content: center; }
+  :global(.nb-fund__hero-phone) { width: 240px; margin-bottom: -2.5rem; }
+  .nb-fund__body { padding: 2.25rem 1.75rem 1.75rem; display: flex; flex-direction: column; flex: 1; }
+  .nb-fund__name { display: flex; align-items: center; gap: 0.8rem; }
+  :global(.nb-fund__icon) { width: 44px; height: 44px; border-radius: 22.5%; box-shadow: 0 0 0 1px var(--well-ring); }
+  .nb-fund__name h3 { margin: 0; font-size: 1.75rem; font-weight: 400; letter-spacing: -0.016em; line-height: 1.1; }
+  .nb-fund__what { margin: 0.9rem 0 0; font-size: 1.25rem; line-height: 1.3; color: var(--color-ink); }
+  .nb-fund__copy { margin: 0.6rem 0 0; color: var(--color-ink-2); font-size: 1.0625rem; line-height: 1.55; max-width: 36em; }
+  .nb-fund__price { margin: 1rem 0 0; color: var(--color-amber); font-weight: 500; }
+  .nb-fund .nb-actions--tight { margin-top: 1.25rem; animation: none; }
+  @media (max-width: 900px) {
+    .nb-fund__grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  @keyframes lamp-on { from { opacity: 0; transform: translateX(-50%) scale(0.94); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
   @keyframes settle { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
+  /* ── Responsive ──────────────────────────────────────────── */
   @media (max-width: 1100px) {
-    .nb-features--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .nb-companions { grid-template-columns: repeat(2, minmax(0, 340px)); }
+    .nb-companions__copy { grid-column: 1 / -1; }
   }
   @media (max-width: 900px) {
-    .nb-open__body, .nb-split, .nb-split--reverse, .nb-close__grid { grid-template-columns: minmax(0, 1fr); }
-    .nb-split--reverse > :global(.frame) { order: 2; }
-    .nb-specs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .nb-install { grid-template-columns: minmax(0, 1fr); }
-    .nb-close__actions { justify-self: start; }
+    .nb-split, .nb-split--reverse, .nb-split--text-first { grid-template-columns: minmax(0, 1fr); }
+    .nb-split--reverse > :global(.frame) { order: 0; }
+    .nb-bento { grid-template-columns: minmax(0, 1fr); }
+    .nb-tile--2 { grid-column: span 1; }
+    .nb-features--3 { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 760px) {
+    .nb-companions { grid-template-columns: minmax(0, 340px); }
+    .nb-companions__copy { grid-column: span 1; }
+    .nb-glance__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 640px) {
-    .nb-features--2, .nb-features--4, .nb-bench { grid-template-columns: minmax(0, 1fr); }
-  }
-  @media (max-width: 560px) {
-    .statement__line + .statement__line { padding-left: 0; }
-    .lamp { top: -20%; left: -45%; width: 170vw; }
+    .nb-features--2, .nb-reqs { grid-template-columns: minmax(0, 1fr); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .lamp, .statement__line, .nb-open__body, .nb-specs { animation: none; }
+    .lamp, .statement__line, .standfirst, .nb-actions, .nb-studio, :global(.nb-open__icon) { animation: none; }
   }
 </style>

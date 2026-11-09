@@ -111,7 +111,7 @@ Product page: https://casavargas.app/nimbus/
 Case study: https://casavargas.app/work/nimbus/
 Source: https://github.com/CasaVargas/Nimbus (GPL-3.0-or-later)
 
-Nimbus is an open-source Mac app for cloud storage. Each remote from S3, Google Drive, OneDrive, SFTP and the rest of rclone's long list becomes a volume: a pane with its capacity, its Finder presence, its files and its transfers. It doesn't reimplement any provider: it drives rclone and puts a native interface on top, including a Finder extension so your remotes show up where your files already are. Nimbus is before 1.0. Signed builds will follow as a one-time purchase; no price is set.
+Nimbus is an open-source Mac app for cloud storage. Each remote from S3, Google Drive, OneDrive, SFTP and the rest of rclone's long list becomes a volume: a pane with its capacity, its Finder presence, its files and its transfers. It doesn't reimplement any provider: it drives rclone and puts a native interface on top, including a Finder extension so your remotes show up where your files already are. Nimbus is before 1.0 and free, signed builds included; the studio's paid apps, Beltr and OneScribe, fund it.
 
 Why it exists: rclone is the most capable cloud-storage engine there is, but using it means a terminal and a config file. The usual alternative is one vendor app per cloud, each with its own sync folder and its own idea of how a Mac should behave. Nimbus keeps rclone's reach and its open config format, and drops the command line.
 

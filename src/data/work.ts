@@ -249,8 +249,8 @@ export const work: Work[] = [
     group: 'open-source',
     runsOn: ['macOS'],
     builtWith: ['Swift 6', 'SwiftUI', 'File Provider', 'rclone'],
-    // The model, not a price: no price is set before the first signed build (PLAN.md §8).
-    price: 'Free to build, GPL-3.0; signed builds will be sold once',
+    // Free outright since 2026-11-08: source and signed builds. Beltr and OneScribe fund it.
+    price: 'Free, GPL-3.0, signed builds included',
     links: [
       { label: 'Visit the Nimbus page', url: '/nimbus/' },
       { label: 'Download for Mac', url: 'https://github.com/CasaVargas/Nimbus/releases/latest' },

@@ -247,7 +247,8 @@ layout.
   - Stated factually; no piracy framing.
   - Search sources are user-configured, and the app ships none.
 - **Nimbus:** GPL-3.0-or-later as of 2026-11-08 (CasaVargas/Nimbus#7). The model is
-  stated, never a price: source free, signed builds sold once. Before 1.0; 0.9.0 is the
+  stated, never a price: free outright since 2026-11-08, signed builds included; the
+  Nimbus page sends readers to Beltr and OneScribe, which fund it. Before 1.0; 0.9.0 is the
   first signed, notarized release (2026-11-08), so "Download" points at
   `releases/latest`.
 - **AppPulse:** a working title; don't name competitor products.
