@@ -17,6 +17,8 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      // /nimbus/ is a static page in public/, which the sitemap cannot see.
+      customPages: ['https://casavargas.app/nimbus/'],
       // Keep redirect stubs and the 404 out of the sitemap.
       filter: (page) => !['/streamline/', '/work/streamline/', '/onescribe/', '/debrid-downloader/', '/404/'].includes(new URL(page).pathname),
     }),

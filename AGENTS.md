@@ -50,6 +50,8 @@ src/
     ui/Facts                the spec table used everywhere instead of "a · b · c"
   assets/<slug>/            ALL screenshots — imported, never referenced by URL
 public/og/                  Open Graph cards (generated), llms.txt, favicons
+public/nimbus/              the Nimbus product page: a standalone static page copied
+                            from the Nimbus repo's site/ folder (PLAN.md §8). Not Astro.
 ```
 
 Redirects for the old app URLs (`/streamline`, `/onescribe`,

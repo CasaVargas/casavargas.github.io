@@ -251,6 +251,11 @@ layout.
   Nimbus page sends readers to Beltr and OneScribe, which fund it. Before 1.0; 0.9.0 is the
   first signed, notarized release (2026-11-08), so "Download" points at
   `releases/latest`.
+  Since 2026-11-09 `/nimbus/` is not an Astro page: it is the standalone static page
+  from the Nimbus repo's `site/` folder, copied verbatim into `public/nimbus/` (its own
+  look, the app's Stratosphere sky; no site Nav or Footer). Edit it in the Nimbus repo
+  and copy it over; the only local changes are the absolute `og:image`, `og:url` and
+  canonical tags in its `<head>`. The case study at `/work/nimbus/` is unchanged.
 - **AppPulse:** a working title; don't name competitor products.
 - **Screenshots carry claims.** Open every image before shipping it.
   - Banned: `cinematic-bigscreen.webp` and `phone-native-sing.webp` (both have a stale
