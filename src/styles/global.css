@@ -1,43 +1,58 @@
-/* ── The house at night ────────────────────────────────────────
-   A warm walnut ground, lit by the brand amber. Every product ships
-   a near-black UI, so the ground sits *above* them in value: each
-   screenshot reads as a dark screen set into a lit room. See PLAN.md §3. */
-/* Plain custom properties, no framework. */
+/* Plain, product-first (PLAN.md §P3). Neutral grounds that follow the system's
+   light or dark setting, the system's own type, and one accent kept for link
+   hover and the focus ring. No framework: plain custom properties. */
 :root {
-  --color-ground: #231c16;
-  --color-ground-deep: #1a1511;
-  --color-surface: #2c231c;
-  --color-screen: #0b0a09;
+  color-scheme: light dark;
 
-  --color-ink: #f4ede3;
-  --color-ink-2: #c9bdae;
-  /* Lightest value that clears WCAG AA (≥4.5:1) on every ground above.
-     Don't darken it. */
-  --color-ink-3: #a39686;
+  --color-ground: #ffffff;
+  --color-ground-deep: #f5f5f7;
+  --color-surface: #ececef;
+  /* Behind screenshots while they load: the apps' UIs are dark. */
+  --color-screen: #0b0b0c;
 
-  --color-line: rgba(244, 237, 227, 0.13);
-  --color-line-strong: rgba(244, 237, 227, 0.24);
+  --color-ink: #1d1d1f;
+  --color-ink-2: #48484d;
+  /* Lightest value that clears WCAG AA (4.5:1) on ground and ground-deep.
+     Don't lighten it. */
+  --color-ink-3: #636366;
 
-  --color-amber: #ef9f27;
-  --color-amber-deep: #d85a30;
+  --color-line: rgba(0, 0, 0, 0.11);
+  --color-line-strong: rgba(0, 0, 0, 0.24);
 
-  --font-serif: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
-  --font-sans: 'Hanken Grotesk Variable', system-ui, sans-serif;
+  --color-accent: #b4530a;
 
-}
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Helvetica Neue', Arial, sans-serif;
 
-:root {
-  /* Screenshot wells */
-  --well-ring: rgba(244, 237, 227, 0.14);
-  --well-lip: rgba(255, 255, 255, 0.16);
-  --well-shadow:
-    0 30px 80px -30px rgba(0, 0, 0, 0.85),
-    0 12px 28px -18px rgba(0, 0, 0, 0.7);
+  /* Screenshot frames */
+  --well-ring: rgba(0, 0, 0, 0.14);
+  --well-shadow: 0 18px 44px -22px rgba(0, 0, 0, 0.4);
 
   /* Layout */
-  --page-max: 82rem;
-  --gutter: clamp(1.25rem, 4vw, 3rem);
-  --measure: 36rem;
+  --page-max: 70rem;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --measure: 40rem;
+  --radius: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-ground: #141415;
+    --color-ground-deep: #1c1c1e;
+    --color-surface: #262628;
+
+    --color-ink: #f5f5f7;
+    --color-ink-2: #c2c2c7;
+    /* Darkest value that clears AA on both dark grounds. Don't darken it. */
+    --color-ink-3: #98989f;
+
+    --color-line: rgba(255, 255, 255, 0.12);
+    --color-line-strong: rgba(255, 255, 255, 0.26);
+
+    --color-accent: #f0a43a;
+
+    --well-ring: rgba(255, 255, 255, 0.14);
+    --well-shadow: 0 18px 44px -22px rgba(0, 0, 0, 0.9);
+  }
 }
 
 *,
@@ -53,7 +68,6 @@ svg {
 
 html {
   background-color: var(--color-ground);
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -61,31 +75,28 @@ body {
   margin: 0;
   background-color: var(--color-ground);
   color: var(--color-ink);
-  font-family: var(--font-serif);
-  font-optical-sizing: auto;
-  font-size: 1.125rem;
-  line-height: 1.6;
-  font-kerning: normal;
-  font-variant-ligatures: common-ligatures;
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
-::selection {
-  background: rgba(239, 159, 39, 0.32);
-  color: #fff;
+h1,
+h2,
+h3 {
+  font-weight: 650;
+  text-wrap: balance;
 }
 
 a {
   color: inherit;
 }
 
-/* Focus is always visible, always amber. */
 :focus-visible {
-  outline: 2px solid var(--color-amber);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 /* ── Shared roles ───────────────────────────────────────────── */
@@ -96,24 +107,27 @@ a {
   padding-inline: var(--gutter);
 }
 
-/* Section headings: serif, sentence case, no eyebrow above them. */
 .section-title {
   margin: 0;
-  font-family: var(--font-serif);
-  font-weight: 340;
-  font-size: clamp(2rem, 3.4vw, 3rem);
-  line-height: 1.08;
-  letter-spacing: -0.012em;
+  font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   color: var(--color-ink);
 }
 
-/* Small functional text: the only place the sans appears. */
+/* Page titles on inner pages. */
+.page-title {
+  margin: 0;
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+/* Small functional text: meta lines, table heads, dates. */
 .ui {
-  font-family: var(--font-sans);
   font-size: 0.875rem;
   line-height: 1.45;
-  letter-spacing: 0.005em;
-  font-variant-numeric: tabular-nums lining-nums;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Text links: underlined, never pills, never arrows. */
@@ -122,12 +136,41 @@ a {
   text-decoration: underline;
   text-decoration-color: var(--color-line-strong);
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.22em;
-  transition: text-decoration-color 0.18s ease, color 0.18s ease;
+  text-underline-offset: 0.2em;
 }
 .textlink:hover {
-  color: var(--color-amber);
+  color: var(--color-accent);
   text-decoration-color: currentColor;
+}
+
+/* Buttons only where there is something to get: a download, a store, the source. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.15rem;
+  border: 1px solid var(--color-ink);
+  border-radius: 10px;
+  background: var(--color-ink);
+  color: var(--color-ground);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.button:hover {
+  background: var(--color-ink-2);
+  border-color: var(--color-ink-2);
+}
+.button--quiet {
+  background: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-line-strong);
+}
+.button--quiet:hover {
+  background: var(--color-surface);
+  border-color: var(--color-line-strong);
 }
 
 .visually-hidden {
@@ -143,7 +186,6 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
@@ -154,5 +196,5 @@ a {
 /* Horizontal screenshot rails */
 .screenshots-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(244, 237, 227, 0.18) transparent;
+  scrollbar-color: var(--color-line-strong) transparent;
 }

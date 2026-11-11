@@ -10,8 +10,8 @@ interface Props {
 
 const {
   as: Heading = 'h2',
-  title = 'All work',
-  intro = 'Everything the studio has shipped or is building, companion apps included.',
+  title = 'All apps',
+  intro = 'Everything CasaVargas has shipped or is building, companion apps included.',
 } = Astro.props;
 
 const rows = groups.map((g) => ({ ...g, items: work.filter((w) => w.group === g.id) }));
@@ -57,9 +57,7 @@ const rows = groups.map((g) => ({ ...g, items: work.filter((w) => w.group === g.
 
 <style>
   .index {
-    background: var(--color-ground-deep);
-    border-block: 1px solid var(--color-line);
-    padding-block: clamp(4rem, 9vw, 7rem);
+    padding-block: 1rem 0;
   }
 
   .index__head {
@@ -83,7 +81,8 @@ const rows = groups.map((g) => ({ ...g, items: work.filter((w) => w.group === g.
 
   thead th {
     padding: 0 1rem 0.8rem 0;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 0.875rem;
     color: var(--color-ink-3);
     border-bottom: 1px solid var(--color-line-strong);
   }
@@ -92,35 +91,33 @@ const rows = groups.map((g) => ({ ...g, items: work.filter((w) => w.group === g.
 
   .index__group th {
     padding: 2.2rem 0 0.7rem;
-    font-weight: 400;
-    font-style: italic;
-    font-size: 1.0625rem;
-    color: var(--color-amber);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--color-ink-3);
     border-bottom: 1px solid var(--color-line);
   }
   tbody:first-of-type .index__group th { padding-top: 1.4rem; }
 
   .index__row > * {
-    padding: 1.05rem 1rem 1.05rem 0;
+    padding: 0.85rem 1rem 0.85rem 0;
     border-bottom: 1px solid var(--color-line);
     vertical-align: baseline;
   }
 
   .index__name {
-    font-weight: 400;
+    font-weight: 600;
   }
   .index__name a {
-    font-size: 1.5rem;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
+    font-size: 1.125rem;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
     color: var(--color-ink);
     text-decoration: none;
-    transition: color 0.18s ease;
   }
   /* A scanning aid, not a fake button: the name is the only link. */
   .index__row { transition: background-color 0.18s ease; }
-  .index__row:hover { background: rgba(244, 237, 227, 0.035); }
-  .index__name a:hover { color: var(--color-amber); }
+  .index__row:hover { background: var(--color-ground-deep); }
+  .index__name a:hover { color: var(--color-accent); }
 
   .index__what { color: var(--color-ink-2); }
   .index__meta { color: var(--color-ink-3); font-size: 0.9375rem; }

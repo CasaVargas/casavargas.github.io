@@ -44,11 +44,11 @@ const widths = [Math.round(width / 2), width, Math.min(width * 2, src.width)].fi
 </figure>
 
 <style>
-  /* A screen set into a lit room: dark glass, a warm ring, a specular lip. */
+  /* A screenshot: a hairline ring and one soft shadow. */
   .frame {
     position: relative;
     margin: 0;
-    border-radius: 12px;
+    border-radius: 10px;
     overflow: hidden;
     background: var(--color-screen);
     box-shadow: 0 0 0 1px var(--well-ring), var(--well-shadow);
@@ -66,7 +66,6 @@ const widths = [Math.round(width / 2), width, Math.min(width * 2, src.width)].fi
     inset: 0;
     pointer-events: none;
     border-radius: inherit;
-    box-shadow: inset 0 1px 0 var(--well-lip);
   }
 
   .frame__chrome {
@@ -75,7 +74,7 @@ const widths = [Math.round(width / 2), width, Math.min(width * 2, src.width)].fi
     gap: 6px;
     height: 24px;
     padding: 0 11px;
-    background: #1b1714;
+    background: #1c1c1e;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
@@ -84,6 +83,6 @@ const widths = [Math.round(width / 2), width, Math.min(width * 2, src.width)].fi
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: rgba(244, 237, 227, 0.2);
+    background: rgba(255, 255, 255, 0.22);
   }
 </style>

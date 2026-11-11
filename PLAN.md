@@ -1,4 +1,79 @@
-# casavargas.app — Editorial Catalogue Redesign
+# casavargas.app — Plain, product-first (2026-11)
+
+**Status:** in progress on `redesign/plain-product-first` (2026-11-11).
+**Supersedes:** §1 (direction and ground) and §3 (art direction) of the 2026-09
+editorial catalogue below. §2, §4 onward (routes, facts, claims, screenshots,
+SEO, Deckle) still hold except where this section says otherwise.
+
+## P1. Brief
+
+> "casavargas.app looks completely vibecoded and ridiculous. We are about to
+> launch our first huge open source project."
+
+Decisions taken with the owner on 2026-11-11:
+
+| Question | Answer |
+|---|---|
+| Direction | **Plain, product-first.** No monograph, no conceit. Say what each app is and where to get it. |
+| Lead | **Nimbus**, the open-source launch, leads the homepage. |
+| Scope | Whole site. `/nimbus/` already is a plain, system-type product page built from the app's own colours; the rest of the site moves to match it, not the other way round. |
+
+## P2. What was wrong with the September site
+
+1. **The look is the stock generated "editorial" one:** dark warm ground, an amber
+   radial glow, a giant light serif headline with a stepped second line.
+2. **The copy played atelier:** "Software, made to be kept.", "Selected work",
+   "In the workshop", "How the studio works", a typeface colophon.
+3. **Monotony.** About 12,000 px of one plate repeated seven times, then the same
+   products again as a table. Small, low-contrast secondary text.
+4. **Everything faded up on load.**
+5. **Three unrelated looks:** the main site, `/nimbus/` and `/deckle/`.
+
+## P3. Design
+
+- **Colour follows the system** (`prefers-color-scheme`), no toggle. Neutral
+  grounds, no tint, no gradients, no glow.
+
+  | Token | Light | Dark | Role |
+  |---|---|---|---|
+  | `--color-ground` | `#ffffff` | `#141415` | Page |
+  | `--color-ground-deep` | `#f5f5f7` | `#1c1c1e` | Bands and screenshot wells |
+  | `--color-surface` | `#ececef` | `#262628` | Hover, raised |
+  | `--color-ink` | `#1d1d1f` | `#f5f5f7` | Text, solid buttons |
+  | `--color-ink-2` | `#48484d` | `#c2c2c7` | Secondary text |
+  | `--color-ink-3` | `#636366` | `#98989f` | Meta text (AA on ground and ground-deep) |
+  | `--color-accent` | `#b4530a` | `#f0a43a` | Link hover and focus ring only |
+
+  The orange house mark keeps its own gradient. Orange is never a ground.
+- **Type is the system's** (`-apple-system`, Segoe UI, `system-ui`): the same
+  face as the apps and as `/nimbus/`, and no font download. One family, two
+  weights (400 and 650). No serif, no monospace, no all-caps labels.
+- **Layout:** left-aligned, 70rem column. The homepage is short:
+
+  ```
+  CasaVargas                         Apps  Notes  About  GitHub
+  CasaVargas makes Mac, iPhone and desktop apps.
+  No subscriptions ... several are free and open source.
+
+  [ Nimbus: icon, one line, Download for Mac / Source on GitHub, window shot ]
+
+  Apps            2-column grid: shot, name, one line, platforms and price, links
+  In development  two text entries
+  About           two short paragraphs + what it's built with
+  Notes           three latest
+  footer          one row of links
+  ```
+- **Buttons** exist where there is something to download. Everything else is an
+  underlined link.
+- **No motion on load.** Hover colour changes only.
+- **Words:** "Apps", not "Work" (the `/work/` URLs stay). "In development", not
+  "In the workshop". "About", not "The studio". "How it's built", not "case
+  study". No taglines about the company.
+- Still true from §10: no em dashes anywhere; screenshots carry claims.
+
+---
+
+# casavargas.app — Editorial Catalogue Redesign (2026-09, superseded in part)
 
 **Status:** shipped 2026-09-24. PR #1 (merged as `72c8195`) delivered the redesign; PR #2 (`857036f`) revised the opening and removed every em dash.
 **Date:** 2026-09-24

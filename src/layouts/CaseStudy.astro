@@ -67,7 +67,7 @@ const facts: [string, string][] = [
 
   <main id="main" class="cs">
     <header class="wrap cs-head">
-      <Breadcrumbs items={[{ label: 'Work', href: '/work/' }, { label: item.name }]} />
+      <Breadcrumbs items={[{ label: 'Apps', href: '/work/' }, { label: item.name }]} />
 
       <div class="cs-title">
         {item.icon && (
@@ -171,15 +171,15 @@ const facts: [string, string][] = [
               {/\.\w+$/.test(item.links[0].label) ? `Visit ${item.links[0].label}` : item.links[0].label}
             </a>
           ) : (
-            <a class="cs-button" href="mailto:hello@casavargas.app">Write to the studio</a>
+            <a class="cs-button" href="mailto:hello@casavargas.app">Email CasaVargas</a>
           )}
         </div>
       </div>
     </section>
 
-    <nav class="wrap cs-next" aria-label="Next case study">
+    <nav class="wrap cs-next" aria-label="Next app">
       <a href={`/work/${next.slug}/`}>
-        <span class="ui">Next case study</span>
+        <span class="ui">Next</span>
         <span class="cs-next__name">{next.name}</span>
         <span class="cs-next__what">{next.what}</span>
       </a>
@@ -210,9 +210,8 @@ const facts: [string, string][] = [
 
   h1 {
     margin: 0;
-    font-weight: 300;
-    font-size: clamp(3rem, 8vw, 6.5rem);
-    line-height: 0.95;
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    line-height: 1.05;
     letter-spacing: -0.03em;
   }
 
@@ -223,17 +222,16 @@ const facts: [string, string][] = [
 
   .cs-tagline {
     margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
-    max-width: 24em;
-    font-size: clamp(1.4rem, 2.6vw, 2.125rem);
-    font-weight: 330;
-    line-height: 1.28;
-    letter-spacing: -0.01em;
+    max-width: 34em;
+    font-size: clamp(1.1875rem, 2vw, 1.4375rem);
+    line-height: 1.4;
+    text-wrap: pretty;
     color: var(--color-ink-2);
   }
 
   .cs-lead { padding-bottom: clamp(3rem, 7vw, 5.5rem); }
 
-  /* Editorial grid: headings hang in the left third, prose in the right. */
+  /* Headings sit in the left third, prose in the right. */
   .cs-grid {
     display: grid;
     grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
@@ -256,8 +254,8 @@ const facts: [string, string][] = [
   .cs-intro {
     margin: 0;
     max-width: 30em;
-    font-size: clamp(1.25rem, 1.9vw, 1.5rem);
-    line-height: 1.5;
+    font-size: 1.1875rem;
+    line-height: 1.55;
     color: var(--color-ink);
   }
   .cs-links {
@@ -275,17 +273,17 @@ const facts: [string, string][] = [
 
   .cs-h2 {
     margin: 0;
-    font-weight: 340;
-    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
-    line-height: 1.1;
-    letter-spacing: -0.012em;
+    font-weight: 650;
+    font-size: clamp(1.375rem, 2.2vw, 1.625rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
   }
 
   .cs-prose {
     margin: 0;
     max-width: 34em;
-    font-size: 1.1875rem;
-    line-height: 1.65;
+    font-size: 1.0625rem;
+    line-height: 1.6;
     color: var(--color-ink-2);
   }
 
@@ -296,8 +294,8 @@ const facts: [string, string][] = [
     margin: 0;
   }
   .cs-features dt {
-    font-size: 1.1875rem;
-    font-weight: 500;
+    font-size: 1.0625rem;
+    font-weight: 600;
     color: var(--color-ink);
   }
   .cs-features dd {
@@ -316,10 +314,10 @@ const facts: [string, string][] = [
   }
   .cs-note-block h3 {
     margin: 0;
-    font-size: clamp(1.3rem, 1.8vw, 1.5rem);
-    font-weight: 400;
-    line-height: 1.25;
-    letter-spacing: -0.008em;
+    font-size: 1.1875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
     color: var(--color-ink);
   }
   .cs-note-block p {
@@ -343,8 +341,8 @@ const facts: [string, string][] = [
   }
   .cs-companions h3 {
     margin: 0;
-    font-size: 1.5rem;
-    font-weight: 400;
+    font-size: 1.1875rem;
+    font-weight: 600;
   }
   .cs-companions p { margin: 0.45rem 0 0; color: var(--color-ink-2); font-size: 1.0625rem; }
   .cs-companions .cs-companions__meta { color: var(--color-ink-3); }
@@ -352,34 +350,32 @@ const facts: [string, string][] = [
 
   .cs-close {
     background: var(--color-ground-deep);
-    border-top: 1px solid var(--color-line);
-    padding-block: clamp(3.5rem, 8vw, 6rem);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
   }
   .cs-close .cs-grid { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); align-items: center; }
   .cs-close__line {
     margin: 0;
     max-width: 22em;
-    font-size: clamp(1.5rem, 2.8vw, 2.25rem);
-    font-weight: 330;
-    line-height: 1.25;
-    letter-spacing: -0.012em;
+    font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
   }
   .cs-close__actions { justify-self: end; }
 
-  /* The one solid button on the site: the call to action at the end of a case study. */
+  /* The call to action at the end of the page. */
   .cs-button {
     display: inline-block;
     padding: 0.85rem 1.4rem;
-    border-radius: 8px;
+    border-radius: 10px;
     background: var(--color-ink);
     color: var(--color-ground);
-    font-family: var(--font-sans);
     font-size: 0.975rem;
     font-weight: 600;
     text-decoration: none;
-    transition: background-color 0.18s ease;
   }
-  .cs-button:hover { background: var(--color-amber); }
+  .cs-button:hover { background: var(--color-ink-2); }
 
   .cs-next {
     padding-block: clamp(3rem, 7vw, 5rem);
@@ -392,13 +388,12 @@ const facts: [string, string][] = [
   }
   .cs-next .ui { color: var(--color-ink-3); }
   .cs-next__name {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 300;
-    line-height: 1;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 650;
+    line-height: 1.1;
     letter-spacing: -0.025em;
-    transition: color 0.18s ease;
   }
-  .cs-next a:hover .cs-next__name { color: var(--color-amber); }
+  .cs-next a:hover .cs-next__name { color: var(--color-accent); }
   .cs-next__what { color: var(--color-ink-2); }
 
   @media (max-width: 860px) {

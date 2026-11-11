@@ -1,0 +1,62 @@
+---
+import Facts from '../ui/Facts.astro';
+
+// Every clause here is checkable against a product page. Keep it that way.
+const tools: [string, string][] = [
+  ['Apple platforms', 'Swift 6, SwiftUI, SwiftData, Foundation Models'],
+  ['Desktop', 'Tauri and Rust; Electron and Python where the job needs them'],
+  ['Builds', 'Self-hosted runners on a Mac mini, a Windows PC and a Linux server'],
+  ['Sales', 'The App Store, and Lemon Squeezy for the desktop'],
+];
+---
+
+<section id="about" class="wrap about" aria-labelledby="about-title">
+  <div class="about__copy">
+    <h2 id="about-title" class="section-title">About</h2>
+    <p>
+      Casa Vargas LLC is an independent software company in North Carolina,
+      founded in 2025 by Jon Vargas.
+    </p>
+    <p>
+      There are no subscriptions. You pay once, if at all, and the open-source
+      apps are free, signed builds included.
+    </p>
+    <p>
+      The work happens on your own hardware. Beltr separates vocals on your
+      computer and OneScribe reads your documents on your phone, with no server
+      of ours involved.
+    </p>
+  </div>
+
+  <div>
+    <h3 class="about__label ui">Built with</h3>
+    <Facts rows={tools} />
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 2.5rem clamp(2rem, 6vw, 5rem);
+    padding-top: clamp(3.5rem, 8vw, 5.5rem);
+    scroll-margin-top: 1rem;
+  }
+
+  .about__copy p {
+    margin: 0.9rem 0 0;
+    max-width: 34em;
+    color: var(--color-ink-2);
+  }
+  .about__copy .section-title + p { margin-top: 1.5rem; }
+
+  .about__label {
+    margin: 0.5rem 0 0.75rem;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 860px) {
+    .about { grid-template-columns: 1fr; }
+  }
+</style>

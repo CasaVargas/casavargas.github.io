@@ -21,6 +21,8 @@ import deckleWeather from '../assets/deckle/paper/weather.jpg';
 import deckleStory from '../assets/deckle/paper/story.jpg';
 
 import nimbusVolume from '../assets/nimbus/volume-files.png';
+// The current (Stratosphere) Home window, the same capture /nimbus/ leads with.
+import nimbusHome from '../assets/nimbus/home-stratosphere.webp';
 
 import ctvGuide from '../assets/cathode-tv/guide-bezel.webp';
 import ctvHome from '../assets/cathode-tv/home-bezel.webp';
@@ -281,6 +283,20 @@ export const work: Work[] = [
   },
 ];
 
+/**
+ * The homepage leads with one product: the current launch (PLAN.md §P1).
+ * `facts` is the line under its buttons; check it against /nimbus/.
+ */
+export const lead = {
+  slug: 'nimbus',
+  shot: nimbusHome,
+  alt: 'Nimbus’s Home window: 3.25 TB free across five clouds, a ring showing who uses the space, and a card for each cloud with its status. Shown with made-up accounts.',
+  facts: 'Free and open source under GPL-3.0. macOS 15 or later, Apple silicon and Intel, signed and notarized.',
+  download: { label: 'Download for Mac', url: 'https://github.com/CasaVargas/Nimbus/releases/latest' },
+  source: { label: 'Source on GitHub', url: 'https://github.com/CasaVargas/Nimbus' },
+  page: { label: 'More about Nimbus', url: '/nimbus/' },
+};
+
 /** One entry per case study (companions excluded), in site order. */
 export const caseStudies = work.filter((w) => !w.parent);
 
@@ -292,7 +308,7 @@ export const featured = work
 export const groups: { id: Group; label: string }[] = [
   { id: 'available', label: 'Available now' },
   { id: 'open-source', label: 'Open source' },
-  { id: 'workshop', label: 'In the workshop' },
+  { id: 'workshop', label: 'In development' },
 ];
 
 export const statusFor = (w: Work): string =>

@@ -1,6 +1,6 @@
 # CasaVargas, full facts
 
-> Casa Vargas LLC is an independent software studio in North Carolina, founded by Jon Vargas. It makes apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux, sold as one-time purchases or free, with no subscriptions.
+> Casa Vargas LLC is an independent software company in North Carolina, founded by Jon Vargas. It makes apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux, sold as one-time purchases or free, with no subscriptions.
 
 This file gives the fuller per-product facts behind the summary in /llms.txt: what each product does, why it exists, how it's built, and its pricing. Each product's own site is the source of truth for prices and features; this file and the case studies it is drawn from are kept in sync with those sites.
 
