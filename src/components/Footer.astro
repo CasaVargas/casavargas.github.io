@@ -4,17 +4,10 @@ import { caseStudies } from '../data/work';
 const year = new Date().getFullYear();
 ---
 
-<footer class="colophon">
-  <div class="wrap colophon__grid">
-    <div class="colophon__lead">
-      <p class="colophon__line">
-        Write to <a class="textlink" href="mailto:hello@casavargas.app">hello@casavargas.app</a>.
-        Every message is read by the person who wrote the software.
-      </p>
-    </div>
-
-    <nav class="colophon__col" aria-label="Work">
-      <h2 class="colophon__head ui">Work</h2>
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <nav aria-label="Apps">
+      <h2 class="foot__head ui">Apps</h2>
       <ul>
         {caseStudies.map((w) => (
           <li><a href={`/work/${w.slug}/`}>{w.name}</a></li>
@@ -22,83 +15,83 @@ const year = new Date().getFullYear();
       </ul>
     </nav>
 
-    <nav class="colophon__col" aria-label="Studio">
-      <h2 class="colophon__head ui">Studio</h2>
+    <nav aria-label="CasaVargas">
+      <h2 class="foot__head ui">CasaVargas</h2>
       <ul>
+        <li><a href="/#about">About</a></li>
         <li><a href="/blog/">Notes</a></li>
-        <li><a href="/#studio">About</a></li>
         <li><a href="https://github.com/CasaVargas" rel="noopener">GitHub</a></li>
         <li><a href="https://github.com/sponsors/prjoni99" rel="noopener">Sponsor on GitHub</a></li>
       </ul>
     </nav>
+
+    <div>
+      <h2 class="foot__head ui">Contact</h2>
+      <p class="foot__contact">
+        <a class="textlink" href="mailto:hello@casavargas.app">hello@casavargas.app</a><br />
+        Every message is read by the person who wrote the software.
+      </p>
+    </div>
   </div>
 
-  <div class="wrap colophon__base ui">
-    <p>© {year} Casa Vargas LLC, North Carolina</p>
-    <p>Set in Newsreader and Hanken Grotesk. Built with Astro.</p>
-  </div>
+  <p class="wrap foot__base ui">© {year} Casa Vargas LLC, North Carolina</p>
 </footer>
 
 <style>
-  .colophon {
+  .foot {
+    margin-top: clamp(3.5rem, 8vw, 6rem);
     background: var(--color-ground-deep);
-    border-top: 1px solid var(--color-line);
-    padding-top: clamp(3.5rem, 7vw, 5.5rem);
+    padding-top: clamp(2.5rem, 5vw, 3.5rem);
   }
 
-  .colophon__grid {
+  .foot__grid {
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
-    gap: 3rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
   }
 
-  .colophon__line {
-    margin: 0;
-    max-width: 26ch;
-    font-size: clamp(1.5rem, 2.4vw, 2rem);
-    font-weight: 330;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
+  .foot__head {
+    margin: 0 0 0.6rem;
+    font-weight: 600;
     color: var(--color-ink);
   }
 
-  .colophon__head {
-    margin: 0 0 0.9rem;
-    font-weight: 500;
-    color: var(--color-ink-3);
-  }
-
-  .colophon__col ul {
+  .foot ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: grid;
-    gap: 0.5rem;
+    columns: 2;
+    column-gap: 1.5rem;
   }
+  .foot nav + nav ul { columns: 1; }
+  .foot li { break-inside: avoid; }
 
-  .colophon__col a {
+  .foot li a {
+    display: inline-block;
+    padding-block: 0.3rem;
     color: var(--color-ink-2);
     text-decoration: none;
-    font-size: 1.0625rem;
-    transition: color 0.18s ease;
+    font-size: 0.9375rem;
   }
-  .colophon__col a:hover { color: var(--color-amber); }
+  .foot li a:hover { color: var(--color-ink); text-decoration: underline; }
 
-  .colophon__base {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.5rem 2rem;
-    margin-top: clamp(3rem, 6vw, 4.5rem);
-    padding-block: 1.6rem 2rem;
-    /* Rule spans the content column, not the gutters (this sits on .wrap). */
-    background: linear-gradient(var(--color-line), var(--color-line)) center top / calc(100% - 2 * var(--gutter)) 1px no-repeat;
+  .foot__contact {
+    margin: 0;
+    padding-top: 0.3rem;
+    max-width: 22em;
+    font-size: 0.9375rem;
+    color: var(--color-ink-2);
+  }
+
+  .foot__base {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 0;
+    padding-block: 1.25rem 1.75rem;
     color: var(--color-ink-3);
   }
-  .colophon__base p { margin: 0; }
 
-  @media (max-width: 820px) {
-    .colophon__grid { grid-template-columns: 1fr 1fr; }
-    .colophon__lead { grid-column: 1 / -1; }
+  @media (max-width: 760px) {
+    .foot__grid { grid-template-columns: 1fr 1fr; }
+    .foot ul { columns: 1; }
   }
 </style>

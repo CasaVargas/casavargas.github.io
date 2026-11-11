@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets';
+import Frame from '../ui/Frame.astro';
+import { bySlug, lead } from '../../data/work';
+
+// The one product the homepage leads with (PLAN.md §P1).
+const item = bySlug(lead.slug);
+---
+
+<section class="wrap" aria-labelledby="lead-name">
+  <div class="lead">
+    <div class="lead__text">
+      <h2 id="lead-name" class="lead__name">
+        {item.icon && (
+          <Image src={item.icon} alt="" widths={[48, 96]} sizes="48px" format="webp" quality={84} class="lead__icon" loading="eager" />
+        )}
+        {item.name}
+      </h2>
+      <p class="lead__what">{item.what}.</p>
+      <p class="lead__tagline">{item.tagline}</p>
+      <p class="lead__actions">
+        <a class="button" href={lead.download.url} rel="noopener">{lead.download.label}</a>
+        <a class="button button--quiet" href={lead.source.url} rel="noopener">{lead.source.label}</a>
+        <a class="textlink" href={lead.page.url}>{lead.page.label}</a>
+      </p>
+      <p class="lead__facts ui">{lead.facts}</p>
+    </div>
+
+    <Frame src={lead.shot} alt={lead.alt} width={1500} sizes="(max-width: 1120px) 92vw, 1040px" chrome={false} eager class="lead__shot" />
+  </div>
+</section>
+
+<style>
+  .lead {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 2.75rem);
+    padding: clamp(1.25rem, 4vw, 3rem);
+    padding-bottom: 0;
+    border-radius: calc(var(--radius) + 8px);
+    background: var(--color-ground-deep);
+    overflow: hidden;
+  }
+
+  .lead__name {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  :global(.lead__icon) {
+    width: 48px;
+    height: 48px;
+    border-radius: 11px;
+  }
+
+  .lead__what {
+    margin: 1.25rem 0 0;
+    max-width: 18em;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 650;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .lead__tagline {
+    margin: 1rem 0 0;
+    max-width: 38em;
+    font-size: 1.125rem;
+    color: var(--color-ink-2);
+    text-wrap: pretty;
+  }
+
+  .lead__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 0.75rem;
+    margin: 1.5rem 0 0;
+  }
+  .lead__actions .textlink { margin-left: 0.5rem; }
+
+  .lead__facts {
+    margin: 1rem 0 0;
+    color: var(--color-ink-3);
+  }
+
+  /* The window runs off the bottom of the panel: its top half is the picture. */
+  :global(.lead__shot) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: -1px;
+  }
+</style>

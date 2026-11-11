@@ -1,6 +1,6 @@
 # CasaVargas, full facts
 
-> Casa Vargas LLC is an independent software studio in North Carolina, founded by Jon Vargas. It makes apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux, sold as one-time purchases or free, with no subscriptions.
+> Casa Vargas LLC is an independent software company in North Carolina, founded by Jon Vargas. It makes apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux, sold as one-time purchases or free, with no subscriptions.
 
 This file gives the fuller per-product facts behind the summary in /llms.txt: what each product does, why it exists, how it's built, and its pricing. Each product's own site is the source of truth for prices and features; this file and the case studies it is drawn from are kept in sync with those sites.
 
@@ -114,24 +114,6 @@ Source: https://github.com/CasaVargas/Nimbus (GPL-3.0-or-later)
 Nimbus is an open-source Mac app for cloud storage. Each remote from S3, Google Drive, OneDrive, SFTP and the rest of rclone's long list becomes a volume: a pane with its capacity, its Finder presence, its files and its transfers. It doesn't reimplement any provider: it drives rclone and puts a native interface on top, including a Finder extension so your remotes show up where your files already are. Nimbus is before 1.0 and free, signed builds included; the studio's paid apps, Beltr and OneScribe, fund it.
 
 Why it exists: rclone is the most capable cloud-storage engine there is, but using it means a terminal and a config file. The usual alternative is one vendor app per cloud, each with its own sync folder and its own idea of how a Mac should behave. Nimbus keeps rclone's reach and its open config format, and drops the command line.
-
-### AppPulse (working title)
-Case study: https://casavargas.app/work/apppulse/
-
-AppPulse finds the third-party apps on your Mac, checks for newer versions, and installs them after a chain of checks. The last check confirms the download was signed by the same developer as the app you already have. Every step is logged. There's no telemetry, no account and no sudo. AppPulse is in development. There is no release date yet.
-
-Why it exists: a valid code signature only tells you that some registered developer signed a file. It doesn't tell you that the same developer made the app you're about to replace. An updater that trusts its metadata and then checks only the signature can be pointed at the wrong app, and many apps have no reliable update channel at all. AppPulse is built around being honest about both problems.
-
-What it does:
-- Updates from two sources. It reads Homebrew's cask data as plain data, without running brew to check, and Sparkle update feeds verified with EdDSA.
-- Installs with rollback. The old app is cloned before the new one is swapped in, and any failure swaps it back.
-- Says so when it can't compare. When two version schemes don't line up, it reports them as incomparable instead of guessing. Downgrades are shown, never applied.
-- Shows its work. A summary of your library, a step-by-step install timeline, and a log of every decision it makes.
-- Control per app. Skip, snooze, ignore or pin to a major version. Checks run on a schedule while it's open, and silent installs are opt-in behind a five-part gate.
-
-How it's built: the first time AppPulse sees an app, it records the installed copy's Team ID and treats it as the pin. From then on, a different Team ID is a hard stop, whatever the metadata says, so the check still holds if every upstream source is wrong. Authenticated sources come first: Sparkle with EdDSA, then Homebrew's cask data, then Sparkle without a signature, because the EdDSA key already sits inside the installed app so a network attacker can't swap it, and cask data can't be the integrity anchor since some casks skip the checksum entirely. It never runs .pkg installers, whose scripts run as root. It never uses sudo, never replaces a running app, and never launches an app to see whether an update worked. A disk image that needs a license agreement becomes a download-only update. The core library can't import AppKit or touch the file system, network or processes outside its adapter layer, and a CI script fails the build if it tries. Every process call passes an argument array, never a shell string. The Hardened Runtime is on, with no entitlements.
-
-On the record: 272 automated tests, 19 of them against real system tools. An integration test installs a real app update over a copy of the installed version, then rolls it back.
 
 ## Notes (blog)
 

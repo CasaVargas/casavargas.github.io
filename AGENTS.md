@@ -7,8 +7,9 @@ casavargas.app on every push to `main` (`.github/workflows/deploy.yml`) —
 **merging to `main` is a production deploy**. `origin` is GitHub and is what
 deploys; `gitea` is a mirror.
 
-`PLAN.md` holds the design spec for the current look (the editorial catalogue,
-2026-09). Read it before changing layout, art direction or product claims.
+`PLAN.md` holds the design spec. Its first section (plain, product-first,
+2026-11) is the current look; the 2026-09 editorial catalogue below it still
+governs routes, facts, claims and screenshots. Read it before changing layout, art direction or product claims.
 
 ## Commands
 
@@ -43,8 +44,8 @@ src/
     blog/                   notes (Markdown in src/content/blog/)
     404.astro
   components/
-    home/                   Opening, Plate, Workshop, Method, Studio, LatestNotes
-    WorkIndex.astro         the index table (homepage and /work/)
+    home/                   Lead (the launch product), Apps, About, LatestNotes
+    WorkIndex.astro         the index table on /work/
     figures/                typographic diagrams for products without screenshots
     ui/Frame, Phone, Shot   screenshot wells; Composition lays out a plate
     ui/Facts                the spec table used everywhere instead of "a · b · c"
@@ -64,19 +65,25 @@ beltr.app because the Beltr repo's Pages custom domain claims that path. Before
 adding any top-level route, check that `curl -sI https://casavargas.app/<route>`
 does not 301 off-site.
 
-## Art direction (PLAN.md §3)
+## Art direction (PLAN.md §P3)
 
-- Warm walnut ground (`--color-ground`), lit by the brand amber like a lamp. The
-  ground is *lighter* than the apps' near-black UIs, so screenshots read as
-  screens set into the page.
-- Newsreader (serif, variable `opsz`) for display and body; Hanken Grotesk only
-  for small functional UI (`.ui`). No monospace, no all-caps labels, no eyebrows.
-- Tokens are CSS custom properties in `src/styles/global.css`. Use them; don't
-  hardcode colours. `--color-ink-3` is the lightest value that clears WCAG AA on
-  every ground — don't darken it.
-- Structure only where it carries information: facts tables, the index table,
-  numbered steps only for real sequences. Links are underlined text, not pills.
-- One motion moment (the opening), off under `prefers-reduced-motion`.
+- Plain and product-first: say what each app is and where to get it. No
+  conceit, no company tagline, no "studio" or "case study" in visible copy.
+- Colour follows the system (`prefers-color-scheme`), no toggle. Neutral
+  grounds, no gradients or glows. Tokens are CSS custom properties in
+  `src/styles/global.css`, each with a light and a dark value. Use them; don't
+  hardcode colours. `--color-ink-3` is the weakest text value that clears WCAG
+  AA on both grounds in both schemes.
+- The system face only (`--font-sans`), weights 400 and 600/650. No web fonts,
+  no serif, no all-caps labels, no eyebrows. Monospace only for commands a
+  reader copies.
+- `.button` only where there is something to get (a download, a store, the
+  source). Everything else is an underlined `.textlink`.
+- No motion on load. Hover changes colour, nothing moves.
+- The homepage leads with one product: `lead` in `src/data/work.ts`. Change it
+  there when the next launch comes.
+- `/nimbus/` is a static page in `public/nimbus/` with its own stylesheet, in
+  the same system face. Leave it self-contained.
 
 ## Adding a product
 
@@ -116,7 +123,6 @@ is invisible to grep, diffing and CI. Rejected so far, and why:
   fictional demo lineup with Big Buck Bunny (CC BY 3.0, credited on the plate).
   Runbook: Tolaria `cathodetv-marketing-screenshots-runbook`; the generator
   lives in the marketing repo at `cathodetv/demo-lineup/`.
-- AppPulse: the existing shots show a real personal app library.
 - DebridDownloader: the screenshots here are the real UI rendered with mocked
   IPC and neutral data (Linux installers), captured with headless Chrome. Its
   icon is the emerald chevron mark from the DebridDownloader repo

@@ -1,11 +1,4 @@
 ---
-import '@fontsource-variable/newsreader/opsz.css';
-import '@fontsource-variable/newsreader/opsz-italic.css';
-import '@fontsource-variable/hanken-grotesk';
-// Preloaded: the opening statement is the LCP element and waits on these two.
-import serifLatin from '@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2?url';
-import sansLatin from '@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2?url';
-
 interface Props {
   title?: string;
   description?: string;
@@ -14,8 +7,8 @@ interface Props {
 }
 
 const {
-  title = 'CasaVargas | Software, made to be kept',
-  description = 'CasaVargas is an independent software studio in North Carolina making apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux, paid for once if at all.',
+  title = 'CasaVargas | Apps for Mac, iPhone and the desktop',
+  description = 'CasaVargas makes apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux. No subscriptions: each app is paid for once, and several are free and open source.',
   ogImage = '/og/casavargas.png',
   ogType = 'website',
 } = Astro.props;
@@ -31,8 +24,9 @@ const absoluteOgImage = new URL(ogImage, Astro.site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="author" content="Jon Vargas" />
-    <meta name="theme-color" content="#231c16" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141415" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="generator" content={Astro.generator} />
 
     <link rel="canonical" href={canonicalURL.href} />
@@ -49,9 +43,6 @@ const absoluteOgImage = new URL(ogImage, Astro.site).href;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteOgImage} />
-
-    <link rel="preload" href={serifLatin} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={sansLatin} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" type="image/svg+xml" href="/casavargas-logo-orange.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />

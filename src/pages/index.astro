@@ -3,14 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import JsonLd from '../components/JsonLd.astro';
-import Opening from '../components/home/Opening.astro';
-import Plate from '../components/home/Plate.astro';
-import Workshop from '../components/home/Workshop.astro';
-import WorkIndex from '../components/WorkIndex.astro';
-import Method from '../components/home/Method.astro';
-import Studio from '../components/home/Studio.astro';
+import Lead from '../components/home/Lead.astro';
+import Apps from '../components/home/Apps.astro';
+import About from '../components/home/About.astro';
 import LatestNotes from '../components/home/LatestNotes.astro';
-import { featured, caseStudies } from '../data/work';
+import { caseStudies } from '../data/work';
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -24,7 +21,7 @@ const organizationSchema = {
   foundingDate: '2025',
   address: { '@type': 'PostalAddress', addressRegion: 'NC', addressCountry: 'US' },
   description:
-    'An independent software studio making apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux, paid for once if at all.',
+    'Apps for the Mac, iPhone, iPad, Apple TV, Windows and Linux. No subscriptions: each app is paid for once, and several are free and open source.',
   sameAs: ['https://github.com/CasaVargas'],
 };
 
@@ -38,7 +35,7 @@ const websiteSchema = {
 const itemListSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'Work by CasaVargas',
+  name: 'Apps by CasaVargas',
   itemListElement: caseStudies.map((w, i) => ({
     '@type': 'ListItem',
     position: i + 1,
@@ -55,34 +52,38 @@ const itemListSchema = {
 
   <Nav />
   <main id="main">
-    <Opening />
+    <div class="wrap intro">
+      <h1>CasaVargas makes Mac, iPhone and desktop apps.</h1>
+      <p>
+        No subscriptions. Each app is paid for once, and several are free and
+        open source.
+      </p>
+    </div>
 
-    <section class="wrap selected" aria-labelledby="selected-title">
-      <header class="selected__head">
-        <h2 id="selected-title" class="section-title">Selected work</h2>
-        <a class="textlink ui selected__all" href="#index">See everything</a>
-      </header>
-      {featured.map((item) => <Plate item={item} />)}
-      <Workshop />
-    </section>
-
-    <WorkIndex />
-    <Method />
-    <Studio />
+    <Lead />
+    <Apps />
+    <About />
     <LatestNotes />
   </main>
   <Footer />
 </Layout>
 
 <style>
-  .selected { padding-top: clamp(1rem, 3vw, 2rem); }
+  .intro { padding-block: clamp(2.5rem, 7vw, 4.5rem) clamp(2rem, 5vw, 3rem); }
 
-  .selected__head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-bottom: clamp(2rem, 4vw, 3rem);
+  h1 {
+    margin: 0;
+    max-width: 15em;
+    font-size: clamp(2.25rem, 5.6vw, 3.75rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
   }
-  .selected__all { color: var(--color-ink-2); }
+
+  .intro p {
+    margin: 1.1rem 0 0;
+    max-width: 30em;
+    font-size: clamp(1.125rem, 1.8vw, 1.3125rem);
+    line-height: 1.45;
+    color: var(--color-ink-2);
+  }
 </style>

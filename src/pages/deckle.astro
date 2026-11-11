@@ -175,7 +175,6 @@ const schema = {
 
   <main id="main" class="dk">
     <section class="dk-open" aria-labelledby="dk-title">
-      <div class="lamp" aria-hidden="true"></div>
       <div class="wrap dk-open__inner">
         <p class="dk-mark">
           <Image src={item.icon!} alt="" widths={[64, 128]} sizes="64px" format="webp" quality={84} loading="eager" fetchpriority="high" class="dk-mark__icon" />
@@ -713,7 +712,7 @@ deckle llm check</code></pre>
           <p class="dk-close__links">
             <a class="textlink" href={repo} rel="noopener">Source</a>
             <a class="textlink" href={`${repo}/issues`} rel="noopener">Issues</a>
-            <a class="textlink" href="/work/deckle/">Case study</a>
+            <a class="textlink" href="/work/deckle/">How it’s built</a>
           </p>
         </div>
       </div>
@@ -730,18 +729,6 @@ deckle llm check</code></pre>
     overflow-x: clip;
   }
 
-  /* The lamp, as on the homepage: the one motion moment on the page. */
-  .lamp {
-    position: absolute;
-    z-index: -1;
-    top: -40%;
-    left: -14%;
-    width: min(1250px, 115vw);
-    aspect-ratio: 1.3;
-    background: radial-gradient(closest-side, rgba(239, 159, 39, 0.17), rgba(239, 159, 39, 0.06) 55%, transparent);
-    pointer-events: none;
-    animation: lamp-on 2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  }
 
   .dk-open__inner {
     display: grid;
@@ -765,32 +752,25 @@ deckle llm check</code></pre>
   }
   .dk-mark__name {
     font-size: 1.5rem;
-    font-weight: 450;
+    font-weight: 600;
     letter-spacing: -0.01em;
   }
 
   .statement {
     grid-column: 1 / -1;
     margin: 0;
-    font-weight: 290;
-    font-size: clamp(3rem, 8.4vw, 8.25rem);
-    line-height: 0.92;
-    letter-spacing: -0.036em;
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
     text-wrap: balance;
   }
   .statement__line {
     display: block;
-    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  }
-  .statement__line + .statement__line {
-    padding-left: 0.62em;
-    animation-delay: 0.12s;
   }
 
   .dk-open__body {
     grid-column: 1 / span 6;
     margin-top: clamp(2.5rem, 6vh, 4rem);
-    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both;
   }
   .standfirst {
     margin: 0;
@@ -813,23 +793,19 @@ deckle llm check</code></pre>
     grid-column: 8 / -1;
     align-self: end;
     margin-top: clamp(2.5rem, 6vh, 4rem) !important;
-    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.45s both;
   }
 
-  /* The solid button, as at the end of a case study. */
   .dk-button {
     display: inline-block;
     padding: 0.85rem 1.4rem;
     border-radius: 8px;
     background: var(--color-ink);
     color: var(--color-ground);
-    font-family: var(--font-sans);
     font-size: 0.975rem;
     font-weight: 600;
     text-decoration: none;
-    transition: background-color 0.18s ease;
   }
-  .dk-button:hover { background: var(--color-amber); }
+  .dk-button:hover { background: var(--color-ink-2); }
 
   .dk-lead { padding-bottom: clamp(3.5rem, 8vw, 6rem); }
 
@@ -889,10 +865,10 @@ deckle llm check</code></pre>
 
   .dk-h2 {
     margin: 0;
-    font-weight: 340;
-    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
-    line-height: 1.1;
-    letter-spacing: -0.012em;
+    font-weight: 650;
+    font-size: clamp(1.375rem, 2.2vw, 1.625rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
   .dk-side {
@@ -906,12 +882,12 @@ deckle llm check</code></pre>
   .dk-prose { max-width: 36em; }
   .dk-prose > p {
     margin: 0 0 1.2rem;
-    font-size: 1.1875rem;
-    line-height: 1.65;
+    font-size: 1.0625rem;
+    line-height: 1.6;
     color: var(--color-ink-2);
   }
   .dk-prose > p:last-child { margin-bottom: 0; }
-  .dk-prose strong { font-weight: 500; color: var(--color-ink); }
+  .dk-prose strong { font-weight: 600; color: var(--color-ink); }
 
   .dk-note { font-size: 1rem !important; color: var(--color-ink-3) !important; }
 
@@ -921,7 +897,7 @@ deckle llm check</code></pre>
     gap: 2rem clamp(1.5rem, 3vw, 2.5rem);
     margin: 0;
   }
-  .dk-features dt { font-size: 1.1875rem; font-weight: 500; }
+  .dk-features dt { font-size: 1.1875rem; font-weight: 600; }
   .dk-features dd {
     margin: 0.4rem 0 0;
     color: var(--color-ink-2);
@@ -942,7 +918,7 @@ deckle llm check</code></pre>
   }
   .dk-table th {
     text-align: left;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--color-ink-3);
     padding: 0 1rem 0.7rem 0;
     border-bottom: 1px solid var(--color-line-strong);
@@ -965,7 +941,7 @@ deckle llm check</code></pre>
     overflow-x: auto;
     margin-top: 0.5rem;
     scrollbar-width: thin;
-    scrollbar-color: rgba(244, 237, 227, 0.18) transparent;
+    scrollbar-color: var(--color-line-strong) transparent;
   }
   .dk-matrix {
     width: 100%;
@@ -984,9 +960,8 @@ deckle llm check</code></pre>
   }
   .dk-matrix tbody th {
     text-align: left;
-    font-family: var(--font-serif);
     font-size: 1rem;
-    font-weight: 450;
+    font-weight: 600;
     color: var(--color-ink);
     padding: 0.7rem 1.2rem 0.7rem 0;
     border-bottom: 1px solid var(--color-line);
@@ -1028,14 +1003,14 @@ deckle llm check</code></pre>
     grid-column: 1;
     grid-row: 1 / span 3;
     font-size: 1.5rem;
-    font-weight: 300;
+    font-weight: 650;
     line-height: 1.2;
-    color: var(--color-amber);
+    color: var(--color-accent);
   }
   .dk-steps h3 {
     margin: 0;
     font-size: 1.3rem;
-    font-weight: 450;
+    font-weight: 600;
     line-height: 1.3;
   }
   .dk-steps p {
@@ -1055,9 +1030,8 @@ deckle llm check</code></pre>
     margin: 0 0 1.4rem;
     padding: 1.1rem 1.3rem;
     overflow-x: auto;
-    background: var(--color-screen);
+    background: var(--color-ground-deep);
     border-radius: 10px;
-    box-shadow: 0 0 0 1px var(--well-ring);
     font-size: 0.9375rem;
     line-height: 1.7;
     color: var(--color-ink);
@@ -1066,8 +1040,7 @@ deckle llm check</code></pre>
 
   .dk-close {
     background: var(--color-ground-deep);
-    border-top: 1px solid var(--color-line);
-    padding-block: clamp(3.5rem, 8vw, 6rem);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
   }
   .dk-close__grid {
     display: grid;
@@ -1078,10 +1051,10 @@ deckle llm check</code></pre>
   .dk-close__line {
     margin: 0;
     max-width: 22em;
-    font-size: clamp(1.5rem, 2.8vw, 2.25rem);
-    font-weight: 330;
-    line-height: 1.25;
-    letter-spacing: -0.012em;
+    font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
   .dk-close__actions { justify-self: end; }
   .dk-close__links {
@@ -1091,14 +1064,6 @@ deckle llm check</code></pre>
     font-size: 1.0625rem;
   }
 
-  @keyframes lamp-on {
-    from { opacity: 0; transform: scale(0.94); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes settle {
-    from { opacity: 0; transform: translateY(14px); }
-    to { opacity: 1; transform: none; }
-  }
 
   @media (max-width: 860px) {
     .dk-open__body,
@@ -1114,7 +1079,5 @@ deckle llm check</code></pre>
   }
 
   @media (max-width: 560px) {
-    .statement__line + .statement__line { padding-left: 0; }
-    .lamp { top: -20%; left: -45%; width: 170vw; }
   }
 </style>

@@ -151,12 +151,11 @@ const schema = {
   .wn-crumb { margin: 0 0 1.2rem; font-size: 1.0625rem; color: var(--color-ink-3); }
   .wn-title {
     margin: 0;
-    font-weight: 290;
-    font-size: clamp(2.75rem, 7vw, 6.5rem);
-    line-height: 0.95;
+    font-weight: 650;
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    line-height: 1.05;
     letter-spacing: -0.03em;
     text-wrap: balance;
-    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
   .wn-lede {
     max-width: 36em;
@@ -165,7 +164,6 @@ const schema = {
     line-height: 1.55;
     color: var(--color-ink-2);
     text-wrap: pretty;
-    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
   }
   .wn-actions {
     display: flex;
@@ -174,7 +172,6 @@ const schema = {
     gap: 1rem 1.6rem;
     margin: 2rem 0 0;
     font-size: 1.0625rem;
-    animation: settle 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both;
   }
   .wn-button {
     display: inline-block;
@@ -182,13 +179,11 @@ const schema = {
     border-radius: 8px;
     background: var(--color-ink);
     color: var(--color-ground);
-    font-family: var(--font-sans);
     font-size: 0.975rem;
     font-weight: 600;
     text-decoration: none;
-    transition: background-color 0.18s ease;
   }
-  .wn-button:hover { background: var(--color-amber); }
+  .wn-button:hover { background: var(--color-ink-2); }
 
   /* The contents: one row of underlined links, the way the site does links. */
   .wn-nav {
@@ -205,7 +200,7 @@ const schema = {
     text-decoration-color: var(--color-line-strong);
     text-underline-offset: 0.22em;
   }
-  .wn-nav a:hover { color: var(--color-amber); text-decoration-color: currentColor; }
+  .wn-nav a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 
   .wn-theme {
     display: grid;
@@ -216,10 +211,10 @@ const schema = {
   }
   .wn-h2 {
     margin: 0;
-    font-weight: 340;
-    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
-    line-height: 1.1;
-    letter-spacing: -0.012em;
+    font-weight: 650;
+    font-size: clamp(1.375rem, 2.2vw, 1.625rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
   .wn-why {
@@ -238,7 +233,7 @@ const schema = {
   .wn-items dt {
     display: inline;
     font-size: 1.125rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--color-ink);
   }
   .wn-items dd {
@@ -275,10 +270,6 @@ const schema = {
   .wn-items--earlier dd { display: block; margin-top: 0.3rem; }
   .wn-note { margin: 2rem 0 0; font-size: 1rem; color: var(--color-ink-3); }
 
-  @keyframes settle {
-    from { opacity: 0; transform: translateY(14px); }
-    to { opacity: 1; transform: none; }
-  }
 
   @media (max-width: 860px) {
     .wn-theme { grid-template-columns: minmax(0, 1fr); }

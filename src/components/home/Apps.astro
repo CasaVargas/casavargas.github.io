@@ -1,0 +1,167 @@
+---
+import { Image } from 'astro:assets';
+import Composition from '../ui/Composition.astro';
+import { lead, work, type Work } from '../../data/work';
+
+// Shipped products with publishable screenshots, minus the lead above.
+// The thin-imagery (compact) one goes last.
+const shipped = work
+  .filter((w) => w.plate && !w.parent && w.group !== 'workshop' && w.slug !== lead.slug)
+  .sort((a, b) => Number(a.plate!.layout === 'compact') - Number(b.plate!.layout === 'compact'));
+
+// In development: named and described, no prices or dates promised (PLAN.md §8).
+const building = work.filter((w) => w.group === 'workshop');
+
+const external = (w: Work) => {
+  const l = w.links[0];
+  if (!l) return null;
+  return { url: l.url, label: /\.\w+$/.test(l.label) ? `Visit ${l.label}` : l.label };
+};
+---
+
+<section class="wrap apps" aria-labelledby="apps-title">
+  <header class="apps__head">
+    <h2 id="apps-title" class="section-title">Apps</h2>
+    <a class="textlink ui" href="/work/">All apps, companions included</a>
+  </header>
+
+  <ul class="apps__grid">
+    {shipped.map((w) => {
+      const ext = external(w);
+      return (
+        <li class="app">
+          <a class="app__well" href={`/work/${w.slug}/`} tabindex="-1" aria-hidden="true">
+            <Composition plate={{ ...w.plate!, credit: undefined }} />
+          </a>
+          <div class="app__text">
+            <h3 class="app__name">
+              {w.icon && (
+                <Image src={w.icon} alt="" widths={[32, 64]} sizes="32px" format="webp" quality={82} class="app__icon" loading="lazy" />
+              )}
+              <a href={`/work/${w.slug}/`}>{w.name}</a>
+            </h3>
+            <p class="app__what">{w.what}.</p>
+            <p class="app__meta ui">{w.runsOn.join(', ')}. {w.price}.</p>
+            <p class="app__links">
+              {ext && <a class="textlink" href={ext.url} rel="noopener">{ext.label}</a>}
+              <a class="textlink" href={`/work/${w.slug}/`} aria-label={`How ${w.name} is built`}>How it’s built</a>
+            </p>
+            {w.plate!.credit && <p class="app__credit ui">{w.plate!.credit}</p>}
+          </div>
+        </li>
+      );
+    })}
+  </ul>
+
+  <h2 id="building-title" class="section-title apps__sub">In development</h2>
+  <ul class="apps__building" aria-labelledby="building-title">
+    {building.map((w) => {
+      const ext = external(w);
+      return (
+        <li>
+          <h3 class="app__name">
+            {w.icon && (
+              <Image src={w.icon} alt="" widths={[32, 64]} sizes="32px" format="webp" quality={82} class="app__icon" loading="lazy" />
+            )}
+            <a href={`/work/${w.slug}/`}>{w.name}</a>
+          </h3>
+          <p class="app__what">{w.tagline}</p>
+          <p class="app__meta ui">{w.runsOn.join(', ')}. No date promised.</p>
+          <p class="app__links">
+            {ext && <a class="textlink" href={ext.url} rel="noopener">{ext.label}</a>}
+            <a class="textlink" href={`/work/${w.slug}/`} aria-label={`How ${w.name} is built`}>How it’s built</a>
+          </p>
+        </li>
+      );
+    })}
+  </ul>
+</section>
+
+<style>
+  .apps { padding-top: clamp(3.5rem, 8vw, 5.5rem); }
+
+  .apps__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .apps__head .textlink { color: var(--color-ink-2); }
+
+  .apps__grid,
+  .apps__building {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2.5rem, 5vw, 3.5rem) clamp(1.25rem, 3vw, 2rem);
+  }
+
+  /* Each entry spans two shared rows, so wells in a row are the same height. */
+  .apps__grid { grid-auto-rows: auto; }
+  .app {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+    row-gap: 1.1rem;
+  }
+
+  .app__well {
+    display: grid;
+    align-content: center;
+    padding: clamp(1rem, 3vw, 2rem);
+    border-radius: var(--radius);
+    background: var(--color-ground-deep);
+  }
+
+  .app__name {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    font-size: 1.3125rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .app__name a { color: inherit; text-decoration: none; }
+  .app__name a:hover { text-decoration: underline; text-underline-offset: 0.18em; }
+  :global(.app__icon) {
+    width: 32px;
+    height: 32px;
+    border-radius: 7.5px;
+    flex-shrink: 0;
+  }
+
+  .app__what {
+    margin: 0.5rem 0 0;
+    max-width: 34em;
+    color: var(--color-ink-2);
+    text-wrap: pretty;
+  }
+  .app__meta { margin: 0.5rem 0 0; color: var(--color-ink-3); }
+  .app__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin: 0.75rem 0 0;
+    font-size: 1rem;
+  }
+  .app__credit { margin: 0.75rem 0 0; color: var(--color-ink-3); font-size: 0.8125rem; }
+
+  .apps__sub {
+    margin-top: clamp(3.5rem, 8vw, 5.5rem);
+    margin-bottom: 1.5rem;
+  }
+  .apps__building > li {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  @media (max-width: 760px) {
+    .apps__grid,
+    .apps__building { grid-template-columns: 1fr; }
+  }
+</style>
