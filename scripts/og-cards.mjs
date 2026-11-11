@@ -33,7 +33,6 @@ const cards = [
   { file: 'cathode-tv', title: 'Cathode TV', sub: 'A native IPTV player for every Apple screen.', kicker: 'casavargas.app', icon: 'src/assets/icons/cathode-tv.png', big: true },
   { file: 'nimbus', title: 'Nimbus', sub: 'Every cloud you use. One Mac app. Free and open source.', kicker: 'casavargas.app/nimbus', icon: 'src/assets/icons/nimbus.png', big: true, shot: 'src/assets/nimbus/home-stratosphere.webp' },
   { file: 'work-nimbus', title: 'Nimbus', sub: 'Cloud storage as Mac volumes, built on rclone.', kicker: 'casavargas.app', icon: 'src/assets/icons/nimbus.png', big: true },
-  { file: 'apppulse', title: 'AppPulse', sub: 'A Mac app updater that checks who made the update.', kicker: 'casavargas.app', big: true },
 ];
 
 const mark = `<svg width="44" height="44" viewBox="0 0 512 512"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#EF9F27"/><stop offset="100%" stop-color="#D85A30"/></linearGradient></defs><g transform="translate(256,240)"><path d="M0,-160 L-122,-51 L-98,-51 L0,-139 L98,-51 L122,-51 Z" fill="url(#g)"/><rect x="-88" y="-51" width="176" height="152" rx="7" fill="url(#g)" opacity="0.9"/><path d="M-30,-8 L-54,25 L-30,59" fill="none" stroke="#1d1d1f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M30,-8 L54,25 L30,59" fill="none" stroke="#1d1d1f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><line x1="14" y1="-8" x2="-14" y2="59" stroke="#1d1d1f" stroke-width="7.5" stroke-linecap="round" opacity="0.8"/></g></svg>`;

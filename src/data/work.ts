@@ -268,19 +268,6 @@ export const work: Work[] = [
       ],
     },
   },
-  {
-    slug: 'apppulse',
-    name: 'AppPulse',
-    what: 'A Mac app updater that checks who made the update',
-    tagline:
-      'AppPulse updates the apps on your Mac, but only when it can prove the update comes from the same developer.',
-    group: 'workshop',
-    runsOn: ['macOS'],
-    builtWith: ['Swift 6', 'SwiftUI', 'Security framework'],
-    links: [],
-    highlight:
-      'A valid signature is not proof of identity, so every install ends with a Team ID match against the copy already on your Mac.',
-  },
 ];
 
 /**

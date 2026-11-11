@@ -14,13 +14,15 @@ export default defineConfig({
     '/work/streamline': '/work/cathode-tv/',
     '/onescribe': '/work/onescribe/',
     '/debrid-downloader': '/work/debrid-downloader/',
+    // AppPulse was taken off the site on 2026-11-11.
+    '/work/apppulse': '/work/',
   },
   integrations: [
     sitemap({
       // /nimbus/ is a static page in public/, which the sitemap cannot see.
       customPages: ['https://casavargas.app/nimbus/'],
       // Keep redirect stubs and the 404 out of the sitemap.
-      filter: (page) => !['/streamline/', '/work/streamline/', '/onescribe/', '/debrid-downloader/', '/404/'].includes(new URL(page).pathname),
+      filter: (page) => !['/streamline/', '/work/streamline/', '/onescribe/', '/debrid-downloader/', '/work/apppulse/', '/404/'].includes(new URL(page).pathname),
     }),
   ],
 });

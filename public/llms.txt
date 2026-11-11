@@ -20,7 +20,6 @@ Expanded, one-paragraph-per-product version of this file: https://casavargas.app
 
 - [Cathode TV](https://casavargas.app/work/cathode-tv/): A native IPTV player for your own M3U or Xtream playlists and XMLTV guides, on iPhone, iPad, Mac, Apple TV and Vision Pro. Due in 2026. Product site: https://cathodetv.app
 - [Nimbus](https://casavargas.app/nimbus/): An open-source native Mac app that turns S3, Google Drive, OneDrive, SFTP and fifty more storage services into volumes you browse, show in Finder and sync, driven by rclone. GPL-3.0. Case study: https://casavargas.app/work/nimbus/
-- [AppPulse](https://casavargas.app/work/apppulse/) (working title): A Mac app updater that installs an update only after verifying it comes from the same developer as the installed app.
 
 ## Notes
 

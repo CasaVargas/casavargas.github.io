@@ -123,7 +123,6 @@ is invisible to grep, diffing and CI. Rejected so far, and why:
   fictional demo lineup with Big Buck Bunny (CC BY 3.0, credited on the plate).
   Runbook: Tolaria `cathodetv-marketing-screenshots-runbook`; the generator
   lives in the marketing repo at `cathodetv/demo-lineup/`.
-- AppPulse: the existing shots show a real personal app library.
 - DebridDownloader: the screenshots here are the real UI rendered with mocked
   IPC and neutral data (Linux installers), captured with headless Chrome. Its
   icon is the emerald chevron mark from the DebridDownloader repo

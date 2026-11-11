@@ -69,6 +69,8 @@ Decisions taken with the owner on 2026-11-11:
 - **Words:** "Apps", not "Work" (the `/work/` URLs stay). "In development", not
   "In the workshop". "About", not "The studio". "How it's built", not "case
   study". No taglines about the company.
+- AppPulse was removed from the site on 2026-11-11 (owner's call); `/work/apppulse/`
+  redirects to `/work/`. Mentions of it below are historical.
 - Still true from §10: no em dashes anywhere; screenshots carry claims.
 
 ---
